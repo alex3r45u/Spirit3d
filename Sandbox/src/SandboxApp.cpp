@@ -75,7 +75,7 @@ public:
 
 		 mesh = Spirit::Render::Mesh("assets/monkey.fbx");
 
-		m_ShaderLibrary.Load("default", "assets/vertex.glsl", "assets/fragment.glsl");
+		Spirit::AssetLibrary::s_ShaderLibrary.Load("default", "assets/vertex.glsl", "assets/fragment.glsl");
 		//m_Texture = Spirit::Render::Texture2d::Create("assets/dmark.jpg");
 	}
 
@@ -109,7 +109,7 @@ public:
 
 		Spirit::Render::Renderer::BeginScene(m_Camera);
 		//Spirit::Render::Renderer::Submit(m_VertexArray, m_ShaderLibrary.Get("default"), glm::mat4(1.0f));
-		mesh.Render(m_ShaderLibrary.Get("default"));
+		mesh.Render(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
 		Spirit::Render::Renderer::EndScene();
 	}
 
@@ -123,7 +123,6 @@ private:
 
 	std::shared_ptr<Spirit::Render::Camera> m_Camera;
 
-	Spirit::Render::ShaderLibrary m_ShaderLibrary;
 	Spirit::Render::Mesh mesh;
 };
 
