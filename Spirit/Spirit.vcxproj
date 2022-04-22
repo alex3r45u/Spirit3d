@@ -152,6 +152,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="src\Spirit.h" />
     <ClInclude Include="src\Spirit\Application.h" />
     <ClInclude Include="src\Spirit\Core.h" />
@@ -706,6 +707,7 @@
     <ClInclude Include="vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="src\Spirit\Application.cpp" />
     <ClCompile Include="src\Spirit\Core\AssetLibrary.cpp" />
     <ClCompile Include="src\Spirit\Core\MaterialLibrary.cpp" />
