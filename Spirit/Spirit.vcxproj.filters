@@ -1737,7 +1737,7 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.h">
+    <ClInclude Include="src\Spirit\Utility\Logger.h">
       <Filter>src\Spirit\Utility</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1829,7 +1829,7 @@
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp">
+    <ClCompile Include="src\Spirit\Utility\Logger.cpp">
       <Filter>src\Spirit\Utility</Filter>
     </ClCompile>
   </ItemGroup>
