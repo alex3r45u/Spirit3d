@@ -1823,6 +1823,8 @@
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spirit\Render\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Spirit\Render\Lights\Light.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">
