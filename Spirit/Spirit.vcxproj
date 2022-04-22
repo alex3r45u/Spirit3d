@@ -726,7 +726,11 @@
     <ClCompile Include="src\Spirit\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Spirit\Render\Buffer.cpp" />
     <ClCompile Include="src\Spirit\Render\Camera.cpp" />
+    <ClCompile Include="src\Spirit\Render\Lights\DirectionalLight.cpp" />
+    <ClCompile Include="src\Spirit\Render\Lights\Light.cpp" />
     <ClCompile Include="src\Spirit\Render\Lights\LightManager.cpp" />
+    <ClCompile Include="src\Spirit\Render\Lights\PointLight.cpp" />
+    <ClCompile Include="src\Spirit\Render\Lights\SpotLight.cpp" />
     <ClCompile Include="src\Spirit\Render\Material.cpp" />
     <ClCompile Include="src\Spirit\Render\Mesh.cpp" />
     <ClCompile Include="src\Spirit\Render\RenderAPI.cpp" />

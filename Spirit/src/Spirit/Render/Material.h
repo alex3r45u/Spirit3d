@@ -21,6 +21,9 @@ namespace Spirit::Render {
 	};
 
 	struct GeneratedMaterial : public Material {
+		GeneratedMaterial() {}
+		GeneratedMaterial(const glm::vec3& ambient) : ambient(ambient) {}
+		GeneratedMaterial(const glm::vec3& ambient, const glm::vec3& deffuse, const glm::vec3& specular) : ambient(ambient), deffuse(deffuse), specular(specular) {}
 		virtual const glm::vec3& GetAmbient() override { return ambient; }
 		virtual const glm::vec3& GetDeffuse() override { return deffuse; }
 		virtual const glm::vec3& GetSpecular() override { return specular; }
@@ -31,15 +34,15 @@ namespace Spirit::Render {
 
 
 		glm::vec3 ambient;
-		bool hasAmbientTexture;
+		bool hasAmbientTexture = false;
 		const std::shared_ptr<Texture2d> ambientTexture;
 
 		glm::vec3 deffuse;
-		bool hasDeffuseTexture;
+		bool hasDeffuseTexture = false;
 		const std::shared_ptr<Texture2d> deffuseTexture;
 
 		glm::vec3 specular;
-		bool hasSpecularTexture;
+		bool hasSpecularTexture = false;
 		const std::shared_ptr<Texture2d> specularTexture;
 	private:
 		const std::shared_ptr<Texture2d> ambientRef;

@@ -10,6 +10,7 @@
 #include "Spirit/Event/Event.h"
 #include "Spirit/Core/AssetLibrary.h"
 
+
 //Render
 #include "Spirit/Render/Renderer.h"
 #include "Spirit/Render/RenderAPI.h"
@@ -18,6 +19,7 @@
 #include "Spirit/Render/Shader.h"
 #include "Spirit/Render/Mesh.h"
 #include "Spirit/Render/Texture.h"
+#include "Spirit/Render/Lights/LightManager.h"
 
 
 // ---Entry Point---------------------

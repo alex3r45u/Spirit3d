@@ -5,7 +5,7 @@ public:
 	TestLayer() : Layer("Tsst") {
 	}
 
-	void OnAttach() override {
+	virtual void OnAttach() override {
 		m_Camera = std::make_shared<Spirit::Render::Camera>(glm::vec3(.0f, .0f, .0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
 
@@ -73,14 +73,21 @@ public:
 		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 
-		 mesh = Spirit::Render::Mesh("assets/monkey.fbx");
-
+		mesh = Spirit::Render::Mesh("assets/monkey.fbx");
+		mat = std::make_shared<Spirit::Render::GeneratedMaterial>(glm::vec3(1.0f,.0f,.0f));
+		
+		Spirit::AssetLibrary::s_MaterialLibrary.Add("default", mat);
 		Spirit::AssetLibrary::s_ShaderLibrary.Load("default", "assets/vertex.glsl", "assets/fragment.glsl");
 		//m_Texture = Spirit::Render::Texture2d::Create("assets/dmark.jpg");
 	}
 
+	virtual void LightUpdate() override {
+		Spirit::Render::LightManager::Start(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
+		Spirit::Render::LightManager::Submit(std::make_shared<Spirit::Render::DirectionalLight>(glm::vec3(0.0f), glm::vec3(.1f)));
+			Spirit::Render::LightManager::End();
+	}
 
-	void Update(Spirit::TimeStep ts) override {
+	virtual void Update(Spirit::TimeStep ts) override {
 		
 		if (Spirit::Input::IsKeyPressed(SP_KEY_W)) {
 			m_Camera->SetPosition(m_Camera->GetPosition() + glm::vec3(.10f, 0.0f, 0.0f));
@@ -109,6 +116,7 @@ public:
 
 		Spirit::Render::Renderer::BeginScene(m_Camera);
 		//Spirit::Render::Renderer::Submit(m_VertexArray, m_ShaderLibrary.Get("default"), glm::mat4(1.0f));
+		mat->SetUniforms(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
 		mesh.Render(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
 		Spirit::Render::Renderer::EndScene();
 	}
@@ -122,7 +130,7 @@ private:
 	std::shared_ptr<Spirit::Render::VertexArray> m_VertexArray;
 
 	std::shared_ptr<Spirit::Render::Camera> m_Camera;
-
+	std::shared_ptr<Spirit::Render::Material> mat;
 	Spirit::Render::Mesh mesh;
 };
 
