@@ -17,16 +17,17 @@ struct DirectionalLight {
 };
 
 struct PointLight {    
+    vec3 color;
     vec3 position;
     
     float k0;
     float k1;
     float k2;  
 
-    vec3 color;
 }; 
 
 struct SpotLight {
+	vec3 color;
 	vec3 position;
 	vec3 direction;
 
@@ -37,7 +38,6 @@ struct SpotLight {
 	float k1;
 	float k2;
 
-	vec3 color;
 };
 
 
@@ -60,5 +60,5 @@ uniform DirectionalLight directionalLights[NO_DIRECTIONAL_LIGHTS];
 in vec3 v_Position;
 void main()
 {
-	color = vec4(material.ambient, 1.0);
+	color = vec4(material.ambient * directionalLights[0].color, 1.0);
 }

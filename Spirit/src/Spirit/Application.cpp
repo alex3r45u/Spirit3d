@@ -50,6 +50,7 @@ namespace Spirit {
 
 			m_LayerStack.Update(ts);
 			//Update ImGui
+			m_LayerStack.LightUpdate();
 			m_LayerStack.RenderUpdate();
 
 			m_ImGuiLayer->Begin();

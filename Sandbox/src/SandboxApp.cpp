@@ -5,7 +5,7 @@ public:
 	TestLayer() : Layer("Tsst") {
 	}
 
-	void OnAttach() override {
+	virtual void OnAttach() override {
 		m_Camera = std::make_shared<Spirit::Render::Camera>(glm::vec3(.0f, .0f, .0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
 
@@ -81,8 +81,13 @@ public:
 		//m_Texture = Spirit::Render::Texture2d::Create("assets/dmark.jpg");
 	}
 
+	virtual void LightUpdate() override {
+		Spirit::Render::LightManager::Start(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
+		Spirit::Render::LightManager::Submit(std::make_shared<Spirit::Render::DirectionalLight>(glm::vec3(0.0f), glm::vec3(.1f)));
+			Spirit::Render::LightManager::End();
+	}
 
-	void Update(Spirit::TimeStep ts) override {
+	virtual void Update(Spirit::TimeStep ts) override {
 		
 		if (Spirit::Input::IsKeyPressed(SP_KEY_W)) {
 			m_Camera->SetPosition(m_Camera->GetPosition() + glm::vec3(.10f, 0.0f, 0.0f));

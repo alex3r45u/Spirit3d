@@ -22,6 +22,7 @@ void Spirit::Render::LightManager::Start(const std::shared_ptr<Shader>& shader)
 
 void Spirit::Render::LightManager::End()
 {
+	SetUniforms();
 	s_Shader->SetInt("u_NoDirectionalLights", Light::GetNoDirectionalLights());
 	s_Shader->SetInt("u_NoSpotLights", Light::GetNoSpotLights());
 	s_Shader->SetInt("u_NoPointLights", Light::GetNoPointLights());

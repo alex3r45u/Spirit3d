@@ -35,6 +35,13 @@ void Spirit::LayerStack::Update(TimeStep ts)
 	}
 }
 
+void Spirit::LayerStack::LightUpdate()
+{
+	for (auto l : m_Layers) {
+		l->LightUpdate();
+	}
+}
+
 void Spirit::LayerStack::RenderUpdate()
 {
 	for (auto l : m_Layers) {
