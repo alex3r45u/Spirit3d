@@ -37,9 +37,11 @@ void Spirit::Render::Material::SetUniforms(const std::shared_ptr<Shader>& shader
     glm::vec3 ambient = GetAmbient();
     glm::vec3 deffuse = GetDeffuse();
     glm::vec3 specular = GetSpecular();
+    float shininess = GetShininess();
     shader->SetFloat3("material.ambient", ambient.x, ambient.y, ambient.z);
     shader->SetFloat3("material.deffuse", deffuse.x, deffuse.y, deffuse.z);
     shader->SetFloat3("material.specular", specular.x, specular.y, specular.z);
+    shader->SetFloat("material.shininess", shininess);
 
     //TODO textures
 }

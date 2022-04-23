@@ -11,8 +11,8 @@ namespace Spirit::Render {
 
 		void SetPosition(glm::vec3& position) { m_Position = position; CalcMats(); }
 		void SetRotation(glm::vec3& rotation) { m_Rotation = rotation; CalcMats(); }
-		const glm::vec3&  GetPosition() const { return m_Position; }
-		const glm::vec3&  GetRotation() const { return m_Rotation; }
+		const glm::vec3&  GetPosition()  { return m_Position; }
+		const glm::vec3&  GetRotation()  { return m_Rotation; }
 
 		void SetViewport(unsigned int width, unsigned int height) { m_Width = width; m_Height = height; CalcMats(); }
 

@@ -30,6 +30,8 @@ void Spirit::Render::Renderer::Submit(const std::shared_ptr<VertexArray>& vertex
 	shader->Bind();
 	shader->SetMat4("u_ViewPerspective", s_Camera->GetViewPerspective());
 	shader->SetMat4("u_Model", model);
+	glm::vec3 camPos = s_Camera->GetPosition();
+	shader->SetFloat3("u_ViewPos", camPos.x, camPos.y, camPos.z);
 	vertexArray->Bind();
 	RenderCommand::DrawIndexed(vertexArray);
 }
@@ -40,6 +42,8 @@ void Spirit::Render::Renderer::Submit(const std::shared_ptr<VertexArray>& vertex
 	shader->SetMat4("u_ViewPerspective", s_Camera->GetViewPerspective());
 	shader->SetMat4("u_Model", model);
 	material->SetUniforms(shader);
+	glm::vec3 camPos = s_Camera->GetPosition();
+	shader->SetFloat3("u_ViewPos", camPos.x, camPos.y, camPos.z);
 	vertexArray->Bind();
 	RenderCommand::DrawIndexed(vertexArray);
 }

@@ -9,6 +9,7 @@ namespace Spirit::Render {
 		static int GetNoDirectionalLights()  { return s_NoDirectionalLights; }
 		static int GetNoSpotLights()  { return s_NoSpotLights; }
 		static int GetNoPointLights()  { return s_NoPointLights; }
+		static void ResetNoLights();
 	protected:
 		static int s_NoDirectionalLights;
 		static int s_NoSpotLights;

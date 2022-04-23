@@ -28,7 +28,7 @@ namespace Spirit {
 		m_LayerStack.AddLayer(m_ImGuiLayer);
 		
 
-		
+		Render::Renderer::Init();
 
 	}
 
@@ -47,6 +47,8 @@ namespace Spirit {
 			float time = glfwGetTime(); //TODO 
 			TimeStep ts = TimeStep(time - m_LastTime);
 			m_LastTime = time;
+
+			Input::Update();
 
 			m_LayerStack.Update(ts);
 			//Update ImGui

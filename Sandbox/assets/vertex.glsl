@@ -8,8 +8,10 @@ uniform mat4 u_ViewPerspective;
 uniform mat4 u_Model;
 
 out vec3 v_Position;
+out vec3 v_Normal;
 void main()
 {
 	v_Position = a_Position;
+	v_Normal = a_Normal;
 	gl_Position = u_ViewPerspective * u_Model * vec4(a_Position, 1.0);
 }

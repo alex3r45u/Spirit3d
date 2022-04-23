@@ -41,3 +41,23 @@ float Spirit::WindowsInput::GetMouseYImpl()
 	auto [x, y] = GetMousePositionImpl();
 	return y;
 }
+
+float Spirit::WindowsInput::GetMouseDxImpl()
+{
+	return m_Dx;
+}
+
+float Spirit::WindowsInput::GetMouseDyImpl()
+{
+	return m_Dy;
+}
+
+void Spirit::WindowsInput::OnUpdate()
+{
+	m_Dx = GetMouseXImpl() - m_LastX;
+	m_Dy = GetMouseYImpl() - m_LastY;
+
+
+	m_LastX = GetMouseXImpl();
+	m_LastY = GetMouseYImpl();
+}

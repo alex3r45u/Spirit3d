@@ -8,6 +8,7 @@ namespace Spirit::Render {
 		virtual const glm::vec3& GetAmbient() = 0;
 		virtual const glm::vec3& GetDeffuse() = 0;
 		virtual const glm::vec3& GetSpecular() = 0;
+		virtual float GetShininess() = 0;
 
 		virtual const std::shared_ptr<Texture2d> GetAmbientTexture() = 0;
 		virtual const std::shared_ptr<Texture2d> GetDeffuseTexture() = 0;
@@ -23,10 +24,11 @@ namespace Spirit::Render {
 	struct GeneratedMaterial : public Material {
 		GeneratedMaterial() {}
 		GeneratedMaterial(const glm::vec3& ambient) : ambient(ambient) {}
-		GeneratedMaterial(const glm::vec3& ambient, const glm::vec3& deffuse, const glm::vec3& specular) : ambient(ambient), deffuse(deffuse), specular(specular) {}
+		GeneratedMaterial(const glm::vec3& ambient, const glm::vec3& deffuse, const glm::vec3& specular, float shininess) : ambient(ambient), deffuse(deffuse), specular(specular), shininess(shininess) {}
 		virtual const glm::vec3& GetAmbient() override { return ambient; }
 		virtual const glm::vec3& GetDeffuse() override { return deffuse; }
 		virtual const glm::vec3& GetSpecular() override { return specular; }
+		virtual float GetShininess() override { return shininess; }
 
 		virtual const std::shared_ptr<Texture2d> GetAmbientTexture() override;
 		virtual const std::shared_ptr<Texture2d> GetDeffuseTexture() override;
@@ -44,6 +46,8 @@ namespace Spirit::Render {
 		glm::vec3 specular;
 		bool hasSpecularTexture = false;
 		const std::shared_ptr<Texture2d> specularTexture;
+
+		float shininess;
 	private:
 		const std::shared_ptr<Texture2d> ambientRef;
 		const std::shared_ptr<Texture2d> deffuseRef;
@@ -55,6 +59,7 @@ namespace Spirit::Render {
 		virtual const glm::vec3& GetAmbient() override { return ambient; }
 		virtual const glm::vec3& GetDeffuse() override { return deffuse; }
 		virtual const glm::vec3& GetSpecular() override { return specular; }
+		virtual float GetShininess() override { return shininess; }
 
 		virtual const std::shared_ptr<Texture2d> GetAmbientTexture() override;
 		virtual const std::shared_ptr<Texture2d> GetDeffuseTexture() override;
@@ -72,6 +77,8 @@ namespace Spirit::Render {
 		glm::vec3 specular;
 		bool hasSpecularTexture;
 		const std::string& specularTexturePath;
+
+		float shininess;
 
 	};
 }

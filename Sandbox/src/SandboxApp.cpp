@@ -2,7 +2,7 @@
 
 class TestLayer : public Spirit::Layer {
 public:
-	TestLayer() : Layer("Tsst") {
+	TestLayer() : Layer("Test") {
 	}
 
 	virtual void OnAttach() override {
@@ -74,7 +74,7 @@ public:
 
 
 		mesh = Spirit::Render::Mesh("assets/monkey.fbx");
-		mat = std::make_shared<Spirit::Render::GeneratedMaterial>(glm::vec3(1.0f,.0f,.0f));
+		mat = std::make_shared<Spirit::Render::GeneratedMaterial>(glm::vec3(1.0f,.0f,.0f), glm::vec3(0.5f), glm::vec3(0.5f), 1.0f);
 		
 		Spirit::AssetLibrary::s_MaterialLibrary.Add("default", mat);
 		Spirit::AssetLibrary::s_ShaderLibrary.Load("default", "assets/vertex.glsl", "assets/fragment.glsl");
@@ -83,8 +83,8 @@ public:
 
 	virtual void LightUpdate() override {
 		Spirit::Render::LightManager::Start(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
-		Spirit::Render::LightManager::Submit(std::make_shared<Spirit::Render::DirectionalLight>(glm::vec3(0.0f), glm::vec3(.1f)));
-			Spirit::Render::LightManager::End();
+		Spirit::Render::LightManager::Submit(std::make_shared<Spirit::Render::DirectionalLight>(glm::vec3(180.0f, .0f, .0f), glm::vec3(1.0f, 1.0f, 1.0f)));
+		Spirit::Render::LightManager::End();
 	}
 
 	virtual void Update(Spirit::TimeStep ts) override {
@@ -107,16 +107,18 @@ public:
 		if (Spirit::Input::IsKeyPressed(SP_KEY_SPACE)) {
 			m_Camera->SetPosition(m_Camera->GetPosition() + glm::vec3(.0f, .10f, .0f));
 		}
+		//glm::vec3 camrot = m_Camera->GetRotation();
+		//m_Camera->SetRotation(glm::vec3(camrot.x + Spirit::Input::GetMouseDx() * .1f, 0.0f, 0.0f));
 		
 	}
 
 	void RenderUpdate() override {
-		Spirit::Render::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		Spirit::Render::RenderCommand::SetClearColor({ 0.1f, .1f, .1f, 1 });
 		Spirit::Render::RenderCommand::Clear();
 
 		Spirit::Render::Renderer::BeginScene(m_Camera);
-		//Spirit::Render::Renderer::Submit(m_VertexArray, m_ShaderLibrary.Get("default"), glm::mat4(1.0f));
 		mat->SetUniforms(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
+		//Spirit::Render::Renderer::Submit(m_VertexArray, Spirit::AssetLibrary::s_ShaderLibrary.Get("default"), glm::mat4(1.0f));
 		mesh.Render(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
 		Spirit::Render::Renderer::EndScene();
 	}
