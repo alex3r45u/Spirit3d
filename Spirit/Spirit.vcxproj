@@ -157,6 +157,7 @@
     <ClInclude Include="src\Spirit\Core.h" />
     <ClInclude Include="src\Spirit\Core\AssetLibrary.h" />
     <ClInclude Include="src\Spirit\Core\MaterialLibrary.h" />
+    <ClInclude Include="src\Spirit\Core\MeshLibrary.h" />
     <ClInclude Include="src\Spirit\Core\ShaderLibrary.h" />
     <ClInclude Include="src\Spirit\Core\TimeStep.h" />
     <ClInclude Include="src\Spirit\EntryPoint.h" />
@@ -709,6 +710,7 @@
     <ClCompile Include="src\Spirit\Application.cpp" />
     <ClCompile Include="src\Spirit\Core\AssetLibrary.cpp" />
     <ClCompile Include="src\Spirit\Core\MaterialLibrary.cpp" />
+    <ClCompile Include="src\Spirit\Core\MeshLibrary.cpp" />
     <ClCompile Include="src\Spirit\Core\ShaderLibrary.cpp" />
     <ClCompile Include="src\Spirit\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Spirit\ImGui\ImGuiLayer.cpp" />

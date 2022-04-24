@@ -9,71 +9,9 @@ public:
 		m_Camera = std::make_shared<Spirit::Render::Camera>(glm::vec3(.0f, .0f, .0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
 
-		m_VertexArray.reset(Spirit::Render::VertexArray::Create());
-
-		float vertices[] = {
-			// position  
-			-0.5f, -0.5f, -0.5f,    
-			 0.5f, -0.5f, -0.5f,    
-			 0.5f,  0.5f, -0.5f,    
-			 0.5f,  0.5f, -0.5f,    
-			-0.5f,  0.5f, -0.5f,    
-			-0.5f, -0.5f, -0.5f,    
-
-			-0.5f, -0.5f,  0.5f,    
-			 0.5f, -0.5f,  0.5f,    
-			 0.5f,  0.5f,  0.5f,    
-			 0.5f,  0.5f,  0.5f,    
-			-0.5f,  0.5f,  0.5f,    
-			-0.5f, -0.5f,  0.5f,    
-
-			-0.5f,  0.5f,  0.5f,    
-			-0.5f,  0.5f, -0.5f,    
-			-0.5f, -0.5f, -0.5f,    
-			-0.5f, -0.5f, -0.5f,    
-			-0.5f, -0.5f,  0.5f,    
-			-0.5f,  0.5f,  0.5f,    
-
-			 0.5f,  0.5f,  0.5f,    
-			 0.5f,  0.5f, -0.5f,    
-			 0.5f, -0.5f, -0.5f,    
-			 0.5f, -0.5f, -0.5f,    
-			 0.5f, -0.5f,  0.5f,    
-			 0.5f,  0.5f,  0.5f,    
-
-			-0.5f, -0.5f, -0.5f,    
-			 0.5f, -0.5f, -0.5f,    
-			 0.5f, -0.5f,  0.5f,    
-			 0.5f, -0.5f,  0.5f,    
-			-0.5f, -0.5f,  0.5f,    
-			-0.5f, -0.5f, -0.5f,    
-
-			-0.5f,  0.5f, -0.5f,    
-			 0.5f,  0.5f, -0.5f,    
-			 0.5f,  0.5f,  0.5f,    
-			 0.5f,  0.5f,  0.5f,    
-			-0.5f,  0.5f,  0.5f,    
-			-0.5f,  0.5f, -0.5f,    
-		};
-
-		std::shared_ptr<Spirit::Render::VertexBuffer> vertexBuffer;
-		vertexBuffer = Spirit::Render::VertexBuffer::Create(vertices, sizeof(vertices));
-		Spirit::Render::BufferLayout layout = {
-			{ Spirit::Render::ShaderDataType::Float3, "a_Position" }
-		};
-		vertexBuffer->SetLayout(layout);
-		m_VertexArray->AddVertexBuffer(vertexBuffer);
-
-		unsigned int indices[36];
-		for (int i = 0; i < 36; i++) {
-			indices[i] = i;
-		}
-		std::shared_ptr<Spirit::Render::IndexBuffer> indexBuffer;
-		indexBuffer = Spirit::Render::IndexBuffer::Create(indices, sizeof(indices) / sizeof(unsigned int));
-		m_VertexArray->SetIndexBuffer(indexBuffer);
 
 
-		mesh = Spirit::Render::Mesh("assets/monkey.fbx");
+		Spirit::AssetLibrary::s_MeshLibrary.Load("default", "assets/monkey.fbx");
 		mat = std::make_shared<Spirit::Render::GeneratedMaterial>(glm::vec3(1.0f,.0f,.0f), glm::vec3(0.5f), glm::vec3(0.5f), 1.0f);
 		
 		Spirit::AssetLibrary::s_MaterialLibrary.Add("default", mat);
@@ -118,8 +56,7 @@ public:
 
 		Spirit::Render::Renderer::BeginScene(m_Camera);
 		mat->SetUniforms(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
-		//Spirit::Render::Renderer::Submit(m_VertexArray, Spirit::AssetLibrary::s_ShaderLibrary.Get("default"), glm::mat4(1.0f));
-		mesh.Render(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
+		Spirit::AssetLibrary::s_MeshLibrary.Get("default")->Render(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
 		Spirit::Render::Renderer::EndScene();
 	}
 
@@ -129,11 +66,9 @@ public:
 		
 	}
 private:
-	std::shared_ptr<Spirit::Render::VertexArray> m_VertexArray;
 
 	std::shared_ptr<Spirit::Render::Camera> m_Camera;
 	std::shared_ptr<Spirit::Render::Material> mat;
-	Spirit::Render::Mesh mesh;
 };
 
 
