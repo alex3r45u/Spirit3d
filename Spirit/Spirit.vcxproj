@@ -172,6 +172,7 @@
     <ClInclude Include="src\Spirit\Layer\LayerStack.h" />
     <ClInclude Include="src\Spirit\Log.h" />
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlBuffer.h" />
+    <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlFramebuffer.h" />
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlRenderAPI.h" />
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlRenderContext.h" />
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlShader.h" />
@@ -182,7 +183,7 @@
     <ClInclude Include="src\Spirit\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Spirit\Render\Buffer.h" />
     <ClInclude Include="src\Spirit\Render\Camera.h" />
-    <ClInclude Include="src\Spirit\Render\FrameBuffer.h" />
+    <ClInclude Include="src\Spirit\Render\Framebuffer.h" />
     <ClInclude Include="src\Spirit\Render\Lights\DirectionalLight.h" />
     <ClInclude Include="src\Spirit\Render\Lights\Light.h" />
     <ClInclude Include="src\Spirit\Render\Lights\LightManager.h" />
@@ -717,6 +718,7 @@
     <ClCompile Include="src\Spirit\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Spirit\Log.cpp" />
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlBuffer.cpp" />
+    <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlFramebuffer.cpp" />
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlRenderAPI.cpp" />
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlRenderContext.cpp" />
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlShader.cpp" />
@@ -726,6 +728,7 @@
     <ClCompile Include="src\Spirit\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Spirit\Render\Buffer.cpp" />
     <ClCompile Include="src\Spirit\Render\Camera.cpp" />
+    <ClCompile Include="src\Spirit\Render\Framebuffer.cpp" />
     <ClCompile Include="src\Spirit\Render\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Spirit\Render\Lights\Light.cpp" />
     <ClCompile Include="src\Spirit\Render\Lights\LightManager.cpp" />
@@ -735,10 +738,12 @@
     <ClCompile Include="src\Spirit\Render\Mesh.cpp" />
     <ClCompile Include="src\Spirit\Render\RenderAPI.cpp" />
     <ClCompile Include="src\Spirit\Render\RenderCommand.cpp" />
+    <ClCompile Include="src\Spirit\Render\RenderContext.cpp" />
     <ClCompile Include="src\Spirit\Render\Renderer.cpp" />
     <ClCompile Include="src\Spirit\Render\Shader.cpp" />
     <ClCompile Include="src\Spirit\Render\Texture.cpp" />
     <ClCompile Include="src\Spirit\Render\VertexArray.cpp" />
+    <ClCompile Include="src\Spirit\Window.cpp" />
     <ClCompile Include="src\sppch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

@@ -22,11 +22,11 @@ namespace Spirit {
 		SP_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
 
-		m_Window = std::unique_ptr<Window>(Window::Create());
+		m_Window = Window::Create();
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 		m_ImGuiLayer = new ImGuiLayer();
 		m_LayerStack.AddLayer(m_ImGuiLayer);
-		
+
 
 		Render::Renderer::Init();
 
@@ -60,7 +60,7 @@ namespace Spirit {
 			m_ImGuiLayer->End();
 
 			m_Window->OnUpdate();
-			
+
 		}
 	}
 
@@ -89,6 +89,8 @@ namespace Spirit {
 
 		//m_Minimized = false;
 		Render::Renderer::OnReseize(e.GetWidth(), e.GetHeight());
+
+		
 
 		return false;
 	}

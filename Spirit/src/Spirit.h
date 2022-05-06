@@ -20,6 +20,7 @@
 #include "Spirit/Render/Mesh.h"
 #include "Spirit/Render/Texture.h"
 #include "Spirit/Render/Lights/LightManager.h"
+#include "Spirit/Render/Framebuffer.h"
 
 
 // ---Entry Point---------------------

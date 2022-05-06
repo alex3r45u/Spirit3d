@@ -25,7 +25,7 @@ namespace Spirit {
 		virtual void Shutdown();
 	private:
 		GLFWwindow* m_Window;
-		Render::RenderContext* m_Context;
+		std::unique_ptr<Render::RenderContext> m_Context;
 
 		struct WindowData
 		{

@@ -93,6 +93,9 @@
     <ClInclude Include="src\Spirit\Core\MaterialLibrary.h">
       <Filter>src\Spirit\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spirit\Core\MeshLibrary.h">
+      <Filter>src\Spirit\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Spirit\Core\ShaderLibrary.h">
       <Filter>src\Spirit\Core</Filter>
     </ClInclude>
@@ -135,6 +138,9 @@
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlBuffer.h">
       <Filter>src\Spirit\Platform\OpenGl</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlFramebuffer.h">
+      <Filter>src\Spirit\Platform\OpenGl</Filter>
+    </ClInclude>
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlRenderAPI.h">
       <Filter>src\Spirit\Platform\OpenGl</Filter>
     </ClInclude>
@@ -165,7 +171,7 @@
     <ClInclude Include="src\Spirit\Render\Camera.h">
       <Filter>src\Spirit\Render</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spirit\Render\FrameBuffer.h">
+    <ClInclude Include="src\Spirit\Render\Framebuffer.h">
       <Filter>src\Spirit\Render</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Render\Lights\DirectionalLight.h">
@@ -1734,7 +1740,6 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spirit\Core\MeshLibrary.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp">
@@ -1744,6 +1749,9 @@
       <Filter>src\Spirit\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Core\MaterialLibrary.cpp">
+      <Filter>src\Spirit\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Core\MeshLibrary.cpp">
       <Filter>src\Spirit\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Core\ShaderLibrary.cpp">
@@ -1762,6 +1770,9 @@
       <Filter>src\Spirit</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlBuffer.cpp">
+      <Filter>src\Spirit\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlFramebuffer.cpp">
       <Filter>src\Spirit\Platform\OpenGl</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlRenderAPI.cpp">
@@ -1791,7 +1802,22 @@
     <ClCompile Include="src\Spirit\Render\Camera.cpp">
       <Filter>src\Spirit\Render</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spirit\Render\Framebuffer.cpp">
+      <Filter>src\Spirit\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Render\Lights\DirectionalLight.cpp">
+      <Filter>src\Spirit\Render\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Render\Lights\Light.cpp">
+      <Filter>src\Spirit\Render\Lights</Filter>
+    </ClCompile>
     <ClCompile Include="src\Spirit\Render\Lights\LightManager.cpp">
+      <Filter>src\Spirit\Render\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Render\Lights\PointLight.cpp">
+      <Filter>src\Spirit\Render\Lights</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Render\Lights\SpotLight.cpp">
       <Filter>src\Spirit\Render\Lights</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Render\Material.cpp">
@@ -1824,11 +1850,8 @@
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="src\Spirit\Render\Lights\DirectionalLight.cpp" />
-    <ClCompile Include="src\Spirit\Render\Lights\Light.cpp" />
-    <ClCompile Include="src\Spirit\Render\Lights\SpotLight.cpp" />
-    <ClCompile Include="src\Spirit\Render\Lights\PointLight.cpp" />
-    <ClCompile Include="src\Spirit\Core\MeshLibrary.cpp" />
+    <ClCompile Include="src\Spirit\Render\RenderContext.cpp" />
+    <ClCompile Include="src\Spirit\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">

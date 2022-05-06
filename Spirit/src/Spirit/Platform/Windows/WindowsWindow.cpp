@@ -2,6 +2,7 @@
 #include "WindowsWindow.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "Spirit/Render/Renderer.h"
 
 
 #include "Spirit/Event/ApplicationEvent.h"
@@ -11,48 +12,55 @@
 
 namespace Spirit {
 
-	static bool s_GLFWInitialized = false;
+	static uint8_t s_GLFWWindowCount = 0;
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
 		SP_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProps& props)
-	{
-		return new WindowsWindow(props);
-	}
-
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+
+
 		Init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
+
+
 		Shutdown();
 	}
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+
+
 		m_Data.Title = props.name;
 		m_Data.Width = props.width;
 		m_Data.Height = props.height;
 
 		SP_CORE_INFO("Creating window {0} ({1}, {2})", props.name, props.width, props.height);
 
-		if (!s_GLFWInitialized)
+		if (s_GLFWWindowCount == 0)
 		{
-			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
-			SP_CORE_ASSERT(success, "Could not intialize GLFW!");
+			SP_CORE_ASSERT(success, "Could not initialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
-			s_GLFWInitialized = true;
 		}
 
-		m_Window = glfwCreateWindow((int)props.width, (int)props.height, m_Data.Title.c_str(), nullptr, nullptr);
+		{
 
-		m_Context = new Render::OpenGlRenderContext(m_Window);
+#if defined(SP_DEBUG)
+			if (Render::Renderer::GetAPI() == Render::RenderAPI::API::OpenGl)
+				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+#endif
+			m_Window = glfwCreateWindow((int)props.width, (int)props.height, m_Data.Title.c_str(), nullptr, nullptr);
+			++s_GLFWWindowCount;
+		}
+
+		m_Context = Render::RenderContext::Create(m_Window);
 		m_Context->Init();
 
 		glfwSetWindowUserPointer(m_Window, &m_Data);
@@ -151,17 +159,29 @@ namespace Spirit {
 
 	void WindowsWindow::Shutdown()
 	{
+
+
 		glfwDestroyWindow(m_Window);
+		--s_GLFWWindowCount;
+
+		if (s_GLFWWindowCount == 0)
+		{
+			glfwTerminate();
+		}
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
+
+
 		glfwPollEvents();
 		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVsync(bool enabled)
 	{
+
+
 		if (enabled)
 			glfwSwapInterval(1);
 		else

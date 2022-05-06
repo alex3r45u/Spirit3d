@@ -17,7 +17,7 @@ namespace Spirit {
 	public:
 		Application();
 		virtual ~Application();
-		
+
 		void Run();
 
 		void OnEvent(Event& e);

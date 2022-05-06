@@ -12,8 +12,8 @@ public:
 
 
 		Spirit::AssetLibrary::s_MeshLibrary.Load("default", "assets/monkey.fbx");
-		mat = std::make_shared<Spirit::Render::GeneratedMaterial>(glm::vec3(1.0f,.0f,.0f), glm::vec3(0.5f), glm::vec3(0.5f), 1.0f);
-		
+		mat = std::make_shared<Spirit::Render::GeneratedMaterial>(glm::vec3(1.0f, .0f, .0f), glm::vec3(0.5f), glm::vec3(0.5f), 1.0f);
+
 		Spirit::AssetLibrary::s_MaterialLibrary.Add("default", mat);
 		Spirit::AssetLibrary::s_ShaderLibrary.Load("default", "assets/vertex.glsl", "assets/fragment.glsl");
 		//m_Texture = Spirit::Render::Texture2d::Create("assets/dmark.jpg");
@@ -26,7 +26,7 @@ public:
 	}
 
 	virtual void Update(Spirit::TimeStep ts) override {
-		
+
 		if (Spirit::Input::IsKeyPressed(SP_KEY_W)) {
 			m_Camera->SetPosition(m_Camera->GetPosition() + glm::vec3(.10f, 0.0f, 0.0f));
 		}
@@ -47,7 +47,7 @@ public:
 		}
 		//glm::vec3 camrot = m_Camera->GetRotation();
 		//m_Camera->SetRotation(glm::vec3(camrot.x + Spirit::Input::GetMouseDx() * .1f, 0.0f, 0.0f));
-		
+
 	}
 
 	void RenderUpdate() override {
@@ -61,9 +61,9 @@ public:
 	}
 
 
-	
+
 	void OnEvent(Spirit::Event& event) override {
-		
+
 	}
 private:
 
@@ -87,7 +87,7 @@ public:
 	}
 
 
-	
+
 
 };
 

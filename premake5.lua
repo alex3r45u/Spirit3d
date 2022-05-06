@@ -117,6 +117,7 @@ workspace "Spirit3d"
     	{
     		"Spirit/vendor/spdlog/include",
     		"Spirit/src",
+            "Spirit/vendor",
     		"%{IncludeDir.glm}",
 			"%{IncludeDir.assimp}",
     	}
@@ -148,3 +149,66 @@ workspace "Spirit3d"
     	filter "configurations:Dist"
     		defines "SP_DIST"
     		optimize "On"
+
+
+
+
+	project "Editor"
+		location "Editor"
+		kind "ConsoleApp"
+		language "C++"
+	
+		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+		
+		files
+		{
+			"%{prj.name}/src/**.h",
+			"%{prj.name}/src/**.cpp"
+		}
+	
+		includedirs
+		{
+			"Spirit/vendor/spdlog/include",
+			"Spirit/src",
+			"Spirit/vendor",
+			"%{IncludeDir.glm}",
+			"%{IncludeDir.assimp}",
+		}
+	
+		links
+		{
+			"Spirit",
+		}
+
+	
+		filter "system:windows"
+			cppdialect "C++17"
+			staticruntime "On"
+			systemversion "latest"
+	
+			defines
+			{
+				"SP_PLATFORM_WINDOWS"
+			}
+	
+		filter "configurations:Debug"
+			defines "SP_DEBUG"
+			symbols "On"
+	
+		filter "configurations:Release"
+			defines "SP_RELEASE"
+			optimize "On"
+	
+		filter "configurations:Dist"
+			defines "SP_DIST"
+			optimize "On"
+
+
+
+
+
+
+
+	
+
