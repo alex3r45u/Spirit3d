@@ -9,7 +9,8 @@
 #include "Spirit/Input/SpiritKeys.h"
 #include "Spirit/Event/Event.h"
 #include "Spirit/Core/AssetLibrary.h"
-
+#include "Spirit/Scene/Entity.h"
+#include "Spirit/Scene/Scene.h"
 
 //Render
 #include "Spirit/Render/Renderer.h"

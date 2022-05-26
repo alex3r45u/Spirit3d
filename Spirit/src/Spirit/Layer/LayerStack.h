@@ -13,7 +13,7 @@ namespace Spirit {
 		void PopLayer(Layer* layer);
 		void Update(TimeStep ts);
 		void LightUpdate();
-		void RenderUpdate();
+		void RenderUpdate(TimeStep ts);
 		void ImGuiUpdate();
 		void OnEvent(Event& e);
 

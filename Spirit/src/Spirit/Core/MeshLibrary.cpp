@@ -8,7 +8,7 @@ void Spirit::MeshLibrary::Add(const std::string& name, const std::shared_ptr<Ren
 }
 
 
-const std::shared_ptr<Spirit::Render::Mesh> Spirit::MeshLibrary::Get(const std::string& name)
+std::shared_ptr<Spirit::Render::Mesh> Spirit::MeshLibrary::Get(const std::string& name)
 {
 	SP_CORE_ASSERT(Exists(name), "Mesh not found!");
 	return m_Meshes[name];

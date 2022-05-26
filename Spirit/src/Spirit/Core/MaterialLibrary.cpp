@@ -8,7 +8,7 @@ void Spirit::MaterialLibrary::Add(const std::string& name, const std::shared_ptr
 }
 
 
-const std::shared_ptr<Spirit::Render::Material> Spirit::MaterialLibrary::Get(const std::string& name)
+std::shared_ptr<Spirit::Render::Material> Spirit::MaterialLibrary::Get(const std::string& name)
 {
 	SP_CORE_ASSERT(Exists(name), "Material not found!");
 	return m_Materials[name];

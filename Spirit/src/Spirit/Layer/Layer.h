@@ -13,7 +13,7 @@ namespace Spirit {
 		virtual void OnDetach() {}
 		virtual void Update(TimeStep ts) {}
 		virtual void LightUpdate() {}
-		virtual void RenderUpdate() {}
+		virtual void RenderUpdate(TimeStep ts) {}
 		virtual void ImGuiUpdate() {}
 		virtual void OnEvent(Event& event) {}
 		const std::string& GetName() const { return m_Name; }

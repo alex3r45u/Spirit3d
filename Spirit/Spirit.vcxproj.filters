@@ -1740,6 +1740,9 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scene.h" />
+    <ClInclude Include="src\Spirit\Scene\Components.h" />
+    <ClInclude Include="src\Spirit\Scene\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp">
@@ -1832,6 +1835,9 @@
     <ClCompile Include="src\Spirit\Render\RenderCommand.cpp">
       <Filter>src\Spirit\Render</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spirit\Render\RenderContext.cpp">
+      <Filter>src\Spirit\Render</Filter>
+    </ClCompile>
     <ClCompile Include="src\Spirit\Render\Renderer.cpp">
       <Filter>src\Spirit\Render</Filter>
     </ClCompile>
@@ -1844,14 +1850,17 @@
     <ClCompile Include="src\Spirit\Render\VertexArray.cpp">
       <Filter>src\Spirit\Render</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spirit\Window.cpp">
+      <Filter>src\Spirit</Filter>
+    </ClCompile>
     <ClCompile Include="src\sppch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="src\Spirit\Render\RenderContext.cpp" />
-    <ClCompile Include="src\Spirit\Window.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scene.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">

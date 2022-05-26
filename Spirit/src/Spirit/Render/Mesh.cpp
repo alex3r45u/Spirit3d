@@ -1,19 +1,12 @@
 #include "sppch.h"
 #include "Mesh.h"
+#include "Renderer.h"
 
 
 
 
 
 
-void Spirit::Render::Mesh::Render(std::shared_ptr<Shader> shader)
-{
-	for (auto va : m_VertexArray) {
-		glm::mat4 pos = glm::mat4(1.0f);
-		Spirit::Render::Renderer::Submit(va, shader, pos);
-	}
-	
-}
 
 void Spirit::Render::Mesh::LoadModel(const std::string& path)
 {

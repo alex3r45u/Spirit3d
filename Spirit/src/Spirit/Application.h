@@ -21,6 +21,7 @@ namespace Spirit {
 		void Run();
 
 		void OnEvent(Event& e);
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
 
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() const { return *m_Window; }

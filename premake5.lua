@@ -19,6 +19,7 @@ workspace "Spirit3d"
     IncludeDir["stb"] = "Spirit/vendor/stb"
     IncludeDir["glm"] = "Spirit/vendor/glm"
     IncludeDir["assimp"] = "Spirit/vendor/assimp/"
+	IncludeDir["entt"] = "Spirit/vendor/entt/include"
     
     
     include "Spirit/vendor/glfw"
@@ -57,6 +58,7 @@ workspace "Spirit3d"
     		"%{IncludeDir.glm}",
     		"%{IncludeDir.stb}",
     		"%{IncludeDir.assimp}",
+			"%{IncludeDir.entt}",
     	}
     
     	links {
@@ -120,6 +122,7 @@ workspace "Spirit3d"
             "Spirit/vendor",
     		"%{IncludeDir.glm}",
 			"%{IncludeDir.assimp}",
+			"%{IncludeDir.entt}",
     	}
     
     	links
@@ -174,6 +177,7 @@ workspace "Spirit3d"
 			"Spirit/vendor",
 			"%{IncludeDir.glm}",
 			"%{IncludeDir.assimp}",
+			"%{IncludeDir.entt}",
 		}
 	
 		links
