@@ -22,7 +22,7 @@ namespace Spirit::Render {
 	};
 
 	struct GeneratedMaterial : public Material {
-		GeneratedMaterial() {}
+		GeneratedMaterial() = default;
 		GeneratedMaterial(const glm::vec3& ambient) : ambient(ambient) {}
 		GeneratedMaterial(const glm::vec3& ambient, const glm::vec3& deffuse, const glm::vec3& specular, float shininess) : ambient(ambient), deffuse(deffuse), specular(specular), shininess(shininess) {}
 		virtual const glm::vec3& GetAmbient() override { return ambient; }

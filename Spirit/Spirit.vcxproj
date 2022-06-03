@@ -156,6 +156,7 @@
     <ClInclude Include="src\Spirit\Application.h" />
     <ClInclude Include="src\Spirit\Core.h" />
     <ClInclude Include="src\Spirit\Core\AssetLibrary.h" />
+    <ClInclude Include="src\Spirit\Core\FIleTypes.h" />
     <ClInclude Include="src\Spirit\Core\MaterialLibrary.h" />
     <ClInclude Include="src\Spirit\Core\MeshLibrary.h" />
     <ClInclude Include="src\Spirit\Core\ShaderLibrary.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="src\Spirit\Scene\Components.h" />
     <ClInclude Include="src\Spirit\Scene\Entity.h" />
     <ClInclude Include="src\Spirit\Scene\Scene.h" />
+    <ClInclude Include="src\Spirit\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Spirit\Window.h" />
     <ClInclude Include="src\sppch.h" />
     <ClInclude Include="vendor\assimp\assimp\Base64.hpp" />

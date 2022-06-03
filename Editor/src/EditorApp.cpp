@@ -1,6 +1,8 @@
 #include <Spirit.h>
 #include <imgui/imgui.h>
-
+#include "Windows/SceneHierarchyPanel.h"
+#include "Windows/PropertiesPanel.h"
+#include "Windows/FileExplorerPanel.h"
 
 class EditorLayer : public Spirit::Layer {
 public:
@@ -9,8 +11,6 @@ public:
 
 	virtual void OnAttach() override {
 		
-
-		Spirit::AssetLibrary::s_MeshLibrary.Load("default", "assets/monkey.fbx");
 		mat = std::make_shared<Spirit::Render::GeneratedMaterial>(glm::vec3(1.0f,.0f,.0f), glm::vec3(0.5f), glm::vec3(0.5f), 1.0f);
 		Spirit::AssetLibrary::s_MaterialLibrary.Add("default", mat);
 		Spirit::AssetLibrary::s_ShaderLibrary.Load("default", "assets/vertex.glsl", "assets/fragment.glsl");
@@ -25,11 +25,14 @@ public:
 		m_Camera.AddComponent<Spirit::PerspectiveCameraComponent>(Spirit::Render::PerspectiveCamera(1280, 720, 45.0f));
 		
 		m_Monkey = m_ActiveScene->CreateEntity("Monkey");
-		m_Monkey.AddComponent<Spirit::MeshRendererComponent>("default");
-		// 
-		// 
-		//m_Camera = std::make_shared<Spirit::Render::Camera>(glm::vec3(.0f, .0f, .0f), glm::vec3(0.0f, 0.0f, 0.0f));
+		m_Monkey.AddComponent<Spirit::MeshRendererComponent>("assets/monkey.fbx");
 
+		m_SceneHierarchyPanel.SetScene(m_ActiveScene);
+		m_PropertiesPanel.SetScene(m_ActiveScene);
+		m_PropertiesPanel.SetSceneHierarchy(&m_SceneHierarchyPanel);
+
+		m_FileExplorerPanel.SetScene(m_ActiveScene);
+		m_FileExplorerPanel.SetDirectory(SP_ASSET_PATH);
 
 	}
 
@@ -41,8 +44,7 @@ public:
 
 	virtual void Update(Spirit::TimeStep ts) override {
 		
-		//if (m_ViewportHovered)
-			//m_Camera->Update(ts);
+
 		
 		
 	}
@@ -116,6 +118,9 @@ public:
 			ImGui::EndMenuBar();
 		}
 
+		m_SceneHierarchyPanel.ImGuiRender();
+		m_PropertiesPanel.ImGuiRender();
+		m_FileExplorerPanel.ImGuiRender();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
@@ -157,6 +162,9 @@ private:
 
 	Spirit::Entity m_Camera;
 	Spirit::Entity m_Monkey;
+	Spirit::SceneHierarchyPanel m_SceneHierarchyPanel;
+	Spirit::PropertiesPanel m_PropertiesPanel;
+	Spirit::FileExplorerPanel m_FileExplorerPanel;
 };
 
 

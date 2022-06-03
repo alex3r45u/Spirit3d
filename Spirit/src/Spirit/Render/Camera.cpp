@@ -8,16 +8,19 @@
 
 
 
-void Spirit::Render::PerspectiveCamera::CalcMats(TransformComponent& transform)
+
+
+void Spirit::Render::PerspectiveCamera::CalcProjection()
 {
 	m_Projection = glm::perspective(
-		glm::radians(45.0f),
+		glm::radians(m_Zoom),
 		(float)m_Width / (float)m_Height,
 		0.1f,
 		100.0f
 	);
-
-	m_View = glm::lookAt(transform.Position, transform.Position + transform.GetForward(), glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-
+void Spirit::Render::PerspectiveCamera::CalcView(TransformComponent& transform)
+{
+	m_View = glm::lookAt(transform.Position, transform.Position + transform.GetForward(), glm::vec3(0.0f, 1.0f, 0.0f));
+}

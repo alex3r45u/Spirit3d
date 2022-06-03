@@ -11,6 +11,7 @@
 #include "Spirit/Core/AssetLibrary.h"
 #include "Spirit/Scene/Entity.h"
 #include "Spirit/Scene/Scene.h"
+#include "Spirit/Scene/ScriptableEntity.h"
 
 //Render
 #include "Spirit/Render/Renderer.h"

@@ -5,6 +5,8 @@
 #include "Spirit/Render/Camera.h"
 #include <memory>
 #include "Spirit/Core/AssetLibrary.h"
+#include "ScriptableEntity.h"
+#include <filesystem>
 
 namespace Spirit {
 	struct TagComponent {
@@ -16,7 +18,8 @@ namespace Spirit {
 			: Tag(tag) {}
 	};
 
-	struct TransformComponent {
+	class TransformComponent {
+	public:
 		glm::mat4 Transform = glm::mat4(1.0f);
 
 		glm::vec3 Position = glm::vec3(0.0f);
@@ -32,11 +35,12 @@ namespace Spirit {
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) : Position(position), Rotation(rotation), Scale(scale) {}
+		TransformComponent(glm::vec3 position, glm::vec3 rotation, glm::vec3 scale) : Position(position), Rotation(rotation), Scale(scale) { Recalculate(); }
 
 		operator glm::mat4& () { Recalculate();  return Transform; }
 	private:
 		void Recalculate() {
+			Transform = glm::mat4(1.0f);
 			glm::vec3 direction;
 			direction.x = cos(glm::radians(Rotation.x)) * cos(glm::radians(Rotation.y));
 			direction.y = sin(glm::radians(Rotation.y));
@@ -62,11 +66,10 @@ namespace Spirit {
 	struct MeshRendererComponent
 	{
 		std::shared_ptr<Spirit::Render::Mesh> Mesh;
-
+		std::string FileName;
 		MeshRendererComponent() = default;
 		MeshRendererComponent(const MeshRendererComponent&) = default;
-		MeshRendererComponent(const std::shared_ptr<Spirit::Render::Mesh>& mesh) : Mesh(mesh) {}
-		MeshRendererComponent(const std::string& name) { Mesh = AssetLibrary::s_MeshLibrary.Get(name); }
+		MeshRendererComponent(const std::string& name) { Mesh = AssetLibrary::s_MeshLibrary.Get(name); FileName = std::filesystem::path(name).filename().string(); }
 	};
 
 	struct PerspectiveCameraComponent {
@@ -76,5 +79,18 @@ namespace Spirit {
 		PerspectiveCameraComponent(const PerspectiveCameraComponent&) = default;
 		PerspectiveCameraComponent(const Spirit::Render::PerspectiveCamera& camera) : Camera(camera) {}
 
+	};
+
+	struct NativeScriptComponent {
+		ScriptableEntity* Instance = nullptr;
+		ScriptableEntity* (*InstantiateScript)();
+		void(*DestroyScript)(NativeScriptComponent*);
+
+
+		template<typename T>
+		void Bind() {
+			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); }
+			DestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instane = nullptr; }
+		}
 	};
 }

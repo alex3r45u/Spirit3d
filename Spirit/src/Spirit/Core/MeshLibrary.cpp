@@ -8,15 +8,17 @@ void Spirit::MeshLibrary::Add(const std::string& name, const std::shared_ptr<Ren
 }
 
 
-std::shared_ptr<Spirit::Render::Mesh> Spirit::MeshLibrary::Get(const std::string& name)
+std::shared_ptr<Spirit::Render::Mesh> Spirit::MeshLibrary::Get(const std::string& path)
 {
-	SP_CORE_ASSERT(Exists(name), "Mesh not found!");
-	return m_Meshes[name];
+	if (!Exists(path)) {
+		Load(path, path);
+	}
+	return m_Meshes[path];
 }
 
-bool Spirit::MeshLibrary::Exists(const std::string& name) const
+bool Spirit::MeshLibrary::Exists(const std::string& path) const
 {
-	return m_Meshes.find(name) != m_Meshes.end();
+	return m_Meshes.find(path) != m_Meshes.end();
 }
 
 void Spirit::MeshLibrary::Load(const std::string& name, const std::string& path)

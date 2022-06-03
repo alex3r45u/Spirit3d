@@ -1743,6 +1743,8 @@
     <ClInclude Include="src\Spirit\Scene\Scene.h" />
     <ClInclude Include="src\Spirit\Scene\Components.h" />
     <ClInclude Include="src\Spirit\Scene\Entity.h" />
+    <ClInclude Include="src\Spirit\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\Spirit\Core\FIleTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp">

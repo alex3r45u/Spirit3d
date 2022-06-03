@@ -7,10 +7,10 @@ namespace Spirit {
 	public:
 		MeshLibrary() {}
 		void Add(const std::string& name, const std::shared_ptr<Render::Mesh>& mesh);
-		void Load(const std::string& name, const std::string& path);
-		std::shared_ptr<Render::Mesh> Get(const std::string& name);
-		bool Exists(const std::string& name) const;
+		std::shared_ptr<Render::Mesh> Get(const std::string& path);
+		bool Exists(const std::string& path) const;
 	private:
+		void Load(const std::string& name, const std::string& path);
 		std::unordered_map<std::string, std::shared_ptr<Render::Mesh>> m_Meshes;
 	};
 }

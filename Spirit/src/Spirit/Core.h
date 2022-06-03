@@ -2,6 +2,7 @@
 #include <memory>
 
 
+
 #ifdef SP_PLATFORM_WINDOWS
 	
 #else
@@ -25,6 +26,8 @@
 #define BIT(x) (1 << x)
 
 #define SP_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+#define SP_ASSET_PATH "C:\\Users\\ap\\source\\repos\\Spirit3d\\Editor\\assets"
 
 namespace Spirit {
 

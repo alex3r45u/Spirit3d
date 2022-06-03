@@ -12,10 +12,10 @@ namespace Spirit::Render {
 	public:
 		Camera() = default;
 		virtual ~Camera() {}
-		const glm::mat4& GetView(TransformComponent& transform) { CalcMats(transform); return m_View;  }
-		const glm::mat4& GetProjection(TransformComponent& transform) { CalcMats(transform); return m_Projection;  }
+		const glm::mat4& GetView(TransformComponent& transform) { CalcView(transform); return m_View;  }
+		const glm::mat4& GetProjection() { CalcProjection(); return m_Projection;  }
 
-		const glm::mat4& const GetViewProjection(TransformComponent& transform) { CalcMats(transform); return m_Projection * m_View; }
+		const glm::mat4& GetViewProjection(TransformComponent& transform) { CalcView(transform); CalcProjection(); return m_Projection * m_View; }
 
 		void SetViewport(unsigned int width, unsigned int height) { m_Width = width; m_Height = height; }
 		
@@ -23,7 +23,8 @@ namespace Spirit::Render {
 		int GetWidth() { return m_Width; }
 		int GetHeight() { return m_Height; }
 	protected:
-		virtual void CalcMats(TransformComponent& transform) {}
+		virtual void CalcView(TransformComponent& transform) = 0;
+		virtual void CalcProjection() = 0;
 		glm::mat4 m_Projection;
 		glm::mat4 m_View;
 
@@ -33,7 +34,7 @@ namespace Spirit::Render {
 
 	class PerspectiveCamera : public Camera {
 	public:
-		PerspectiveCamera() = default;
+		PerspectiveCamera() : m_Zoom(45.0f) {}
 		PerspectiveCamera(unsigned int width, unsigned int height, float zoom) {
 			SetViewport(width, height);
 			m_Zoom = zoom;
@@ -41,10 +42,11 @@ namespace Spirit::Render {
 
 
 
-		void SetZoom(float& zoom) { m_Zoom = zoom; }
-		const float& const GetZoom() const { return m_Zoom; }
+		void SetZoom(float zoom) { m_Zoom = zoom; CalcProjection();}
+		float GetZoom() { return m_Zoom; }
 	protected:
-		virtual void CalcMats(TransformComponent& transform) override;
+		virtual void CalcProjection() override;
+		virtual void CalcView(TransformComponent& transform) override;
 	private:
 		float m_Zoom;
 	};

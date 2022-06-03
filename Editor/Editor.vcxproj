@@ -132,11 +132,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorApp.cpp" />
+    <ClCompile Include="src\Windows\FileExplorerPanel.cpp" />
+    <ClCompile Include="src\Windows\PropertiesPanel.cpp" />
+    <ClCompile Include="src\Windows\SceneHierarchyPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Spirit\Spirit.vcxproj">
       <Project>{2070A1D1-0C12-CCA7-F5CC-DFFBE10D53F8}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Windows\FileExplorerPanel.h" />
+    <ClInclude Include="src\Windows\Panel.h" />
+    <ClInclude Include="src\Windows\PropertiesPanel.h" />
+    <ClInclude Include="src\Windows\SceneHierarchyPanel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,7 +9,7 @@
 
 Spirit::Scene::Scene()
 {
-	entt::entity entity = m_Registry.create();
+	
 }
 
 Spirit::Scene::~Scene()
@@ -34,7 +34,7 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 		auto view = m_Registry.view<TransformComponent, PerspectiveCameraComponent>();
 		for (auto entity : view)
 		{
-			auto& [transform, camera] = view.get<TransformComponent, PerspectiveCameraComponent>(entity);
+			auto [transform, camera] = view.get<TransformComponent, PerspectiveCameraComponent>(entity);
 			mainCamera = &camera.Camera;
 			cameraTransform = &transform;
 			break;
@@ -49,7 +49,7 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 		auto view = m_Registry.view<TransformComponent, MeshRendererComponent>();
 		for (auto entity : view)
 		{
-			auto& [transform, mesh] = view.get<TransformComponent, MeshRendererComponent>(entity);
+			auto [transform, mesh] = view.get<TransformComponent, MeshRendererComponent>(entity);
 
 			for (auto va : mesh.Mesh->GetVertexArray()) {
 				Spirit::Render::Renderer::Submit(va, AssetLibrary::s_ShaderLibrary.Get("default"), AssetLibrary::s_MaterialLibrary.Get("default"), transform);
