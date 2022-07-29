@@ -1,22 +1,24 @@
 #pragma once
+
 #include "Entity.h"
 #include "Spirit/Core/TimeStep.h"
 
 namespace Spirit {
-	class ScriptableEntity {
+	class TransformComponent;
+	class ScriptableEntity
+	{
 	public:
 		virtual ~ScriptableEntity() {}
 
-		template<typename T>
-		T& GetComponent() {
-			return m_Entity.GetComponent<T>();
-		}
+		Entity entity;
+		TransformComponent& transform;
 	protected:
 		virtual void OnCreate() {}
 		virtual void OnDestroy() {}
 		virtual void OnUpdate(TimeStep ts) {}
+		virtual void ImGui() {}
 	private:
-		Entity m_Entity;
 		friend class Scene;
 	};
+
 }

@@ -2,11 +2,52 @@
 #include "SceneHierarchyPanel.h"
 #include "Spirit/Scene/Components.h"
 #include <imgui/imgui.h>
+#include "Spirit/ImGui/DragDropSystem.h"
 
 
 void Spirit::SceneHierarchyPanel::ImGuiRender()
 {
 	ImGui::Begin("Hierarchie");
+	if (ImGui::Button("+")) {
+		ImGui::OpenPopup("ADD_POPUP");
+	}
+
+	if (ImGui::BeginPopup("ADD_POPUP"))
+	{
+		if (ImGui::BeginMenu("Meshes")) {
+			if (ImGui::MenuItem("Cube")) {
+				auto g = m_Scene->CreateEntity("Cube");
+				//Add Cube REnder
+			}
+			
+			if (ImGui::MenuItem("Sphere")) {
+				auto g = m_Scene->CreateEntity("Sphere");
+				//Add Cube REnder
+			}
+			if (ImGui::MenuItem("Cylinder")) {
+				auto g = m_Scene->CreateEntity("Cylinder");
+				//Add Cube REnder
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Cameras")) {
+			if (ImGui::MenuItem("Perspective")) {
+				auto g = m_Scene->CreateEntity("Camera");
+				g.AddComponent<PerspectiveCameraComponent>();
+			}
+			if (ImGui::MenuItem("Orthocraphic")) {
+				auto g = m_Scene->CreateEntity("Camera");
+				//add component
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::Selectable("Empty")) {
+			auto g = m_Scene->CreateEntity("Empty");
+		}
+		
+		ImGui::EndPopup();
+	}
+
 	m_Scene->m_Registry.each([&](auto entityID)
 		{
 			Entity entity{ entityID , m_Scene.get() };
@@ -26,7 +67,19 @@ void Spirit::SceneHierarchyPanel::DrawNode(Entity& entity)
 		m_SelectedEntity = entity;
 		m_IsSelected = true;
 	}
+	if (ImGui::IsItemClicked(1)) {
+		ImGui::OpenPopup((const char*)&entity);
+	}
 
+	if (ImGui::BeginPopup((const char*)&entity))
+	{
+		if (ImGui::Selectable("Delete")) {
+			m_Scene->RemoveEntity(entity);
+		}		
+		ImGui::EndPopup();
+	}
+	
+	DragDropSystem::SetSourceInt("ENTITY", (uint32_t)entity);
 	if (opened)
 	{
 		//ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;

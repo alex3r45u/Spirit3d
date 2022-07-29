@@ -11,36 +11,30 @@ public:
 
 	virtual void OnAttach() override {
 		
-		mat = std::make_shared<Spirit::Render::GeneratedMaterial>(glm::vec3(1.0f,.0f,.0f), glm::vec3(0.5f), glm::vec3(0.5f), 1.0f);
-		Spirit::AssetLibrary::s_MaterialLibrary.Add("default", mat);
 		Spirit::AssetLibrary::s_ShaderLibrary.Load("default", "assets/vertex.glsl", "assets/fragment.glsl");
 		Spirit::Render::FramebufferSettings fbosettings;
 		fbosettings.Width = 1280;
 		fbosettings.Height = 720;
 		m_Fbo = Spirit::Render::Framebuffer::Create(fbosettings);
 		
-		m_ActiveScene = std::make_shared<Spirit::Scene>();
+		Spirit::SceneManager::AddScene(std::make_shared<Spirit::Scene>("Test"));
+		Spirit::SceneManager::SetActiveScene("Test");
 
-		m_Camera = m_ActiveScene->CreateEntity("Cam");
+		m_Camera = Spirit::SceneManager::GetActiveScene()->CreateEntity("Cam");
 		m_Camera.AddComponent<Spirit::PerspectiveCameraComponent>(Spirit::Render::PerspectiveCamera(1280, 720, 45.0f));
 		
-		m_Monkey = m_ActiveScene->CreateEntity("Monkey");
+		m_Monkey = Spirit::SceneManager::GetActiveScene()->CreateEntity("Monkey");
 		m_Monkey.AddComponent<Spirit::MeshRendererComponent>("assets/monkey.fbx");
-
-		m_SceneHierarchyPanel.SetScene(m_ActiveScene);
-		m_PropertiesPanel.SetScene(m_ActiveScene);
+		m_Monkey.AddComponent<Spirit::MaterialComponent>();
+		m_SceneHierarchyPanel.SetScene(Spirit::SceneManager::GetActiveScene());
+		m_PropertiesPanel.SetScene(Spirit::SceneManager::GetActiveScene());
 		m_PropertiesPanel.SetSceneHierarchy(&m_SceneHierarchyPanel);
 
-		m_FileExplorerPanel.SetScene(m_ActiveScene);
+		m_FileExplorerPanel.SetScene(Spirit::SceneManager::GetActiveScene());
 		m_FileExplorerPanel.SetDirectory(SP_ASSET_PATH);
 
 	}
 
-	virtual void LightUpdate() override {
-		Spirit::Render::LightManager::Start(Spirit::AssetLibrary::s_ShaderLibrary.Get("default"));
-		Spirit::Render::LightManager::Submit(std::make_shared<Spirit::Render::DirectionalLight>(glm::vec3(180.0f, .0f, .0f), glm::vec3(1.0f, 1.0f, 1.0f)));
-		Spirit::Render::LightManager::End();
-	}
 
 	virtual void Update(Spirit::TimeStep ts) override {
 		
@@ -54,7 +48,7 @@ public:
 		Spirit::Render::RenderCommand::SetClearColor({ 0.1f, .1f, .1f, 1 });
 		Spirit::Render::RenderCommand::Clear();
 
-		m_ActiveScene->OnUpdate(ts);
+		Spirit::SceneManager::GetActiveScene()->OnUpdate(ts);
 		m_Fbo->Unbind();
 	}
 
@@ -135,7 +129,7 @@ public:
 			m_Fbo->Reseize(viewportPanelSize.x, viewportPanelSize.y);
 			m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
-			m_ActiveScene->OnReseize(viewportPanelSize.x, viewportPanelSize.y);
+			Spirit::SceneManager::GetActiveScene()->OnReseize(viewportPanelSize.x, viewportPanelSize.y);
 		}
 		
 		uint32_t textureID = m_Fbo->GetRendererID();
@@ -153,12 +147,10 @@ public:
 
 
 private:
-	std::shared_ptr<Spirit::Render::Material> mat;
 	std::shared_ptr<Spirit::Render::Framebuffer> m_Fbo;
 	glm::vec2 m_ViewportSize;
 	bool m_ViewportFocused = false, m_ViewportHovered = false;
 
-	std::shared_ptr<Spirit::Scene> m_ActiveScene;
 
 	Spirit::Entity m_Camera;
 	Spirit::Entity m_Monkey;
@@ -172,7 +164,7 @@ private:
 class EditorApp : public Spirit::Application
 {
 public:
-	EditorApp() : Spirit::Application()
+	EditorApp() : Spirit::Application()//std::filesystem::current_path().append("assets"), std::filesystem::current_path().append("ressources"))
 	{
 		m_LayerStack.AddLayer(new EditorLayer());
 	}

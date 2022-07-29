@@ -61,6 +61,8 @@ uniform vec3 u_ViewPos;
 in vec3 v_Position;
 in vec3 v_Normal;
 
+uniform vec3 u_ObjRot;
+
 vec3 CalcDirLight(DirectionalLight light, vec3 norm, vec3 viewDir);
 vec3 CalcPointLight(PointLight light, vec3 norm, vec3 viewDir);
 vec3 CalcSpotLight(SpotLight light, vec3 norm, vec3 viewDir);

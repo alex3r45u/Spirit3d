@@ -10,12 +10,15 @@
 #include "Spirit/Event/Event.h"
 #include "Spirit/Event/ApplicationEvent.h"
 
+#include <filesystem>
+
 namespace Spirit {
 
 	class Application
 	{
 	public:
 		Application();
+		Application(std::filesystem::path assets, std::filesystem::path ressources);
 		virtual ~Application();
 
 		void Run();
@@ -26,7 +29,11 @@ namespace Spirit {
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() const { return *m_Window; }
 
+		std::filesystem::path GetAssetDir() const;
+		std::filesystem::path GetRessourceDir() const;
+
 	private:
+		void Init();
 		bool OnWindowClose(WindowCloseEvent& e);
 		bool OnWindowReseize(WindowResizeEvent& e);
 
@@ -37,6 +44,9 @@ namespace Spirit {
 		ImGuiLayer* m_ImGuiLayer;
 		float m_LastTime;
 		bool m_Running;
+
+		std::filesystem::path m_AssetPath;
+		std::filesystem::path m_RessourcePath;
 	protected:
 		LayerStack m_LayerStack = LayerStack();
 

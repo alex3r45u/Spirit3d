@@ -1,8 +1,13 @@
 #pragma once
 #include "Scene.h"
 #include <entt.hpp>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include "Scripting/ScriptObject.h"
 
 namespace Spirit {
+
 	class Entity {
 	public:
 		Entity() = default;
@@ -12,7 +17,9 @@ namespace Spirit {
 		template<typename T, typename... Args>
 		T& AddComponent(Args&&... args)
 		{
-			SP_CORE_ASSERT(!HasComponent<T>(), "Entity already has component!");
+			if (HasComponent<T>()) {
+				return GetComponent<T>();
+			}
 			return m_Scene->m_Registry.emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
 		}
 
@@ -36,8 +43,13 @@ namespace Spirit {
 			m_Scene->m_Registry.remove<T>(m_EntityHandle);
 		}
 
+
+
+
 		operator bool() const { return m_EntityHandle != entt::null; }
 		operator uint32_t() const { return (uint32_t)m_EntityHandle; }
+		//operator unsigned int() const { return (unsigned int)m_EntityHandle; }
+		operator entt::entity() const{ return m_EntityHandle; }
 
 		bool operator==(const Entity& other) const
 		{

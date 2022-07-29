@@ -1,0 +1,8 @@
+C:\Users\ap\source\repos\Spirit3d\bin\Debug-windows-x86_64\GameScripts\GameScripts.dll
+C:\Users\ap\source\repos\Spirit3d\bin\Debug-windows-x86_64\GameScripts\GameScripts.pdb
+C:\Users\ap\source\repos\Spirit3d\bin-int\Debug-windows-x86_64\GameScripts\GameScripts.csproj.CoreCompileInputs.cache
+C:\Users\ap\source\repos\Spirit3d\bin-int\Debug-windows-x86_64\GameScripts\GameScripts.dll
+C:\Users\ap\source\repos\Spirit3d\bin-int\Debug-windows-x86_64\GameScripts\GameScripts.pdb
+C:\Users\ap\source\repos\Spirit3d\Editor\GameScripts.dll
+C:\Users\ap\source\repos\Spirit3d\Editor\GameScripts.pdb
+C:\Users\ap\source\repos\Spirit3d\bin-int\Debug-windows-x86_64\GameScripts\GameScripts.csproj.AssemblyReference.cache

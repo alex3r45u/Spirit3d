@@ -10,8 +10,14 @@
 
 void Spirit::Render::Mesh::LoadModel(const std::string& path)
 {
+	m_Path = std::filesystem::path(path);
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	if (!scene) {
+		m_Path = "Error";
+		SP_CORE_INFO(path);
+		return;
+	}
 	processNode(scene->mRootNode, scene);
 }
 

@@ -18,7 +18,6 @@ namespace Spirit::Render {
 		const glm::mat4& GetViewProjection(TransformComponent& transform) { CalcView(transform); CalcProjection(); return m_Projection * m_View; }
 
 		void SetViewport(unsigned int width, unsigned int height) { m_Width = width; m_Height = height; }
-		
 
 		int GetWidth() { return m_Width; }
 		int GetHeight() { return m_Height; }
@@ -49,6 +48,7 @@ namespace Spirit::Render {
 		virtual void CalcView(TransformComponent& transform) override;
 	private:
 		float m_Zoom;
+		
 	};
 
 	

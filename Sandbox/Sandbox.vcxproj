@@ -131,9 +131,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\SandboxApp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Spirit\Spirit.vcxproj">
       <Project>{2070A1D1-0C12-CCA7-F5CC-DFFBE10D53F8}</Project>
     </ProjectReference>

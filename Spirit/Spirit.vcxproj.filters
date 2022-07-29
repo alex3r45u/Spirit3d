@@ -37,6 +37,12 @@
     <Filter Include="src\Spirit\Render\Lights">
       <UniqueIdentifier>{204A11CF-0C6F-604F-35BA-45DF213E5F6D}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Spirit\Scene">
+      <UniqueIdentifier>{B41B1667-A014-35B9-C946-1A3EB59E14C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Spirit\Scene\Scripting">
+      <UniqueIdentifier>{B6C12A6B-A2D1-D63B-0B8B-3B5AF7B9C5D4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -73,6 +79,33 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\mono">
+      <UniqueIdentifier>{5BE77CC1-C79C-F5B6-5091-EF8DBC45ECBA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\mono\include">
+      <UniqueIdentifier>{CE393D2A-3A9B-1A38-C308-61EA2F6951F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\mono\include\mono">
+      <UniqueIdentifier>{56B67FF2-42DB-CE72-6B26-B40257AACD90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\mono\include\mono\cil">
+      <UniqueIdentifier>{3D6A9AFD-2925-8AA9-D2DC-02F4BE76D439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\mono\include\mono\jit">
+      <UniqueIdentifier>{0C889AFD-F842-8AA9-A1FA-02F48D94D439}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\mono\include\mono\metadata">
+      <UniqueIdentifier>{E6C55D7F-5234-B3FE-9B1D-6EFE07CBA89A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\mono\include\mono\utils">
+      <UniqueIdentifier>{56B029CF-42D6-F335-2B1C-790117E11802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\mono\lib">
+      <UniqueIdentifier>{01BC227A-6D47-903E-7658-1333E262EC3E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\mono\lib\Debug">
+      <UniqueIdentifier>{3703E48F-A36F-9F8A-6C63-37E8D88EC1F2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor\stb">
       <UniqueIdentifier>{8BD3C5A8-778B-07F6-E092-E051CC69A2E6}</UniqueIdentifier>
     </Filter>
@@ -88,6 +121,9 @@
       <Filter>src\Spirit</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Core\AssetLibrary.h">
+      <Filter>src\Spirit\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Core\FileTypes.h">
       <Filter>src\Spirit\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Core\MaterialLibrary.h">
@@ -116,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="src\Spirit\Event\MouseEvent.h">
       <Filter>src\Spirit\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\ImGui\DragDropSystem.h">
+      <Filter>src\Spirit\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\ImGui\ImGuiLayer.h">
       <Filter>src\Spirit\ImGui</Filter>
@@ -215,6 +254,63 @@
     </ClInclude>
     <ClInclude Include="src\Spirit\Render\VertexArray.h">
       <Filter>src\Spirit\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Components.h">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Entity.h">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scene.h">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\SceneManager.h">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\SceneSerializer.h">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\ScriptableEntity.h">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ComponentsCs.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\EntityCs.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\Parameter.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ParameterList.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\Parameters.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptClass.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptController.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptDomain.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptField.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptMethod.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptObject.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptProperty.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptingECS.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Window.h">
       <Filter>src\Spirit</Filter>
@@ -1737,20 +1833,129 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\jit\jit.h">
+      <Filter>vendor\mono\include\mono\jit</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\jit\mono-private-unstable.h">
+      <Filter>vendor\mono\include\mono\jit</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\appdomain.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\assembly.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\attrdefs.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\blob.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\class.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\debug-helpers.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\debug-mono-symfile.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\environment.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\exception.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\image.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\loader.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\metadata.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\mono-config.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\mono-debug.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\mono-gc.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\mono-private-unstable.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\object-forward.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\object.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\opcodes.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\profiler-events.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\profiler.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\reflection.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\row-indexes.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\sgen-bridge.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\threads.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\tokentype.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\metadata\verify.h">
+      <Filter>vendor\mono\include\mono\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-counters.h">
+      <Filter>vendor\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-dl-fallback.h">
+      <Filter>vendor\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-error.h">
+      <Filter>vendor\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-forward.h">
+      <Filter>vendor\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-jemalloc.h">
+      <Filter>vendor\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-logger.h">
+      <Filter>vendor\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-private-unstable.h">
+      <Filter>vendor\mono\include\mono\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-publib.h">
+      <Filter>vendor\mono\include\mono\utils</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spirit\Scene\Scene.h" />
-    <ClInclude Include="src\Spirit\Scene\Components.h" />
-    <ClInclude Include="src\Spirit\Scene\Entity.h" />
-    <ClInclude Include="src\Spirit\Scene\ScriptableEntity.h" />
-    <ClInclude Include="src\Spirit\Core\FIleTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp">
       <Filter>src\Spirit</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Core\AssetLibrary.cpp">
+      <Filter>src\Spirit\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Core\FileTypes.cpp">
       <Filter>src\Spirit\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Core\MaterialLibrary.cpp">
@@ -1852,6 +2057,54 @@
     <ClCompile Include="src\Spirit\Render\VertexArray.cpp">
       <Filter>src\Spirit\Render</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Entity.cpp">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scene.cpp">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\SceneManager.cpp">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\SceneSerializer.cpp">
+      <Filter>src\Spirit\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ComponentsCs.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\EntityCs.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ParameterList.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\Parameters.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptClass.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptController.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptDomain.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptField.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptMethod.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptObject.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptProperty.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptingECS.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Spirit\Window.cpp">
       <Filter>src\Spirit</Filter>
     </ClCompile>
@@ -1861,8 +2114,6 @@
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="src\Spirit\Scene\Scene.cpp" />
-    <ClCompile Include="src\Spirit\Scene\Entity.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">
@@ -1870,6 +2121,12 @@
     </None>
     <None Include="vendor\assimp\assimp\config.h.in">
       <Filter>vendor\assimp\assimp</Filter>
+    </None>
+    <None Include="vendor\mono\include\mono\cil\opcode.def">
+      <Filter>vendor\mono\include\mono\cil</Filter>
+    </None>
+    <None Include="vendor\mono\lib\Debug\libmono-static-sgen.lib">
+      <Filter>vendor\mono\lib\Debug</Filter>
     </None>
   </ItemGroup>
 </Project>

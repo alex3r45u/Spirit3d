@@ -19,8 +19,8 @@ namespace Spirit::Render {
 		static void BeginScene(const Camera& camera, Spirit::TransformComponent& transform);
 		static void EndScene();
 
-		static void Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, glm::mat4& model);
-		static void Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Material>& material, glm::mat4& model);
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, TransformComponent& model);
+		static void Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Material>& material, TransformComponent& model);
 
 
 		inline static RenderAPI::API GetAPI() { return RenderAPI::GetAPI(); }

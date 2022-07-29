@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>sppch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_BUILD_DLL;SP_ENGINE;SP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;vendor\mono\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -88,7 +88,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -101,7 +101,7 @@
       <PrecompiledHeaderFile>sppch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_BUILD_DLL;SP_ENGINE;SP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;vendor\mono\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -116,7 +116,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -129,7 +129,7 @@
       <PrecompiledHeaderFile>sppch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_BUILD_DLL;SP_ENGINE;SP_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;vendor\mono\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -144,7 +144,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
     <PostBuildEvent>
@@ -156,7 +156,7 @@
     <ClInclude Include="src\Spirit\Application.h" />
     <ClInclude Include="src\Spirit\Core.h" />
     <ClInclude Include="src\Spirit\Core\AssetLibrary.h" />
-    <ClInclude Include="src\Spirit\Core\FIleTypes.h" />
+    <ClInclude Include="src\Spirit\Core\FileTypes.h" />
     <ClInclude Include="src\Spirit\Core\MaterialLibrary.h" />
     <ClInclude Include="src\Spirit\Core\MeshLibrary.h" />
     <ClInclude Include="src\Spirit\Core\ShaderLibrary.h" />
@@ -166,6 +166,7 @@
     <ClInclude Include="src\Spirit\Event\Event.h" />
     <ClInclude Include="src\Spirit\Event\KeyEvent.h" />
     <ClInclude Include="src\Spirit\Event\MouseEvent.h" />
+    <ClInclude Include="src\Spirit\ImGui\DragDropSystem.h" />
     <ClInclude Include="src\Spirit\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Spirit\Input\Input.h" />
     <ClInclude Include="src\Spirit\Input\SpiritKeys.h" />
@@ -202,7 +203,22 @@
     <ClInclude Include="src\Spirit\Scene\Components.h" />
     <ClInclude Include="src\Spirit\Scene\Entity.h" />
     <ClInclude Include="src\Spirit\Scene\Scene.h" />
+    <ClInclude Include="src\Spirit\Scene\SceneManager.h" />
+    <ClInclude Include="src\Spirit\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Spirit\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ComponentsCs.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\EntityCs.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\Parameter.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ParameterList.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\Parameters.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptClass.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptController.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptDomain.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptField.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptMethod.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptObject.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptProperty.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptingECS.h" />
     <ClInclude Include="src\Spirit\Window.h" />
     <ClInclude Include="src\sppch.h" />
     <ClInclude Include="vendor\assimp\assimp\Base64.hpp" />
@@ -710,11 +726,49 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="vendor\mono\include\mono\jit\jit.h" />
+    <ClInclude Include="vendor\mono\include\mono\jit\mono-private-unstable.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\appdomain.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\assembly.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\attrdefs.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\blob.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\class.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\debug-helpers.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\debug-mono-symfile.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\environment.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\exception.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\image.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\loader.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\metadata.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\mono-config.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\mono-debug.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\mono-gc.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\mono-private-unstable.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\object-forward.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\object.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\opcodes.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\profiler-events.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\profiler.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\reflection.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\row-indexes.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\sgen-bridge.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\threads.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\tokentype.h" />
+    <ClInclude Include="vendor\mono\include\mono\metadata\verify.h" />
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-counters.h" />
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-dl-fallback.h" />
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-error.h" />
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-forward.h" />
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-jemalloc.h" />
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-logger.h" />
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-private-unstable.h" />
+    <ClInclude Include="vendor\mono\include\mono\utils\mono-publib.h" />
     <ClInclude Include="vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp" />
     <ClCompile Include="src\Spirit\Core\AssetLibrary.cpp" />
+    <ClCompile Include="src\Spirit\Core\FileTypes.cpp" />
     <ClCompile Include="src\Spirit\Core\MaterialLibrary.cpp" />
     <ClCompile Include="src\Spirit\Core\MeshLibrary.cpp" />
     <ClCompile Include="src\Spirit\Core\ShaderLibrary.cpp" />
@@ -750,6 +804,20 @@
     <ClCompile Include="src\Spirit\Render\VertexArray.cpp" />
     <ClCompile Include="src\Spirit\Scene\Entity.cpp" />
     <ClCompile Include="src\Spirit\Scene\Scene.cpp" />
+    <ClCompile Include="src\Spirit\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Spirit\Scene\SceneSerializer.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ComponentsCs.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\EntityCs.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ParameterList.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\Parameters.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptClass.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptController.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptDomain.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptField.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptMethod.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptObject.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptProperty.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptingECS.cpp" />
     <ClCompile Include="src\Spirit\Window.cpp" />
     <ClCompile Include="src\sppch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -759,6 +827,8 @@
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig" />
     <None Include="vendor\assimp\assimp\config.h.in" />
+    <None Include="vendor\mono\include\mono\cil\opcode.def" />
+    <None Include="vendor\mono\lib\Debug\libmono-static-sgen.lib" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\glfw\GLFW.vcxproj">

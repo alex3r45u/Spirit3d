@@ -10,7 +10,7 @@
 #include "Spirit/Event/Event.h"
 #include "Spirit/Core/AssetLibrary.h"
 #include "Spirit/Scene/Entity.h"
-#include "Spirit/Scene/Scene.h"
+#include "Spirit/Scene/SceneManager.h"
 #include "Spirit/Scene/ScriptableEntity.h"
 
 //Render

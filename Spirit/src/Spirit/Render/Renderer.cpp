@@ -25,21 +25,23 @@ void Spirit::Render::Renderer::EndScene()
 {
 }
 
-void Spirit::Render::Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, glm::mat4& model)
+void Spirit::Render::Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, TransformComponent& model)
 {
 	shader->Bind();
 	shader->SetMat4("u_ViewPerspective", s_Camera.GetViewProjection(s_CamTransform));
 	shader->SetMat4("u_Model", model);
+	shader->SetFloat3("u_ObjRot", model.Rotation.x, model.Rotation.y, model.Rotation.z);
 	shader->SetFloat3("u_ViewPos", s_CamTransform.Position.x, s_CamTransform.Position.y, s_CamTransform.Position.z);
 	vertexArray->Bind();
 	RenderCommand::DrawIndexed(vertexArray);
 }
 
-void Spirit::Render::Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Material>& material, glm::mat4& model)
+void Spirit::Render::Renderer::Submit(const std::shared_ptr<VertexArray>& vertexArray, const std::shared_ptr<Shader>& shader, const std::shared_ptr<Material>& material, TransformComponent& model)
 {
 	shader->Bind();
 	shader->SetMat4("u_ViewPerspective", s_Camera.GetViewProjection(s_CamTransform));
 	shader->SetMat4("u_Model", model);
+	shader->SetFloat3("u_ObjRot", model.Rotation.x, model.Rotation.y, model.Rotation.z);
 	material->SetUniforms(shader);
 	shader->SetFloat3("u_ViewPos", s_CamTransform.Position.x, s_CamTransform.Position.y, s_CamTransform.Position.z);
 	vertexArray->Bind();

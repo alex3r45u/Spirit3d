@@ -20,6 +20,7 @@ workspace "Spirit3d"
     IncludeDir["glm"] = "Spirit/vendor/glm"
     IncludeDir["assimp"] = "Spirit/vendor/assimp/"
 	IncludeDir["entt"] = "Spirit/vendor/entt/include"
+	IncludeDir["mono"] = "Spirit/vendor/mono/include"
     
     
     include "Spirit/vendor/glfw"
@@ -28,7 +29,7 @@ workspace "Spirit3d"
     
     project "Spirit"
     	location "Spirit"
-    	kind "StaticLib"
+    	kind "staticLib"
     	language "C++"
     
     	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -46,6 +47,7 @@ workspace "Spirit3d"
     		"%{prj.name}/vendor/glm/glm/**.hpp",
     		"%{prj.name}/vendor/glm/glm/**.inl",
 			"%{prj.name}/vendor/assimp/**",
+			"%{prj.name}/vendor/mono/**"
     	}
     
     	includedirs
@@ -59,6 +61,7 @@ workspace "Spirit3d"
     		"%{IncludeDir.stb}",
     		"%{IncludeDir.assimp}",
 			"%{IncludeDir.entt}",
+			"%{IncludeDir.mono}",
     	}
     
     	links {
@@ -66,10 +69,11 @@ workspace "Spirit3d"
     		"Glad",
     		"ImGui",
 			"assimp-vc143-mtd.lib",
+			"mono-2.0-sgen.lib",
     	}
 
 		libdirs {
-			"%{prj.name}/lib"
+			"%{prj.name}/lib",
 		}
     
     	filter "system:windows"
@@ -178,6 +182,7 @@ workspace "Spirit3d"
 			"%{IncludeDir.glm}",
 			"%{IncludeDir.assimp}",
 			"%{IncludeDir.entt}",
+			"%{IncludeDir.mono}",
 		}
 	
 		links
@@ -210,6 +215,46 @@ workspace "Spirit3d"
 
 
 
+
+
+
+
+
+
+
+	project "GameScripts"
+		location "GameScripts"
+		kind "SharedLib"
+		language "C#"
+
+		files {
+			"%{prj.name}/**",
+			"SpiritScript/**"
+		}
+
+		links {
+		}
+
+
+
+		targetdir ("Editor/")
+		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+		
+
+
+	project "SpiritScript"
+		location "SpiritScript"
+		kind "SharedLib"
+		language "C#"
+		
+		files {
+			"%{prj.name}/**"
+		}
+
+
+		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	
 
 
 

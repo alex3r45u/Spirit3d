@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Windows">
+      <UniqueIdentifier>{5032B729-BC11-36C5-C529-C19B31889C26}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Windows\FileExplorerPanel.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Windows\Panel.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Windows\PropertiesPanel.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Windows\SceneHierarchyPanel.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\EditorApp.cpp" />
+    <ClCompile Include="src\Windows\FileExplorerPanel.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Windows\PropertiesPanel.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Windows\SceneHierarchyPanel.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

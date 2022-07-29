@@ -10,6 +10,9 @@
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
+#include "Spirit/Scene/Scripting/ScriptController.h"
+#include "Spirit/Scene/Scripting/ComponentsCs.h"
+#include "Spirit/Scene/Scripting/EntityCs.h"
 
 namespace Spirit {
 
@@ -18,6 +21,18 @@ namespace Spirit {
 
 	Application* Application::s_Instance = nullptr;
 	Application::Application()
+	{
+		Init();
+	}
+
+	Application::Application(std::filesystem::path assets, std::filesystem::path ressources)
+	{
+		m_AssetPath = assets;
+		m_RessourcePath = ressources;
+	}
+
+
+	void Application::Init()
 	{
 		SP_CORE_ASSERT(!s_Instance, "Application already exists!");
 		s_Instance = this;
@@ -29,11 +44,12 @@ namespace Spirit {
 
 
 		Render::Renderer::Init();
-
+		Scripting::ScriptController::Init("GameScripts.dll");
+		Scripting::ComponentsCs::Bind();
+		Scripting::EntityCs::Bind();
+		Scripting::ScriptObject script = Scripting::ScriptController::GetDomain().GetClass("GameScripts.Class1").CreateInstance();
+		//SP_CORE_INFO(script.GetTypeName());
 	}
-
-
-
 
 
 
@@ -73,6 +89,20 @@ namespace Spirit {
 	}
 
 
+
+
+
+	std::filesystem::path Application::GetAssetDir() const
+	{
+		return m_AssetPath;
+	}
+
+	std::filesystem::path Application::GetRessourceDir() const
+	{
+		return m_RessourcePath;
+	}
+
+	
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{

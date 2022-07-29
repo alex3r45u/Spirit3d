@@ -10,7 +10,7 @@
 #endif
 
 #ifdef SP_DEBUG
-#define SP_ENABLE_ASSERTS
+//#define SP_ENABLE_ASSERTS
 #endif
 
 #ifdef SP_ENABLE_ASSERTS

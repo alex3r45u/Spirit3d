@@ -5,8 +5,11 @@
 #include "Spirit/Render/Camera.h"
 #include <memory>
 #include "Spirit/Core/AssetLibrary.h"
-#include "ScriptableEntity.h"
 #include <filesystem>
+#include "Spirit/Render/Lights/DirectionalLight.h"
+#include "Spirit/Render/Lights/PointLight.h"
+#include "Spirit/Render/Lights/SpotLight.h"
+#include "ScriptableEntity.h"
 
 namespace Spirit {
 	struct TagComponent {
@@ -17,6 +20,7 @@ namespace Spirit {
 		TagComponent(const std::string& tag)
 			: Tag(tag) {}
 	};
+
 
 	class TransformComponent {
 	public:
@@ -66,11 +70,17 @@ namespace Spirit {
 	struct MeshRendererComponent
 	{
 		std::shared_ptr<Spirit::Render::Mesh> Mesh;
-		std::string FileName;
-		MeshRendererComponent() = default;
+		MeshRendererComponent() { Mesh = std::make_shared < Spirit::Render::Mesh>(); }
 		MeshRendererComponent(const MeshRendererComponent&) = default;
-		MeshRendererComponent(const std::string& name) { Mesh = AssetLibrary::s_MeshLibrary.Get(name); FileName = std::filesystem::path(name).filename().string(); }
+		MeshRendererComponent(const std::string& name) { Mesh = AssetLibrary::s_MeshLibrary.Get(name);}
 	};
+
+	struct MaterialComponent {
+		std::shared_ptr<Spirit::Render::Material> Material;
+		MaterialComponent() { Material = std::make_shared <Spirit::Render::Material>(); }
+		MaterialComponent(const MaterialComponent&) = default;
+	};
+	
 
 	struct PerspectiveCameraComponent {
 		Spirit::Render::PerspectiveCamera Camera;
@@ -81,16 +91,40 @@ namespace Spirit {
 
 	};
 
+	struct DirectionalLightComponent {
+		std::shared_ptr<Spirit::Render::DirectionalLight> DirectionalLight;
+
+		DirectionalLightComponent() { DirectionalLight = std::make_shared<Spirit::Render::DirectionalLight>(); }
+		DirectionalLightComponent(const DirectionalLightComponent&) = default;
+		DirectionalLightComponent(const std::shared_ptr<Spirit::Render::DirectionalLight>& direcLight) : DirectionalLight(direcLight) {}
+	};
+	struct PointLightComponent {
+		std::shared_ptr<Spirit::Render::PointLight> PointLight;
+
+		PointLightComponent() { PointLight = std::make_shared<Spirit::Render::PointLight>(); }
+		PointLightComponent(const PointLightComponent&) = default;
+		PointLightComponent(const std::shared_ptr<Spirit::Render::PointLight>& pointLight) : PointLight(pointLight) {}
+	};
+	struct SpotLightComponent {
+		std::shared_ptr<Spirit::Render::SpotLight> SpotLight;
+
+		SpotLightComponent() { SpotLight = std::make_shared<Spirit::Render::SpotLight>(); }
+		SpotLightComponent(const SpotLightComponent&) = default;
+		SpotLightComponent(const std::shared_ptr<Spirit::Render::SpotLight>& spotLight) : SpotLight(spotLight) {}
+	};
+
 	struct NativeScriptComponent {
 		ScriptableEntity* Instance = nullptr;
-		ScriptableEntity* (*InstantiateScript)();
-		void(*DestroyScript)(NativeScriptComponent*);
 
+		ScriptableEntity* (*InstantiateScript)();
+		void (*DestroyScript)(NativeScriptComponent*);
 
 		template<typename T>
-		void Bind() {
-			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); }
-			DestroyScript = [](NativeScriptComponent* nsc) {delete nsc->Instance; nsc->Instane = nullptr; }
+		void Bind()
+		{
+			InstantiateScript = []() { return static_cast<ScriptableEntity*>(new T()); };
+			DestroyScript = [](NativeScriptComponent* nsc) { delete nsc->Instance; nsc->Instance = nullptr; };
 		}
 	};
+
 }
