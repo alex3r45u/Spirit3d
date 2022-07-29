@@ -1,6 +1,7 @@
 #pragma once
 #include <unordered_map>
 #include "ScriptObject.h"
+#include <functional>
 
 namespace Spirit::Scripting{
 	class ScriptingECS {
@@ -20,6 +21,9 @@ namespace Spirit::Scripting{
 		void RemoveComponent(unsigned int entityID, std::string componentName);
 
 		void UpdateScriptingECS();
+
+
+		void DrawComponents(unsigned int entityID, std::function<void(std::shared_ptr<ScriptObject>)> drawFunction);
 	private:
 		std::shared_ptr<ScriptObject> GetComponentOutOfName(unsigned int entityID, std::string name);
 	private:

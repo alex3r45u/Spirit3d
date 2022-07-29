@@ -17,7 +17,6 @@ namespace Spirit::Scripting {
 		Int,
 		UnsignedInt,
 		Float,
-		Double,
 		Bool,
 		String,
 		Vec2,

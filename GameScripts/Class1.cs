@@ -10,9 +10,10 @@ namespace GameScripts
 {
     public class Class1 : Component
     {
+        public float speed;
         void Update()
         {
-            transform.position = new Vector3(100);
+            transform.position = new Vector3(transform.position.X+speed, 0, 0);
         }
      
     }

@@ -6,6 +6,9 @@
 #include "Spirit/ImGui/DragDropSystem.h"
 #include <filesystem>
 #include <typeinfo>
+#include "Spirit/Scene/SceneManager.h"
+#include "Spirit/Scene/Scripting/ScriptClass.h"
+#include "Spirit/Scene/Scripting/ScriptField.h"
 
 template<typename T>
 static void DrawComponent(Spirit::Entity& entity, const std::string& name, std::function<void(T& component)> function) {
@@ -158,6 +161,91 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 		ImGui::DragFloat("K0", &component.SpotLight->k0);
 		ImGui::DragFloat("K1", &component.SpotLight->k1);
 		ImGui::DragFloat("K2", &component.SpotLight->k2);
+		});
+
+	Spirit::SceneManager::GetActiveScene()->GetScriptingECS().DrawComponents(entity, [](std::shared_ptr<Scripting::ScriptObject> component) {
+		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
+
+		bool open = ImGui::TreeNodeEx((void*)component->GetObjectPointer(), treeNodeFlags, component->GetTypeName().c_str());
+
+		bool deleted = false;
+		if (ImGui::IsItemClicked(1)) {
+			ImGui::OpenPopup(component->GetTypeName().c_str());
+		}
+		if (ImGui::BeginPopup(component->GetTypeName().c_str())) {
+			if (ImGui::Selectable("Delete")) {
+				//todo
+				deleted = true;
+			}
+			ImGui::EndPopup();
+		}
+		if (open) {
+			if (!deleted) {
+				Spirit::Scripting::ScriptClass _class = Spirit::Scripting::ScriptClass(mono_object_get_class(component->GetObjectPointer()), mono_domain_get());
+				for (auto v : _class.GetFieldNames()) {
+					Scripting::ScriptField& field = component->GetField(v);
+					switch (field.GetType()) {
+					case Scripting::FieldType::Bool: {
+						bool b = field.GetValue<bool>();
+						ImGui::Checkbox(v.c_str(), &b);
+						field.SetValue(b);
+					}
+												   break;
+					case Scripting::FieldType::Float: {
+						float f = field.GetValue<float>();
+						ImGui::DragFloat(v.c_str(), &f);
+						field.SetValue(f);
+					}
+													break;
+					case Scripting::FieldType::Int: {
+						int i = field.GetValue<int>();
+						ImGui::DragInt(v.c_str(), &i);
+						field.SetValue(i);
+					}
+												  break;
+					case Scripting::FieldType::String: {
+
+					}
+													 break;
+					case Scripting::FieldType::UnsignedInt: {
+						int ui = field.GetValue<int>();
+						ImGui::DragInt(v.c_str(), &ui, 0);
+						field.SetValue(ui);
+					}
+														  break;
+					case Scripting::FieldType::Vec2: {
+						glm::vec2 vec2 = field.GetValue<glm::vec2>();
+						ImGui::DragFloat2(v.c_str(), glm::value_ptr(vec2));
+						field.SetValue(vec2);
+					}
+												   break;
+					case Scripting::FieldType::Vec3: {
+						glm::vec2 vec3 = field.GetValue<glm::vec3>();
+						ImGui::DragFloat3(v.c_str(), glm::value_ptr(vec3));
+						field.SetValue(vec3);
+					}
+												   break;
+					case Scripting::FieldType::Vec4: {
+						glm::vec4 vec4 = field.GetValue<glm::vec4>();
+						ImGui::DragFloat4(v.c_str(), glm::value_ptr(vec4));
+						field.SetValue(vec4);
+					}
+												   break;
+					default:
+						break;
+					}
+				}
+			}
+
+
+
+
+			ImGui::TreePop();
+		}
+
+
+
+		
 		});
 	
 

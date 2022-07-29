@@ -32,6 +32,7 @@ namespace SpiritScript
     }
     public class Tag : Component
     {
+        void Update() { }
         public string tag
         {
             get => GetTag_Native(entity.ID);

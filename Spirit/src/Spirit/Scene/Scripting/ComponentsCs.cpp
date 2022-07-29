@@ -21,7 +21,6 @@ static void GetPosition_Native(unsigned int entityID, glm::vec3* result)
 
 static void SetPosition_Native(unsigned int entityID, glm::vec3* result)
 {
-	SP_CORE_INFO("asdf");
 	Spirit::SceneManager::GetActiveScene()->GetEntityByIndex((entt::entity)entityID).GetComponent<Spirit::TransformComponent>().Position = *result;
 }
 

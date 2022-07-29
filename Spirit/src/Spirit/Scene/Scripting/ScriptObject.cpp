@@ -60,6 +60,8 @@ static Spirit::Scripting::FieldType GetFieldType(MonoType* monoType) {
     case MONO_TYPE_I4: return Spirit::Scripting::FieldType::Int;
     case MONO_TYPE_U4: return Spirit::Scripting::FieldType::UnsignedInt;
     case MONO_TYPE_STRING: return Spirit::Scripting::FieldType::String;
+    case MONO_TYPE_BOOLEAN: return Spirit::Scripting::FieldType::Bool;
+
     case MONO_TYPE_VALUETYPE:
     {
         char* name = mono_type_get_name(monoType);

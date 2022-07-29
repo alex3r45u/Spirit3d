@@ -92,7 +92,6 @@ static void HasComponent_Native(unsigned int entityID, MonoObject* object, bool*
 }
 
 static void GetComponent_Native(unsigned int entityID, MonoObject* object, MonoObject** component) {
-	SP_CORE_INFO("Get c");
 	MonoObject* c = Spirit::SceneManager::GetActiveScene()->GetScriptingECS().GetComponent(entityID, GetName(object))->GetObjectPointer();
 	memcpy(component, &c, sizeof(MonoObject*));
 }
@@ -102,7 +101,6 @@ static void NewEntity_Native(MonoObject* entity) {
 }
 
 static void GetEntity_Native(unsigned int entityID, MonoObject** entity) {
-	SP_CORE_INFO("Getted, {0}", Spirit::SceneManager::GetActiveScene()->GetScriptingECS().GetEntity(entityID)->GetProperty("ID").Get<unsigned int>());
 	MonoObject* e = Spirit::SceneManager::GetActiveScene()->GetScriptingECS().GetEntity(entityID)->GetObjectPointer();
 	memcpy(entity,&e, sizeof(MonoObject*));
 }

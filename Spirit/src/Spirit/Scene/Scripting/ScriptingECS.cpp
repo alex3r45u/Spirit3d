@@ -38,6 +38,7 @@ void Spirit::Scripting::ScriptingECS::AddComponent(unsigned int entityID, std::s
 		m_Entities[entityID] = std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Entity").CreateInstance());
 		m_Entities[entityID]->GetProperty("ID").Set(entityID);
 		AddComponent(entityID,std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Transform").CreateInstance()));
+		AddComponent(entityID, std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Tag").CreateInstance()));
 	}
 	component->GetProperty("entityID").Set(entityID);
 	if (!HasComponent(entityID, component))
@@ -53,10 +54,7 @@ std::shared_ptr<Spirit::Scripting::ScriptObject> Spirit::Scripting::ScriptingECS
 
 bool Spirit::Scripting::ScriptingECS::HasComponent(unsigned int entityID, std::string componentName)
 {
-	SP_CORE_INFO(entityID);
 	for (auto c : m_Components[entityID]) {
-		SP_CORE_INFO(c->GetTypeName());
-		SP_CORE_INFO(componentName);
 		if (c->GetTypeName() == componentName)
 			return true;
 	}
@@ -66,8 +64,6 @@ bool Spirit::Scripting::ScriptingECS::HasComponent(unsigned int entityID, std::s
 bool Spirit::Scripting::ScriptingECS::HasComponent(unsigned int entityID, std::shared_ptr<ScriptObject> component)
 {
 	for (auto c : m_Components[entityID]) {
-	//	SP_CORE_INFO(c->GetTypeName());
-	//	SP_CORE_INFO(component->GetTypeName());
 		if (c->GetObjectPointer() == component->GetObjectPointer())
 			return true;
 	}
@@ -93,11 +89,16 @@ void Spirit::Scripting::ScriptingECS::UpdateScriptingECS()
 	}
 }
 
+void Spirit::Scripting::ScriptingECS::DrawComponents(unsigned int entityID, std::function<void(std::shared_ptr<ScriptObject>)> drawFunction)
+{
+	for (auto c : m_Components[entityID]) {
+		drawFunction(c);
+	}
+}
+
 std::shared_ptr<Spirit::Scripting::ScriptObject> Spirit::Scripting::ScriptingECS::GetComponentOutOfName(unsigned int entityID, std::string name)
 {
 	for (auto c : m_Components[entityID]) {
-		SP_CORE_INFO(c->GetTypeName());
-		SP_CORE_INFO(name);
 		if (c->GetTypeName() == name)
 			return c;
 	}

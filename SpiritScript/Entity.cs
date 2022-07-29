@@ -50,7 +50,6 @@ namespace SpiritScript
 
         public T GetComponent<T>() where T : Component, new()
         {
-            Console.WriteLine(HasComponent<T>());
             if (HasComponent<T>())
             {
                 T component;
