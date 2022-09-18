@@ -123,16 +123,7 @@
     <ClInclude Include="src\Spirit\Core\AssetLibrary.h">
       <Filter>src\Spirit\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spirit\Core\FileTypes.h">
-      <Filter>src\Spirit\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Spirit\Core\MaterialLibrary.h">
-      <Filter>src\Spirit\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Spirit\Core\MeshLibrary.h">
-      <Filter>src\Spirit\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Spirit\Core\ShaderLibrary.h">
+    <ClInclude Include="src\Spirit\Core\FileType.h">
       <Filter>src\Spirit\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Core\TimeStep.h">
@@ -289,6 +280,9 @@
       <Filter>src\Spirit\Scene\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptClass.h">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptComponent.h">
       <Filter>src\Spirit\Scene\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptController.h">
@@ -1947,24 +1941,15 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spirit\Core\AssetRegistry.h" />
+    <ClInclude Include="src\Spirit\Project\ProjectSerializer.h" />
+    <ClInclude Include="src\Spirit\Project\Project.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp">
       <Filter>src\Spirit</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Core\AssetLibrary.cpp">
-      <Filter>src\Spirit\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Spirit\Core\FileTypes.cpp">
-      <Filter>src\Spirit\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Spirit\Core\MaterialLibrary.cpp">
-      <Filter>src\Spirit\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Spirit\Core\MeshLibrary.cpp">
-      <Filter>src\Spirit\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Spirit\Core\ShaderLibrary.cpp">
       <Filter>src\Spirit\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\ImGui\ImGuiBuild.cpp">
@@ -2030,9 +2015,6 @@
     <ClCompile Include="src\Spirit\Render\Lights\SpotLight.cpp">
       <Filter>src\Spirit\Render\Lights</Filter>
     </ClCompile>
-    <ClCompile Include="src\Spirit\Render\Material.cpp">
-      <Filter>src\Spirit\Render</Filter>
-    </ClCompile>
     <ClCompile Include="src\Spirit\Render\Mesh.cpp">
       <Filter>src\Spirit\Render</Filter>
     </ClCompile>
@@ -2084,6 +2066,9 @@
     <ClCompile Include="src\Spirit\Scene\Scripting\ScriptClass.cpp">
       <Filter>src\Spirit\Scene\Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptComponent.cpp">
+      <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Spirit\Scene\Scripting\ScriptController.cpp">
       <Filter>src\Spirit\Scene\Scripting</Filter>
     </ClCompile>
@@ -2114,6 +2099,8 @@
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spirit\Project\Project.cpp" />
+    <ClCompile Include="src\Spirit\Project\ProjectSerializer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">

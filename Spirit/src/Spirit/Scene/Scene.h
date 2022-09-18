@@ -3,6 +3,7 @@
 #include "Spirit/Core/Timestep.h"
 #include <string>
 #include "Scripting/ScriptingECS.h"
+#include <filesystem>
 
 namespace Spirit {
 	class Entity;
@@ -10,7 +11,8 @@ namespace Spirit {
 	class Scene {
 	public:
 		Scene();
-		Scene(const std::string& name);
+		Scene(const std::filesystem::path& path);
+		Scene(const Scene&) = default;
 		~Scene();
 
 		Entity CreateEntity(const std::string& name);
@@ -19,17 +21,18 @@ namespace Spirit {
 		void OnUpdate(TimeStep ts);
 		void OnReseize(unsigned int width, unsigned int height);
 		Entity GetEntityByIndex(entt::entity handle);
-		std::string GetName() { return m_Name; }
-		void SetName(const std::string& name);
+		std::filesystem::path GetPath() { return m_Path; }
+		void SetPath(const std::filesystem::path& path);
 
 		Scripting::ScriptingECS& GetScriptingECS() { return m_ScriptingECS; }
 
 	private:
 		entt::registry m_Registry;
-		std::string m_Name;
+		std::filesystem::path m_Path;
 		Scripting::ScriptingECS m_ScriptingECS;
 		friend class Entity;
 		friend class SceneHierarchyPanel;
 		friend class PropertiesPanel;
+		friend class SceneSerializer;
 	};
 }

@@ -7,11 +7,13 @@ layout(location = 2) in vec3 a_Tex;
 uniform mat4 u_ViewPerspective;
 uniform mat4 u_Model;
 
-out vec3 v_Position;
+out vec3 WorldPos;
 out vec3 v_Normal;
+out vec3 v_Tex;
 void main()
 {
-	v_Position = a_Position;
+	WorldPos = vec3(u_Model * vec4(a_Position, 1.0));
 	v_Normal = a_Normal;
-	gl_Position = u_ViewPerspective * u_Model * vec4(a_Position, 1.0);
+	v_Tex = a_Tex;
+	gl_Position = u_ViewPerspective *  vec4(WorldPos, 1.0);
 }

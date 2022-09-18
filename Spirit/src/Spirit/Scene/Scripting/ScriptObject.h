@@ -23,7 +23,7 @@ namespace Spirit::Scripting {
 	class ScriptMethod;
 	class ScriptField;
 	class ScriptProperty;
-	
+	class ScriptClass;
 
 	class ScriptObject
 	{
@@ -40,6 +40,8 @@ namespace Spirit::Scripting {
 
 		ScriptProperty& GetProperty(const std::string& name);
 		ScriptField& GetField(const std::string& name);
+
+		ScriptClass& GetClass();
 
 	private:
 		MonoObject* m_Object;

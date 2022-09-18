@@ -151,5 +151,47 @@ namespace SpiritScript
 
 
     }
+
+    public class Camera : Component
+    {
+        public enum CameraType
+        {
+            Perspective = 1,
+            Orthographic = 2,
+        }
+
+        public bool IsMain
+        {
+            get
+            {
+                bool isMain;
+                GetMain_Native(entity.ID, out isMain);
+                return isMain;
+            }
+            set => SetMain_Native(entity.ID, value);
+        }
+        public CameraType Type
+        {
+            get
+            {
+                int type;
+                GetType_Native(entity.ID, out type);
+                return (CameraType)type;
+            }
+            set => SetType_Native(entity.ID, (int)value);
+        }
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern void GetMain_Native(uint entityID, out bool isMain);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern void SetMain_Native(uint entityID, bool isMain);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern void GetType_Native(uint entityID, out int type);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern void SetType_Native(uint entityID, int type);
+
+    }
+
+    
     
 }

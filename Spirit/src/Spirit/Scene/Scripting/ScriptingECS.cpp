@@ -8,7 +8,7 @@
 
 void Spirit::Scripting::ScriptingECS::AddEntity(unsigned int entityID, std::shared_ptr<ScriptObject> entity)
 {
-	if(!HasEntity(entityID))
+	if (!HasEntity(entityID))
 		m_Entities[entityID] = entity;
 }
 
@@ -28,8 +28,6 @@ void Spirit::Scripting::ScriptingECS::RemoveEntity(unsigned int entityID)
 {
 	if (HasEntity(entityID))
 		m_Entities.erase(entityID);
-	if (m_Components.find(entityID) != m_Components.end())
-		m_Components.erase(entityID);
 }
 
 void Spirit::Scripting::ScriptingECS::AddComponent(unsigned int entityID, std::shared_ptr<ScriptObject> component)
@@ -37,19 +35,26 @@ void Spirit::Scripting::ScriptingECS::AddComponent(unsigned int entityID, std::s
 	if (!HasEntity(entityID)) {
 		m_Entities[entityID] = std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Entity").CreateInstance());
 		m_Entities[entityID]->GetProperty("ID").Set(entityID);
-		AddComponent(entityID,std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Transform").CreateInstance()));
+		AddComponent(entityID, std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Transform").CreateInstance()));
 		AddComponent(entityID, std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Tag").CreateInstance()));
 	}
 	component->GetProperty("entityID").Set(entityID);
 	if (!HasComponent(entityID, component))
 		m_Components[entityID].push_back(component);
-		component->Invoke("Start");
+	component->Invoke("Start");
 }
 
 std::shared_ptr<Spirit::Scripting::ScriptObject> Spirit::Scripting::ScriptingECS::GetComponent(unsigned int entityID, std::string componentName)
 {
 	auto c = GetComponentOutOfName(entityID, componentName);
 	return c;
+}
+
+std::list<std::shared_ptr<Spirit::Scripting::ScriptObject>>& Spirit::Scripting::ScriptingECS::GetAllScripts(unsigned int entityID)
+{
+	if (!HasEntity(entityID))
+		SP_CORE_ASSERT(false, "Entity not found {0}", entityID);
+	return m_Components[entityID];
 }
 
 bool Spirit::Scripting::ScriptingECS::HasComponent(unsigned int entityID, std::string componentName)
@@ -76,8 +81,8 @@ void Spirit::Scripting::ScriptingECS::RemoveComponent(unsigned int entityID, std
 		if (c->GetTypeName() == componentName)
 			m_Components[entityID].remove(c);
 	}
-		
-		
+
+
 }
 
 void Spirit::Scripting::ScriptingECS::UpdateScriptingECS()

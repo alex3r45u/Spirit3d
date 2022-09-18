@@ -86,6 +86,4 @@ void Spirit::ImGuiLayer::End()
 
 void Spirit::ImGuiLayer::ImGuiUpdate()
 {
-	bool b = true;
-	ImGui::ShowDemoWindow(&b);
 }

@@ -1,0 +1,38 @@
+Scene: Test
+Entites:
+  - Entity: 1
+    class Spirit::TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    struct Spirit::TagComponent:
+      Tag: Monkey
+    struct Spirit::MeshRendererComponent:
+      Path: assets/monkey.fbx
+    struct Spirit::MaterialComponent:
+      {}
+    Scripts:
+      SpiritScript.Transform:
+        {}
+      SpiritScript.Tag:
+        {}
+      GameScripts.Class1:
+        speed: 0
+  - Entity: 1
+    class Spirit::TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    struct Spirit::TagComponent:
+      Tag: Cam
+    struct Spirit::CameraComponent:
+      IsMain: false
+      Type: Perspective
+      Zoom: 45
+    Scripts:
+      SpiritScript.Transform:
+        {}
+      SpiritScript.Tag:
+        {}
+      GameScripts.Class1:
+        speed: 0

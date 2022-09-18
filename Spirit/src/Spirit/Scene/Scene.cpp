@@ -17,11 +17,12 @@ Spirit::Scene::~Scene()
 
 Spirit::Scene::Scene()
 {
+	m_Path = "Not Found";
 }
 
-Spirit::Scene::Scene(const std::string& name)
+Spirit::Scene::Scene(const std::filesystem::path& path)
 {
-	m_Name = name;
+	m_Path = path;
 }
 
 Spirit::Entity Spirit::Scene::CreateEntity(const std::string& name)
@@ -60,14 +61,16 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 	m_ScriptingECS.UpdateScriptingECS();
 
 
-	Spirit::Render::PerspectiveCamera* mainCamera = nullptr;
-	Spirit::TransformComponent* cameraTransform = nullptr;
+	std::shared_ptr<Render::Camera> mainCamera = nullptr;
+	TransformComponent* cameraTransform = nullptr;
 	{
-		auto view = m_Registry.view<TransformComponent, PerspectiveCameraComponent>();
+		auto view = m_Registry.view<TransformComponent, CameraComponent>();
 		for (auto entity : view)
 		{
-			auto [transform, camera] = view.get<TransformComponent, PerspectiveCameraComponent>(entity);
-			mainCamera = &camera.Camera;
+			auto [transform, camera] = view.get<TransformComponent, CameraComponent>(entity);
+			if (!camera.IsMain)
+				continue;
+			mainCamera = camera.Camera;
 			cameraTransform = &transform;
 			break;
 			
@@ -78,7 +81,7 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 	{
 		
 		{
-			Spirit::Render::LightManager::Start(AssetLibrary::s_ShaderLibrary.Get("default"));
+			Spirit::Render::LightManager::Start(AssetLibrary::GetShaderRegistry().GetMember({ "default", "assets/vertex.glsl", "assets/fragment.glsl" }));
 			{
 				auto view = m_Registry.view <TransformComponent, PointLightComponent>();
 				for (auto entity : view) {
@@ -107,14 +110,14 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 		}
 		
 		{
-			Spirit::Render::Renderer::BeginScene(*mainCamera, *cameraTransform);
+			Spirit::Render::Renderer::BeginScene(mainCamera, cameraTransform);
 			auto view = m_Registry.view<TransformComponent, MeshRendererComponent, MaterialComponent>();
 			for (auto entity : view)
 			{
 				auto [transform, mesh, material] = view.get<TransformComponent, MeshRendererComponent, MaterialComponent>(entity);
 
 				for (auto va : mesh.Mesh->GetVertexArray()) {
-					Spirit::Render::Renderer::Submit(va, AssetLibrary::s_ShaderLibrary.Get("default"), material.Material, transform);
+					Spirit::Render::Renderer::Submit(va, AssetLibrary::GetShaderRegistry().GetMember({ "default", "assets/vertex.glsl", "assets/fragment.glsl" }), material.Material, transform);
 				}
 			}
 
@@ -126,11 +129,13 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 
 void Spirit::Scene::OnReseize(unsigned int width, unsigned int height)
 {
-	auto view = m_Registry.view<PerspectiveCameraComponent>();
+	auto view = m_Registry.view<CameraComponent>();
 	for (auto entity : view)
 	{
-		auto& camera = view.get<PerspectiveCameraComponent>(entity);
-		camera.Camera.SetViewport(width, height);
+		auto& camera = view.get<CameraComponent>(entity);
+		camera.Camera->SetViewport(width, height);
+		
+		
 	}
 }
 
@@ -139,8 +144,8 @@ Spirit::Entity Spirit::Scene::GetEntityByIndex(entt::entity handle)
 	return Entity(handle, this);
 }
 
-void Spirit::Scene::SetName(const std::string& name)
+void Spirit::Scene::SetPath(const std::filesystem::path& path)
 {
-	m_Name = name;
+	m_Path = path;
 }
 

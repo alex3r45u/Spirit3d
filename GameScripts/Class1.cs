@@ -11,10 +11,9 @@ namespace GameScripts
     public class Class1 : Component
     {
         public float speed;
-        void Update()
+        protected override void Update()
         {
-            transform.position = new Vector3(transform.position.X+speed, 0, 0);
+            transform.Translate(Vector3.Forward, speed);
         }
-     
     }
 }

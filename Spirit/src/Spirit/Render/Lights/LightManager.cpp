@@ -26,8 +26,9 @@ void Spirit::Render::LightManager::End()
 
 void Spirit::Render::LightManager::Submit(std::shared_ptr<Light> light, TransformComponent& transform)
 {
-	light->position = transform.Position;
-	light->direction = transform.Rotation;
+	light->Position = transform.Position;
+	light->Direction = transform.Rotation;
+	light->Forward = transform.GetForward();
 	s_Lights.push_back(light);
 }
 

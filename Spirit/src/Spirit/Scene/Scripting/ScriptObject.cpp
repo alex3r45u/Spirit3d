@@ -3,7 +3,7 @@
 #include "ScriptMethod.h"
 #include "ScriptField.h"
 #include "ScriptProperty.h"
-
+#include "ScriptClass.h"
 
 
 Spirit::Scripting::ScriptObject::ScriptObject(MonoObject* object, const std::unordered_map<std::string, std::shared_ptr<ScriptMethod>>& methods)
@@ -70,7 +70,7 @@ static Spirit::Scripting::FieldType GetFieldType(MonoType* monoType) {
         if (strcmp(name, "SpiritScript.Math.Vector4") == 0) return Spirit::Scripting::FieldType::Vec4;
     }
     }
-    return Spirit::Scripting::FieldType::None;
+    return Spirit::Scripting::FieldType::Unknown;
 }
 
 Spirit::Scripting::ScriptField& Spirit::Scripting::ScriptObject::GetField(const std::string& name)
@@ -96,5 +96,10 @@ Spirit::Scripting::ScriptField& Spirit::Scripting::ScriptObject::GetField(const 
         return *field;
     }
 
+}
+
+Spirit::Scripting::ScriptClass& Spirit::Scripting::ScriptObject::GetClass()
+{
+    return Spirit::Scripting::ScriptClass(mono_object_get_class(m_Object), mono_domain_get());
 }
 

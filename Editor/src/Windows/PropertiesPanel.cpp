@@ -9,6 +9,7 @@
 #include "Spirit/Scene/SceneManager.h"
 #include "Spirit/Scene/Scripting/ScriptClass.h"
 #include "Spirit/Scene/Scripting/ScriptField.h"
+#include "Spirit/Scene/Scripting/ScriptingECS.h"
 
 template<typename T>
 static void DrawComponent(Spirit::Entity& entity, const std::string& name, std::function<void(T& component)> function) {
@@ -57,6 +58,7 @@ void Spirit::PropertiesPanel::SetSceneHierarchy(SceneHierarchyPanel* hierarchy)
 
 void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 {
+
 	if (entity.HasComponent<TagComponent>()) {
 		auto& tag = entity.GetComponent<TagComponent>();
 
@@ -75,10 +77,18 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 		ImGui::DragFloat3("Scale", glm::value_ptr(component.Scale));
 		});
 
-	DrawComponent<PerspectiveCameraComponent>(entity, "Perspective Camera", [](auto& component) {
-		float zoom = component.Camera.GetZoom();
-		if (ImGui::DragFloat("Zoom", &zoom)) {
-			component.Camera.SetZoom(zoom);
+	DrawComponent<CameraComponent>(entity, "Camera", [](auto& component) {
+		ImGui::Checkbox("Is Main", &component.IsMain);
+		switch (component.Type) {
+		case CameraType::Perspective: {
+			float zoom = std::static_pointer_cast<Render::PerspectiveCamera>(component.Camera)->GetZoom();
+			ImGui::DragFloat("Zoom", &zoom);
+			std::static_pointer_cast<Render::PerspectiveCamera>(component.Camera)->SetZoom(zoom);
+			break;
+		}
+			
+		case CameraType::Orthographic:
+			break;
 		}
 		});
 
@@ -86,84 +96,39 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 		if (ImGui::Button(component.Mesh->GetPath().filename().string().c_str())) {
 	
 		}
-		DragDropSystem::SetTarget("FILE_EXPLORER", [&](auto c) {
-			component.Mesh = AssetLibrary::s_MeshLibrary.Get(c);
+		DragDropSystem::SetTarget<const char*>("FILE_EXPLORER", [&](const char* c) {
+			component.Mesh = AssetLibrary::GetMeshRegistry().GetMember({c});
 			});
 		});
 	
 	
 	DrawComponent<MaterialComponent>(entity, "Material", [](auto& component) {
-		ImGui::ColorEdit3("Ambient", glm::value_ptr(component.Material->Ambient));
-		ImGui::Checkbox("Has Texture##1", &component.Material->HasAmbientTexture);
-		if (component.Material->HasAmbientTexture) {
-			if (component.Material->GetAmbientPath() == "") {
-				ImGui::Text("Drag Texture");
-			}
-			else {
-				ImGui::Text(component.Material->GetAmbientPath().filename().string().c_str());
-			}
-			DragDropSystem::SetTarget("FILE_EXPLORER", [&](auto c) {
-				component.Material->SetAmbientPath(std::filesystem::path(c));
-				});
-	
-		}
-	
-		ImGui::ColorEdit3("Deffuse", glm::value_ptr(component.Material->Deffuse));
-		ImGui::Checkbox("Has Texture##2", &component.Material->HasDeffuseTexture);
-		if (component.Material->HasDeffuseTexture) {
-			if (component.Material->GetDeffusePath() == "") {
-				ImGui::Text("Drag Texture");
-			}
-			else {
-				ImGui::Text(component.Material->GetDeffusePath().filename().string().c_str());
-			}
-			DragDropSystem::SetTarget("FILE_EXPLORER", [=](auto c) {
-				component.Material->SetDeffusePath(std::filesystem::path(c));
-				});
-	
-		}
-	
-		ImGui::ColorEdit3("Specular", glm::value_ptr(component.Material->Specular));
-		ImGui::Checkbox("Has Texture##3", &component.Material->HasSpecularTexture);
-		if (component.Material->HasSpecularTexture) {
-			if (component.Material->GetSpecularPath() == "") {
-				ImGui::Text("Drag Texture");
-			}
-			else {
-				ImGui::Text(component.Material->GetSpecularPath().filename().string().c_str());
-			}
-			DragDropSystem::SetTarget("FILE_EXPLORER", [=](auto c) {
-				component.Material->SetSpecularPath(std::filesystem::path(c));
-				});
-	
-		}
-	
-		ImGui::DragFloat("Shininess", &component.Material->Shininess);
-	
+		ImGui::ColorEdit3("Albedo", glm::value_ptr(component.Material->Albedo));
+		ImGui::ColorEdit3("Normal", glm::value_ptr(component.Material->Normal));
+		ImGui::SliderFloat("Roughness", &component.Material->Roughness, 0.0f, 1.0f);
+		ImGui::SliderFloat("Metallic", &component.Material->Metallic, 0.0f, 1.0f);
+		ImGui::SliderFloat("Ambient Occlusion", &component.Material->AO, 0.0f, 1.0f);
 	
 		});
 	
 	DrawComponent<DirectionalLightComponent>(entity, "Directional Light", [](auto& component) {
-		ImGui::ColorEdit3("Color", glm::value_ptr(component.DirectionalLight->color));
+		ImGui::ColorEdit3("Color", glm::value_ptr(component.DirectionalLight->Color));
+		ImGui::DragFloat("Intensity", &component.DirectionalLight->Intensity);
 		});
 	DrawComponent<PointLightComponent>(entity, "Point Light", [](auto& component) {
-		ImGui::ColorEdit3("Color", glm::value_ptr(component.PointLight->color));
-		ImGui::DragFloat("K0", &component.PointLight->k0);
-		ImGui::DragFloat("K1", &component.PointLight->k1);
-		ImGui::DragFloat("K2", &component.PointLight->k2);
+		ImGui::ColorEdit3("Color", glm::value_ptr(component.PointLight->Color));
+		ImGui::DragFloat("Intensity", &component.PointLight->Intensity);
+		ImGui::DragFloat("Radius", &component.PointLight->Radius);
 		});
 	DrawComponent<SpotLightComponent>(entity, "Spot Light", [](auto& component) {
-		ImGui::ColorEdit3("Color", glm::value_ptr(component.SpotLight->color));
-	
-		ImGui::DragFloat("Cut Off", &component.SpotLight->cutOff);
-		ImGui::DragFloat("Outer Cut Off", &component.SpotLight->outerCutOff);
-	
-		ImGui::DragFloat("K0", &component.SpotLight->k0);
-		ImGui::DragFloat("K1", &component.SpotLight->k1);
-		ImGui::DragFloat("K2", &component.SpotLight->k2);
+
 		});
 
-	Spirit::SceneManager::GetActiveScene()->GetScriptingECS().DrawComponents(entity, [](std::shared_ptr<Scripting::ScriptObject> component) {
+	Spirit::SceneManager::GetActiveScene()->GetScriptingECS().DrawComponents(entity, [&](std::shared_ptr<Scripting::ScriptObject> component) {
+
+		if (!component->GetTypeName().find("SpiritScript.")) {
+			return;
+		}
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
 
 		bool open = ImGui::TreeNodeEx((void*)component->GetObjectPointer(), treeNodeFlags, component->GetTypeName().c_str());
@@ -181,7 +146,7 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 		}
 		if (open) {
 			if (!deleted) {
-				Spirit::Scripting::ScriptClass _class = Spirit::Scripting::ScriptClass(mono_object_get_class(component->GetObjectPointer()), mono_domain_get());
+				Spirit::Scripting::ScriptClass& _class = component->GetClass();
 				for (auto v : _class.GetFieldNames()) {
 					Scripting::ScriptField& field = component->GetField(v);
 					switch (field.GetType()) {
@@ -209,7 +174,7 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 													 break;
 					case Scripting::FieldType::UnsignedInt: {
 						int ui = field.GetValue<int>();
-						ImGui::DragInt(v.c_str(), &ui, 0);
+						ImGui::DragInt(v.c_str(), &ui);
 						field.SetValue(ui);
 					}
 														  break;
@@ -232,6 +197,16 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 					}
 												   break;
 					default:
+						ImGui::Text(v.c_str(), ": ");
+						DragDropSystem::SetTarget<int>("COMPONENT_DRAG_DROP", [&](int i) {
+							if (SceneManager::GetActiveScene()->GetScriptingECS().HasComponent(i, component->GetTypeName())) {
+								field.SetValue(SceneManager::GetActiveScene()->GetScriptingECS().GetComponent(i, component->GetTypeName()));
+								return;
+							}
+
+							//TODO c++ components
+							
+							});
 						break;
 					}
 				}
@@ -283,7 +258,7 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 			
 			if (ImGui::BeginMenu("Cameras")) {
 				if (ImGui::MenuItem("Perspective")) {
-					entity.AddComponent<PerspectiveCameraComponent>();
+					entity.AddComponent<CameraComponent>();
 				}
 				if (ImGui::MenuItem("Orthographic")) {
 					//TODO

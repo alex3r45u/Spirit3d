@@ -1,9 +1,10 @@
+
 #pragma once
 #include <unordered_map>
 #include "ScriptObject.h"
 #include <functional>
 
-namespace Spirit::Scripting{
+namespace Spirit::Scripting {
 	class ScriptingECS {
 	public:
 		ScriptingECS() = default;
@@ -16,6 +17,7 @@ namespace Spirit::Scripting{
 
 		void AddComponent(unsigned int entityID, std::shared_ptr<ScriptObject> component);
 		std::shared_ptr<ScriptObject> GetComponent(unsigned int entityID, std::string componentName);
+		std::list<std::shared_ptr<ScriptObject>>& GetAllScripts(unsigned int entityID);
 		bool HasComponent(unsigned int entityID, std::string componentName);
 		bool HasComponent(unsigned int entityID, std::shared_ptr<ScriptObject> component);
 		void RemoveComponent(unsigned int entityID, std::string componentName);
@@ -28,7 +30,7 @@ namespace Spirit::Scripting{
 		std::shared_ptr<ScriptObject> GetComponentOutOfName(unsigned int entityID, std::string name);
 	private:
 
-		
+
 
 
 		std::unordered_map<unsigned int, std::shared_ptr<ScriptObject>> m_Entities;

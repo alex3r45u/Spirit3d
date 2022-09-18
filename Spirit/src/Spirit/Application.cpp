@@ -13,6 +13,7 @@
 #include "Spirit/Scene/Scripting/ScriptController.h"
 #include "Spirit/Scene/Scripting/ComponentsCs.h"
 #include "Spirit/Scene/Scripting/EntityCs.h"
+#include "Spirit/Core/AssetLibrary.h"
 
 namespace Spirit {
 
@@ -25,12 +26,17 @@ namespace Spirit {
 		Init();
 	}
 
-	Application::Application(std::filesystem::path assets, std::filesystem::path ressources)
+	Application::Application(std::filesystem::path project)
 	{
-		m_AssetPath = assets;
-		m_RessourcePath = ressources;
+		m_ProjectPath = project;
+		Init();
 	}
 
+
+	std::filesystem::path Application::GetProjectPath() const
+	{
+		return m_ProjectPath;
+	}
 
 	void Application::Init()
 	{
@@ -42,7 +48,7 @@ namespace Spirit {
 		m_ImGuiLayer = new ImGuiLayer();
 		m_LayerStack.AddLayer(m_ImGuiLayer);
 
-
+		AssetLibrary::Init();
 		Render::Renderer::Init();
 		Scripting::ScriptController::Init("GameScripts.dll");
 		Scripting::ComponentsCs::Bind();
@@ -65,7 +71,7 @@ namespace Spirit {
 			m_LastTime = time;
 
 			Input::Update();
-
+			AssetLibrary::Update();
 			m_LayerStack.Update(ts);
 			//Update ImGui
 			m_LayerStack.LightUpdate();
@@ -92,15 +98,6 @@ namespace Spirit {
 
 
 
-	std::filesystem::path Application::GetAssetDir() const
-	{
-		return m_AssetPath;
-	}
-
-	std::filesystem::path Application::GetRessourceDir() const
-	{
-		return m_RessourcePath;
-	}
 
 	
 

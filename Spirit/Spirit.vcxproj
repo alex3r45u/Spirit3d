@@ -76,8 +76,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>sppch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_BUILD_DLL;SP_ENGINE;SP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;vendor\mono\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;SP_ENGINE;SP_PLATFORM_WINDOWS;SP_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;vendor\mono\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -100,8 +100,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>sppch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_BUILD_DLL;SP_ENGINE;SP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;vendor\mono\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;SP_ENGINE;SP_PLATFORM_WINDOWS;SP_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;vendor\mono\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -128,8 +128,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>sppch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>SP_PLATFORM_WINDOWS;SP_BUILD_DLL;SP_ENGINE;SP_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;vendor\mono\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>YAML_CPP_STATIC_DEFINE;SP_ENGINE;SP_PLATFORM_WINDOWS;SP_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\glfw\include;vendor\glad\include;vendor\imgui;vendor\glm;vendor\stb;vendor\assimp;vendor\entt\include;vendor\mono\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -156,10 +156,8 @@
     <ClInclude Include="src\Spirit\Application.h" />
     <ClInclude Include="src\Spirit\Core.h" />
     <ClInclude Include="src\Spirit\Core\AssetLibrary.h" />
-    <ClInclude Include="src\Spirit\Core\FileTypes.h" />
-    <ClInclude Include="src\Spirit\Core\MaterialLibrary.h" />
-    <ClInclude Include="src\Spirit\Core\MeshLibrary.h" />
-    <ClInclude Include="src\Spirit\Core\ShaderLibrary.h" />
+    <ClInclude Include="src\Spirit\Core\AssetRegistry.h" />
+    <ClInclude Include="src\Spirit\Core\FileType.h" />
     <ClInclude Include="src\Spirit\Core\TimeStep.h" />
     <ClInclude Include="src\Spirit\EntryPoint.h" />
     <ClInclude Include="src\Spirit\Event\ApplicationEvent.h" />
@@ -183,6 +181,8 @@
     <ClInclude Include="src\Spirit\Platform\Platforms.h" />
     <ClInclude Include="src\Spirit\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Spirit\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Spirit\Project\Project.h" />
+    <ClInclude Include="src\Spirit\Project\ProjectSerializer.h" />
     <ClInclude Include="src\Spirit\Render\Buffer.h" />
     <ClInclude Include="src\Spirit\Render\Camera.h" />
     <ClInclude Include="src\Spirit\Render\Framebuffer.h" />
@@ -212,6 +212,7 @@
     <ClInclude Include="src\Spirit\Scene\Scripting\ParameterList.h" />
     <ClInclude Include="src\Spirit\Scene\Scripting\Parameters.h" />
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptClass.h" />
+    <ClInclude Include="src\Spirit\Scene\Scripting\ScriptComponent.h" />
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptController.h" />
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptDomain.h" />
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptField.h" />
@@ -768,10 +769,6 @@
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp" />
     <ClCompile Include="src\Spirit\Core\AssetLibrary.cpp" />
-    <ClCompile Include="src\Spirit\Core\FileTypes.cpp" />
-    <ClCompile Include="src\Spirit\Core\MaterialLibrary.cpp" />
-    <ClCompile Include="src\Spirit\Core\MeshLibrary.cpp" />
-    <ClCompile Include="src\Spirit\Core\ShaderLibrary.cpp" />
     <ClCompile Include="src\Spirit\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Spirit\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Spirit\Layer\LayerStack.cpp" />
@@ -785,6 +782,8 @@
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlVertexArray.cpp" />
     <ClCompile Include="src\Spirit\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Spirit\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Spirit\Project\Project.cpp" />
+    <ClCompile Include="src\Spirit\Project\ProjectSerializer.cpp" />
     <ClCompile Include="src\Spirit\Render\Buffer.cpp" />
     <ClCompile Include="src\Spirit\Render\Camera.cpp" />
     <ClCompile Include="src\Spirit\Render\Framebuffer.cpp" />
@@ -793,7 +792,6 @@
     <ClCompile Include="src\Spirit\Render\Lights\LightManager.cpp" />
     <ClCompile Include="src\Spirit\Render\Lights\PointLight.cpp" />
     <ClCompile Include="src\Spirit\Render\Lights\SpotLight.cpp" />
-    <ClCompile Include="src\Spirit\Render\Material.cpp" />
     <ClCompile Include="src\Spirit\Render\Mesh.cpp" />
     <ClCompile Include="src\Spirit\Render\RenderAPI.cpp" />
     <ClCompile Include="src\Spirit\Render\RenderCommand.cpp" />
@@ -811,6 +809,7 @@
     <ClCompile Include="src\Spirit\Scene\Scripting\ParameterList.cpp" />
     <ClCompile Include="src\Spirit\Scene\Scripting\Parameters.cpp" />
     <ClCompile Include="src\Spirit\Scene\Scripting\ScriptClass.cpp" />
+    <ClCompile Include="src\Spirit\Scene\Scripting\ScriptComponent.cpp" />
     <ClCompile Include="src\Spirit\Scene\Scripting\ScriptController.cpp" />
     <ClCompile Include="src\Spirit\Scene\Scripting\ScriptDomain.cpp" />
     <ClCompile Include="src\Spirit\Scene\Scripting\ScriptField.cpp" />
@@ -839,6 +838,9 @@
     </ProjectReference>
     <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\yaml-cpp\yaml.vcxproj">
+      <Project>{7814A17C-644B-A20D-0D38-8810F94D1E0F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

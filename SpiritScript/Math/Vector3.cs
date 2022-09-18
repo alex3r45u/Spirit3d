@@ -58,12 +58,12 @@ namespace SpiritScript.Math
             set { Y = value.X; Z = value.Y; }
         }
 
-        static Vector3Direction Forward = Vector3Direction.Forward;
-        static Vector3Direction Backward = Vector3Direction.Backward;
-        static Vector3Direction Left = Vector3Direction.Left;
-        static Vector3Direction Right = Vector3Direction.Right;
-        static Vector3Direction Up = Vector3Direction.Up;
-        static Vector3Direction Down = Vector3Direction.Down;
+        public static Vector3Direction Forward = Vector3Direction.Forward;
+        public static Vector3Direction Backward = Vector3Direction.Backward;
+        public static Vector3Direction Left = Vector3Direction.Left;
+        public static Vector3Direction Right = Vector3Direction.Right;
+        public static Vector3Direction Up = Vector3Direction.Up;
+        public static Vector3Direction Down = Vector3Direction.Down;
     }
 
 }

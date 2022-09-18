@@ -131,12 +131,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\AssetViewer.h" />
     <ClInclude Include="src\Windows\FileExplorerPanel.h" />
     <ClInclude Include="src\Windows\Panel.h" />
     <ClInclude Include="src\Windows\PropertiesPanel.h" />
     <ClInclude Include="src\Windows\SceneHierarchyPanel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\AssetViewer.cpp" />
     <ClCompile Include="src\EditorApp.cpp" />
     <ClCompile Include="src\Windows\FileExplorerPanel.cpp" />
     <ClCompile Include="src\Windows\PropertiesPanel.cpp" />

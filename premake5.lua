@@ -21,15 +21,17 @@ workspace "Spirit3d"
     IncludeDir["assimp"] = "Spirit/vendor/assimp/"
 	IncludeDir["entt"] = "Spirit/vendor/entt/include"
 	IncludeDir["mono"] = "Spirit/vendor/mono/include"
+	IncludeDir["yaml"] = "Spirit/vendor/yaml-cpp/include"
     
     
     include "Spirit/vendor/glfw"
     include "Spirit/vendor/glad"
     include "Spirit/vendor/imgui"
+	include "Spirit/vendor/yaml-cpp"
     
     project "Spirit"
     	location "Spirit"
-    	kind "staticLib"
+    	kind "StaticLib"
     	language "C++"
     
     	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
@@ -47,7 +49,7 @@ workspace "Spirit3d"
     		"%{prj.name}/vendor/glm/glm/**.hpp",
     		"%{prj.name}/vendor/glm/glm/**.inl",
 			"%{prj.name}/vendor/assimp/**",
-			"%{prj.name}/vendor/mono/**"
+			"%{prj.name}/vendor/mono/**",
     	}
     
     	includedirs
@@ -62,12 +64,15 @@ workspace "Spirit3d"
     		"%{IncludeDir.assimp}",
 			"%{IncludeDir.entt}",
 			"%{IncludeDir.mono}",
+			"%{IncludeDir.yaml}",
+
     	}
     
     	links {
     		"GLFW",
     		"Glad",
     		"ImGui",
+			"yaml",
 			"assimp-vc143-mtd.lib",
 			"mono-2.0-sgen.lib",
     	}
@@ -75,7 +80,12 @@ workspace "Spirit3d"
 		libdirs {
 			"%{prj.name}/lib",
 		}
-    
+
+		defines {
+			"YAML_CPP_STATIC_DEFINE",
+    		"SP_ENGINE"
+		}
+
     	filter "system:windows"
     		cppdialect "C++17"
     		staticruntime "On"
@@ -84,8 +94,7 @@ workspace "Spirit3d"
     		defines
     		{
     			"SP_PLATFORM_WINDOWS",
-    			"SP_BUILD_DLL",
-    			"SP_ENGINE"
+    			
     		}
     
     		postbuildcommands
@@ -105,58 +114,6 @@ workspace "Spirit3d"
     		defines "SP_DIST"
     		optimize "On"
     
-    project "Sandbox"
-    	location "Sandbox"
-    	kind "ConsoleApp"
-    	language "C++"
-    
-    	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-    	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-    
-    	files
-    	{
-    		"%{prj.name}/src/**.h",
-    		"%{prj.name}/src/**.cpp"
-    	}
-    
-    	includedirs
-    	{
-    		"Spirit/vendor/spdlog/include",
-    		"Spirit/src",
-            "Spirit/vendor",
-    		"%{IncludeDir.glm}",
-			"%{IncludeDir.assimp}",
-			"%{IncludeDir.entt}",
-    	}
-    
-    	links
-    	{
-    		"Spirit",
-    	}
-
-    
-    	filter "system:windows"
-    		cppdialect "C++17"
-    		staticruntime "On"
-    		systemversion "latest"
-    
-    		defines
-    		{
-    			"SP_PLATFORM_WINDOWS"
-    		}
-    
-    	filter "configurations:Debug"
-    		defines "SP_DEBUG"
-    		symbols "On"
-    
-    	filter "configurations:Release"
-    		defines "SP_RELEASE"
-    		optimize "On"
-    
-    	filter "configurations:Dist"
-    		defines "SP_DIST"
-    		optimize "On"
-
 
 
 
@@ -215,6 +172,57 @@ workspace "Spirit3d"
 
 
 
+	project "SpiritHub"
+		location "SpiritHub"
+		kind "ConsoleApp"
+		language "C++"
+	
+		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+		
+		files
+		{
+			"%{prj.name}/src/**.h",
+			"%{prj.name}/src/**.cpp"
+		}
+	
+		includedirs
+		{
+			"Spirit/vendor/spdlog/include",
+			"Spirit/src",
+			"Spirit/vendor",
+		}
+	
+		links
+		{
+			"Spirit",
+		}
+
+	
+		filter "system:windows"
+			cppdialect "C++17"
+			staticruntime "On"
+			systemversion "latest"
+	
+			defines
+			{
+				"SP_PLATFORM_WINDOWS"
+			}
+	
+		filter "configurations:Debug"
+			defines "SP_DEBUG"
+			symbols "On"
+	
+		filter "configurations:Release"
+			defines "SP_RELEASE"
+			optimize "On"
+	
+		filter "configurations:Dist"
+			defines "SP_DIST"
+			optimize "On"
+
+
+
 
 
 
@@ -233,6 +241,7 @@ workspace "Spirit3d"
 		}
 
 		links {
+			--"SpiritScript"
 		}
 
 

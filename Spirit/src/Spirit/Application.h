@@ -18,7 +18,7 @@ namespace Spirit {
 	{
 	public:
 		Application();
-		Application(std::filesystem::path assets, std::filesystem::path ressources);
+		Application(std::filesystem::path project);
 		virtual ~Application();
 
 		void Run();
@@ -29,8 +29,7 @@ namespace Spirit {
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() const { return *m_Window; }
 
-		std::filesystem::path GetAssetDir() const;
-		std::filesystem::path GetRessourceDir() const;
+		std::filesystem::path GetProjectPath() const;
 
 	private:
 		void Init();
@@ -45,8 +44,7 @@ namespace Spirit {
 		float m_LastTime;
 		bool m_Running;
 
-		std::filesystem::path m_AssetPath;
-		std::filesystem::path m_RessourcePath;
+		std::filesystem::path m_ProjectPath;
 	protected:
 		LayerStack m_LayerStack = LayerStack();
 

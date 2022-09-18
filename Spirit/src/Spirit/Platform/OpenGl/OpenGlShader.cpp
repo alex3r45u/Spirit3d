@@ -1,24 +1,36 @@
 #include "sppch.h"
 #include "OpenGlShader.h"
-
+#include <filesystem>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-Spirit::Render::OpenGlShader::OpenGlShader(const std::string& name, const std::string& vertPath, const std::string& fragPath) : m_Name(name)
+static void LogErrors(unsigned int shader) {
+	char infoLog[512];
+	int success;
+	glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(shader, 512, NULL, infoLog);
+		SP_CORE_ERROR("Shadercompilation failed {0}", infoLog);
+	};
+}
+
+Spirit::Render::OpenGlShader::OpenGlShader(const std::string& name, const std::filesystem::path& vertPath, const std::filesystem::path& fragPath) : m_Name(name)
 {
 
-	std::string vertSrc = ReadFile(vertPath);
-	std::string fragSrc = ReadFile(fragPath);
+	std::string vertSrc = ReadFile(vertPath.string());
+	std::string fragSrc = ReadFile(fragPath.string());
 	unsigned int vertShader = glCreateShader(GL_VERTEX_SHADER);
 	const GLchar* vertSource = vertSrc.c_str();
 	glShaderSource(vertShader, 1, &vertSource, 0);
 	glCompileShader(vertShader);
+	LogErrors(vertShader);
 
 	unsigned int fragShader = glCreateShader(GL_FRAGMENT_SHADER);
 	const GLchar* fragSource = fragSrc.c_str();
 	glShaderSource(fragShader, 1, &fragSource, 0);
 	glCompileShader(fragShader);
-
+	LogErrors(fragShader);
 	m_RendererID = glCreateProgram();
 
 	glAttachShader(m_RendererID, vertShader);
@@ -31,6 +43,8 @@ Spirit::Render::OpenGlShader::OpenGlShader(const std::string& name, const std::s
 
 
 }
+
+
 
 
 Spirit::Render::OpenGlShader::~OpenGlShader()

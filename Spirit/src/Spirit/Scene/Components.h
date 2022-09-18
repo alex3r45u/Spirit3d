@@ -12,6 +12,11 @@
 #include "ScriptableEntity.h"
 
 namespace Spirit {
+
+	struct UUIDComponent {
+
+	};
+
 	struct TagComponent {
 		std::string Tag;
 
@@ -34,6 +39,8 @@ namespace Spirit {
 		glm::vec3 GetBackward() { Recalculate(); return m_Backward; }
 		glm::vec3 GetLeft() { Recalculate(); return m_Left; }
 		glm::vec3 GetRight() { Recalculate(); return m_Right; }
+		glm::vec3 GetUp() { Recalculate(); return m_Up; }
+		glm::vec3 GetDown() { Recalculate(); return m_Down; }
 
 
 
@@ -65,6 +72,8 @@ namespace Spirit {
 		glm::vec3 m_Backward;
 		glm::vec3 m_Left;
 		glm::vec3 m_Right;
+		glm::vec3 m_Up;
+		glm::vec3 m_Down;
 	};
 
 	struct MeshRendererComponent
@@ -72,7 +81,7 @@ namespace Spirit {
 		std::shared_ptr<Spirit::Render::Mesh> Mesh;
 		MeshRendererComponent() { Mesh = std::make_shared < Spirit::Render::Mesh>(); }
 		MeshRendererComponent(const MeshRendererComponent&) = default;
-		MeshRendererComponent(const std::string& name) { Mesh = AssetLibrary::s_MeshLibrary.Get(name);}
+		MeshRendererComponent(const std::string& name) { Mesh = AssetLibrary::GetMeshRegistry().GetMember({ name }); }
 	};
 
 	struct MaterialComponent {
@@ -81,13 +90,28 @@ namespace Spirit {
 		MaterialComponent(const MaterialComponent&) = default;
 	};
 	
-
-	struct PerspectiveCameraComponent {
-		Spirit::Render::PerspectiveCamera Camera;
-
-		PerspectiveCameraComponent() = default;
-		PerspectiveCameraComponent(const PerspectiveCameraComponent&) = default;
-		PerspectiveCameraComponent(const Spirit::Render::PerspectiveCamera& camera) : Camera(camera) {}
+	enum class CameraType {
+		Perspective,
+		Orthographic
+	};
+	struct CameraComponent {
+		std::shared_ptr<Spirit::Render::Camera> Camera;
+		bool IsMain = false;
+		CameraType Type;
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const CameraType& type) {
+			switch (type) {
+			case CameraType::Perspective:
+				Camera = std::make_shared<Render::PerspectiveCamera>();
+				Type = CameraType::Perspective;
+				break;
+			case CameraType::Orthographic:
+				//TODO
+				Type = CameraType::Orthographic;
+				break;
+			}
+		}
 
 	};
 

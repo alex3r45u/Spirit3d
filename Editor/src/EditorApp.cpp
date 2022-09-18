@@ -4,28 +4,37 @@
 #include "Windows/PropertiesPanel.h"
 #include "Windows/FileExplorerPanel.h"
 
+enum class SceneState {
+	None = 0,
+	Edit,
+	Play,
+	PlayStop,
+};
+
+
 class EditorLayer : public Spirit::Layer {
 public:
 	EditorLayer() : Layer("Editor") {
 	}
 
 	virtual void OnAttach() override {
-		
-		Spirit::AssetLibrary::s_ShaderLibrary.Load("default", "assets/vertex.glsl", "assets/fragment.glsl");
+		m_State = SceneState::Edit;
+		Spirit::AssetLibrary::GetShaderRegistry().AddMember({ "default", "assets/vertex.glsl", "assets/fragment.glsl" });
 		Spirit::Render::FramebufferSettings fbosettings;
 		fbosettings.Width = 1280;
 		fbosettings.Height = 720;
 		m_Fbo = Spirit::Render::Framebuffer::Create(fbosettings);
 		
-		Spirit::SceneManager::AddScene(std::make_shared<Spirit::Scene>("Test"));
+		Spirit::SceneManager::CreateScene("Test");
 		Spirit::SceneManager::SetActiveScene("Test");
 
 		m_Camera = Spirit::SceneManager::GetActiveScene()->CreateEntity("Cam");
-		m_Camera.AddComponent<Spirit::PerspectiveCameraComponent>(Spirit::Render::PerspectiveCamera(1280, 720, 45.0f));
+		m_Camera.AddComponent<Spirit::CameraComponent>(Spirit::CameraType::Perspective);
 		
 		m_Monkey = Spirit::SceneManager::GetActiveScene()->CreateEntity("Monkey");
 		m_Monkey.AddComponent<Spirit::MeshRendererComponent>("assets/monkey.fbx");
 		m_Monkey.AddComponent<Spirit::MaterialComponent>();
+		Spirit::SceneManager::SaveScene(std::filesystem::path("TestScene.spirit"));
 		m_SceneHierarchyPanel.SetScene(Spirit::SceneManager::GetActiveScene());
 		m_PropertiesPanel.SetScene(Spirit::SceneManager::GetActiveScene());
 		m_PropertiesPanel.SetSceneHierarchy(&m_SceneHierarchyPanel);
@@ -100,6 +109,34 @@ public:
 
 		if (ImGui::BeginMenuBar())
 		{
+			if (ImGui::Button(m_State == SceneState::Edit ? "Play" : "Edit")) {
+				m_State = m_State == SceneState::Edit ? SceneState::Play : SceneState::Edit;
+
+				switch (m_State)
+				{
+				case SceneState::Edit:
+					break;
+				case SceneState::Play: {
+					std::string activeSceneName = Spirit::SceneManager::GetActiveScene()->GetPath().string();
+					Spirit::SceneManager::SaveActiveScene(std::filesystem::path(activeSceneName));
+					break;
+				}
+					
+				case SceneState::PlayStop:
+					break;
+				default:
+					break;
+				}
+			}
+			if (m_State == SceneState::Play) {
+				if(ImGui::Button("Stop")) {
+					m_State = SceneState::PlayStop;
+				}
+			} else if (m_State == SceneState::PlayStop) {
+				if (ImGui::Button("Start")) {
+					m_State = SceneState::Play;
+				}
+			}
 			if (ImGui::BeginMenu("File"))
 			{
 
@@ -147,6 +184,7 @@ public:
 
 
 private:
+	SceneState m_State;
 	std::shared_ptr<Spirit::Render::Framebuffer> m_Fbo;
 	glm::vec2 m_ViewportSize;
 	bool m_ViewportFocused = false, m_ViewportHovered = false;
@@ -164,7 +202,7 @@ private:
 class EditorApp : public Spirit::Application
 {
 public:
-	EditorApp() : Spirit::Application()//std::filesystem::current_path().append("assets"), std::filesystem::current_path().append("ressources"))
+	EditorApp() : Spirit::Application()
 	{
 		m_LayerStack.AddLayer(new EditorLayer());
 	}

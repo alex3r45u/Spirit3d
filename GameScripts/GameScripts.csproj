@@ -61,6 +61,9 @@
     <Compile Include="..\SpiritScript\Component.cs">
       <Link>SpiritScript\Component.cs</Link>
     </Compile>
+    <Compile Include="..\SpiritScript\Debug\Debug.cs">
+      <Link>SpiritScript\Debug\Debug.cs</Link>
+    </Compile>
     <Compile Include="..\SpiritScript\Entity.cs">
       <Link>SpiritScript\Entity.cs</Link>
     </Compile>

@@ -5,7 +5,7 @@
 namespace Spirit::Render {
 	class OpenGlShader : public Shader {
 	public:
-		OpenGlShader(const std::string& name, const std::string& vertPath, const std::string& fragPath);
+		OpenGlShader(const std::string& name, const std::filesystem::path& vertPath, const std::filesystem::path& fragPath);
 		virtual ~OpenGlShader();
 
 		virtual void Bind() override;

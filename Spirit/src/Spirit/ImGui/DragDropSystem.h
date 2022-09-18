@@ -6,7 +6,29 @@ namespace Spirit {
 	class DragDropSystem {
 	public:
 
+		
 
+		template<typename T>
+		static void SetTarget(const char* targetName, std::function<void(T)> func) {
+			if (ImGui::BeginDragDropTarget()) {
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(targetName)) {
+					func(*(T*)payload->Data);
+					ImGui::EndDragDropTarget();
+				}
+
+			}
+		}
+
+		template<typename T>
+		static void SetSource(const char* sourceName, T data) {
+			if (ImGui::BeginDragDropSource()) {
+
+				ImGui::SetDragDropPayload(sourceName, &data,sizeof(T));
+				ImGui::EndDragDropSource();
+			}
+		}
+
+		template<>
 		static void SetTarget(const char* targetName, std::function<void(const char*)> func) {
 			if (ImGui::BeginDragDropTarget()) {
 				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(targetName)) {
@@ -17,27 +39,11 @@ namespace Spirit {
 			}
 		}
 
+		template<>
 		static void SetSource(const char* sourceName, const char* data) {
 			if (ImGui::BeginDragDropSource()) {
 
 				ImGui::SetDragDropPayload(sourceName, data, (strlen(data) + 1) * sizeof(const char*));
-				ImGui::EndDragDropSource();
-			}
-		}
-
-		static void SetTargetInt(const char* targetName, std::function<void(int)> func) {
-			if (ImGui::BeginDragDropTarget()) {
-				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(targetName)) {
-					func(*(int*)payload->Data);
-					ImGui::EndDragDropTarget();
-				}
-
-			}
-		}
-		static void SetSourceInt(const char* sourceName, int data) {
-			if (ImGui::BeginDragDropSource()) {
-
-				ImGui::SetDragDropPayload(sourceName, &data,sizeof(int));
 				ImGui::EndDragDropSource();
 			}
 		}

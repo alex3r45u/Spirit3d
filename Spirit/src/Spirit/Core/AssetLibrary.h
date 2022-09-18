@@ -1,13 +1,20 @@
 #pragma once
-#include "MaterialLibrary.h"
-#include "ShaderLibrary.h"
-#include "MeshLibrary.h"
+#include "AssetRegistry.h"
+#include "Spirit/Render/Mesh.h"
+#include "Spirit/Render/Material.h"
+#include "Spirit/Render/Shader.h"
 
 namespace Spirit {
 	class AssetLibrary {
 	public:
-		static MaterialLibrary s_MaterialLibrary;
-		static ShaderLibrary s_ShaderLibrary;
-		static MeshLibrary s_MeshLibrary;
+		static void Init();
+		static void Update();
+		static AssetRegistry<Spirit::Render::Mesh>& GetMeshRegistry();
+		static AssetRegistry<Spirit::Render::Shader>& GetShaderRegistry();
+		static AssetRegistry<Spirit::Render::Material>& GetMaterialRegistry();
+	private:
+		static AssetRegistry<Render::Mesh> m_MeshRegistry;
+		static AssetRegistry<Render::Shader> m_ShaderRegistry;
+		static AssetRegistry<Render::Material> m_MaterialRegistry;
 	};
 }

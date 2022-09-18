@@ -13,7 +13,7 @@ namespace Spirit::Scripting {
 	enum class FieldType
 	{
 		None = 0,
-		Unknown = 1,
+		Unknown,
 		Int,
 		UnsignedInt,
 		Float,

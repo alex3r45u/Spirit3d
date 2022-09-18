@@ -5,15 +5,17 @@
 namespace Spirit::Render {
 	class Light {
 	public:
-		Light() : color(glm::vec3(1.0f)) {}
+		Light() = default;
 		virtual void UploadUniforms(const std::shared_ptr<Shader>& shader) = 0;
 		static int GetNoDirectionalLights()  { return s_NoDirectionalLights; }
 		static int GetNoSpotLights()  { return s_NoSpotLights; }
 		static int GetNoPointLights()  { return s_NoPointLights; }
 		static void ResetNoLights();
-		glm::vec3 position;
-		glm::vec3 direction;
-		glm::vec3 color;
+		glm::vec3 Position;
+		glm::vec3 Direction;
+		glm::vec3 Forward;
+		glm::vec3 Color;
+		float Intensity;
 
 	protected:
 		static int s_NoDirectionalLights;

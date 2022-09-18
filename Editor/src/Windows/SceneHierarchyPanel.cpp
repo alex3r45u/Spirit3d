@@ -33,10 +33,11 @@ void Spirit::SceneHierarchyPanel::ImGuiRender()
 		if (ImGui::BeginMenu("Cameras")) {
 			if (ImGui::MenuItem("Perspective")) {
 				auto g = m_Scene->CreateEntity("Camera");
-				g.AddComponent<PerspectiveCameraComponent>();
+				g.AddComponent<CameraComponent>(Spirit::CameraType::Perspective);
 			}
 			if (ImGui::MenuItem("Orthocraphic")) {
 				auto g = m_Scene->CreateEntity("Camera");
+				g.AddComponent<CameraComponent>(Spirit::CameraType::Orthographic);
 				//add component
 			}
 			ImGui::EndMenu();
@@ -79,7 +80,7 @@ void Spirit::SceneHierarchyPanel::DrawNode(Entity& entity)
 		ImGui::EndPopup();
 	}
 	
-	DragDropSystem::SetSourceInt("ENTITY", (uint32_t)entity);
+	DragDropSystem::SetSource<int>("ENTITY", (uint32_t)entity);
 	if (opened)
 	{
 		//ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow;

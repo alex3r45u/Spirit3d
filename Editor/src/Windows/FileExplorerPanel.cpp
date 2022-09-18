@@ -7,6 +7,17 @@
 #include "Spirit/ImGui/DragDropSystem.h"
 
 
+Spirit::FileExplorerPanel::FileExplorerPanel()
+{
+	Init();
+}
+
+Spirit::FileExplorerPanel::FileExplorerPanel(const std::shared_ptr<Scene>& scene, std::filesystem::path directory)
+	: Panel(scene), m_RootDirectory(directory), m_CurrentDirectory(directory)
+{
+	Init();
+}
+
 void Spirit::FileExplorerPanel::ImGuiRender()
 {
 	ImGui::Begin("File Explorer");
@@ -32,7 +43,7 @@ void Spirit::FileExplorerPanel::DrawDirectory(std::filesystem::path directory)
 		if (ImGui::Button("<-")) {
 			m_CurrentDirectory = m_CurrentDirectory.parent_path();
 		}
-		DragDropSystem::SetTarget("FILE_EXPLORER", [&](auto c) {
+		DragDropSystem::SetTarget<const char*>("FILE_EXPLORER", [&](const char* c) {
 			std::filesystem::path p(c);
 			std::filesystem::rename(p, m_CurrentDirectory.parent_path().string() + "\\" + p.filename().string());
 			});
@@ -47,7 +58,7 @@ void Spirit::FileExplorerPanel::DrawDirectory(std::filesystem::path directory)
 				m_CurrentDirectory /= fileName;
 			}
 
-			DragDropSystem::SetTarget("FILE_EXPLORER", [&](auto c) {
+			DragDropSystem::SetTarget<const char*>("FILE_EXPLORER", [&](const char* c) {
 				std::filesystem::path p(c);
 				std::filesystem::rename(p, entry.path().string() + "\\" + p.filename().string());
 				});
@@ -113,4 +124,10 @@ void Spirit::FileExplorerPanel::DrawDirectory(std::filesystem::path directory)
 void Spirit::FileExplorerPanel::Inspect(std::filesystem::path directory)
 {
 	//Switch Through the file type
+}
+
+void Spirit::FileExplorerPanel::Init()
+{
+	m_DirectoryIcon = Spirit::Render::Texture2d::Create("resources/folder.png");
+	m_FileIcon = Spirit::Render::Texture2d::Create("resources/file.png");
 }
