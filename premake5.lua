@@ -77,9 +77,7 @@ workspace "Spirit3d"
 			"mono-2.0-sgen.lib",
     	}
 
-		libdirs {
-			"%{prj.name}/lib",
-		}
+		
 
 		defines {
 			"YAML_CPP_STATIC_DEFINE",
@@ -96,19 +94,24 @@ workspace "Spirit3d"
     			"SP_PLATFORM_WINDOWS",
     			
     		}
+
     
-    		postbuildcommands
-    		{
-    			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-    		}
+    		
     
     	filter "configurations:Debug"
     		defines "SP_DEBUG"
     		symbols "On"
-    
+			libdirs {
+				"%{prj.name}/lib/Debug",
+			}
+
+
     	filter "configurations:Release"
     		defines "SP_RELEASE"
     		optimize "On"
+			libdirs {
+				"%{prj.name}/lib/Release",
+			}
     
     	filter "configurations:Dist"
     		defines "SP_DIST"
@@ -147,7 +150,14 @@ workspace "Spirit3d"
 			"Spirit",
 		}
 
-	
+		postbuildcommands
+    	{
+    		("{COPY} ../Spirit/vendor/mono/bin/mono-2.0-sgen.dll ../bin/" .. outputdir .. "/%{prj.name}"),
+			("{COPY} ../Spirit/vendor/assimp/bin/assimp-vc143-mtd.dll ../bin/" .. outputdir .. "/%{prj.name}")
+    	}
+
+
+
 		filter "system:windows"
 			cppdialect "C++17"
 			staticruntime "On"
@@ -237,11 +247,10 @@ workspace "Spirit3d"
 
 		files {
 			"%{prj.name}/**",
-			"SpiritScript/**"
 		}
 
 		links {
-			--"SpiritScript"
+			"SpiritScript"
 		}
 
 

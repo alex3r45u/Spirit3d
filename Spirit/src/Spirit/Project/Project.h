@@ -1,5 +1,6 @@
 #pragma once
 #include <list>
+#include <filesystem>
 #include "Spirit/Scene/SceneManager.h"
 
 namespace Spirit {
@@ -7,12 +8,14 @@ namespace Spirit {
 		std::string StartScene;
 		std::filesystem::path Path;
 		std::filesystem::path AssetPath;
+		std::filesystem::path RessourcePath;
 		std::filesystem::path ScriptSoulutionPath;
 		//TODO
 	};
 	class Project {
 	public:
-		Project(const std::filesystem::path path, const std::filesystem::path& assetPath, const std::filesystem::path& scriptSoulutionPath);
+		Project() = default;
+		Project(const ProjectSettings& settings);
 		void SetSettings(const ProjectSettings& settings);
 		ProjectSettings& GetSettings();
 	private:

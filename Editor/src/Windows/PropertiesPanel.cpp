@@ -97,6 +97,7 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 	
 		}
 		DragDropSystem::SetTarget<const char*>("FILE_EXPLORER", [&](const char* c) {
+			SP_CORE_INFO(c);
 			component.Mesh = AssetLibrary::GetMeshRegistry().GetMember({c});
 			});
 		});

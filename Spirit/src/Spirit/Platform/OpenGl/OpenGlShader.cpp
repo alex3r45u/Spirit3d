@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include "Spirit/Core/File.h"
 
 static void LogErrors(unsigned int shader) {
 	char infoLog[512];
@@ -18,8 +19,8 @@ static void LogErrors(unsigned int shader) {
 Spirit::Render::OpenGlShader::OpenGlShader(const std::string& name, const std::filesystem::path& vertPath, const std::filesystem::path& fragPath) : m_Name(name)
 {
 
-	std::string vertSrc = ReadFile(vertPath.string());
-	std::string fragSrc = ReadFile(fragPath.string());
+	std::string vertSrc = Spirit::File::Read(FileRegion::Ressource, vertPath);
+	std::string fragSrc = Spirit::File::Read(FileRegion::Ressource, fragPath);
 	unsigned int vertShader = glCreateShader(GL_VERTEX_SHADER);
 	const GLchar* vertSource = vertSrc.c_str();
 	glShaderSource(vertShader, 1, &vertSource, 0);
@@ -97,22 +98,3 @@ void Spirit::Render::OpenGlShader::SetMat4(const std::string& name, glm::mat4 va
 	glUniformMatrix4fv(glGetUniformLocation(m_RendererID, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
 }
 
-std::string Spirit::Render::OpenGlShader::ReadFile(const std::string& path)
-{
-	std::string result;
-	std::ifstream in(path, std::ios::in | std::ios::binary);
-	if (in)
-	{
-		in.seekg(0, std::ios::end);
-		result.resize(in.tellg());
-		in.seekg(0, std::ios::beg);
-		in.read(&result[0], result.size());
-		in.close();
-	}
-	else
-	{
-		SP_CORE_ERROR("Could not open file '{0}'", path);
-	}
-
-	return result;
-}

@@ -8,7 +8,7 @@ static const char* assembly_name;
 namespace Spirit::Scripting {
 	class ScriptController {
 	public:
-		static void Init(const char* filename);
+		static void Init(const char* filename, const char* filenameCore);
 		static ScriptDomain& GetDomain();
 
 		template<typename Func>

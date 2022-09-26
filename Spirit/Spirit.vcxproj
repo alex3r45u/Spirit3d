@@ -82,6 +82,7 @@
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -89,11 +90,8 @@
     </Link>
     <Lib>
       <AdditionalDependencies>assimp-vc143-mtd.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>lib\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\Spirit\Spirit.lib\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\Spirit\Spirit.lib ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\Spirit\Spirit.lib ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -109,6 +107,7 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -117,11 +116,8 @@
     </Link>
     <Lib>
       <AdditionalDependencies>assimp-vc143-mtd.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>lib\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\Spirit\Spirit.lib\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\Spirit\Spirit.lib ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\Spirit\Spirit.lib ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
@@ -137,6 +133,7 @@
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,11 +142,7 @@
     </Link>
     <Lib>
       <AdditionalDependencies>assimp-vc143-mtd.lib;mono-2.0-sgen.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
-    <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\Spirit\Spirit.lib\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\Spirit\Spirit.lib ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\Spirit\Spirit.lib ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Spirit.h" />
@@ -157,6 +150,7 @@
     <ClInclude Include="src\Spirit\Core.h" />
     <ClInclude Include="src\Spirit\Core\AssetLibrary.h" />
     <ClInclude Include="src\Spirit\Core\AssetRegistry.h" />
+    <ClInclude Include="src\Spirit\Core\File.h" />
     <ClInclude Include="src\Spirit\Core\FileType.h" />
     <ClInclude Include="src\Spirit\Core\TimeStep.h" />
     <ClInclude Include="src\Spirit\EntryPoint.h" />
@@ -769,6 +763,7 @@
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp" />
     <ClCompile Include="src\Spirit\Core\AssetLibrary.cpp" />
+    <ClCompile Include="src\Spirit\Core\File.cpp" />
     <ClCompile Include="src\Spirit\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Spirit\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Spirit\Layer\LayerStack.cpp" />
@@ -826,8 +821,9 @@
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig" />
     <None Include="vendor\assimp\assimp\config.h.in" />
+    <None Include="vendor\assimp\bin\assimp-vc143-mtd.dll" />
+    <None Include="vendor\mono\bin\mono-2.0-sgen.dll" />
     <None Include="vendor\mono\include\mono\cil\opcode.def" />
-    <None Include="vendor\mono\lib\Debug\libmono-static-sgen.lib" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\glfw\GLFW.vcxproj">

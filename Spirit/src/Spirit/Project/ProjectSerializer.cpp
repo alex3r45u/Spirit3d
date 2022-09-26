@@ -28,5 +28,6 @@ void Spirit::ProjectSerializer::Serialize(const std::filesystem::path& filepath)
 
 bool Spirit::ProjectSerializer::Deserialize(const std::filesystem::path& filepath)
 {
-	return false;
+
+	return true;
 }

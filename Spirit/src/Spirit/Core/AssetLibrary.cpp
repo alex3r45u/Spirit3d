@@ -11,7 +11,7 @@ void Spirit::AssetLibrary::Init()
 		return std::make_shared<Spirit::Render::Mesh>(l.at(0));
 		});
 	m_ShaderRegistry = Spirit::AssetRegistry<Spirit::Render::Shader>([](std::vector<std::string> l) {
-		return Spirit::Render::Shader::Create(l.at(0), l.at(1), l.at(2));
+		return Spirit::Render::Shader::Create(l.at(0), std::filesystem::path(l.at(1)), std::filesystem::path(l.at(2)));
 		});
 	m_MaterialRegistry = Spirit::AssetRegistry<Spirit::Render::Material>([](std::vector<std::string> l) {
 		return std::make_shared<Spirit::Render::Material>();//TODO loading

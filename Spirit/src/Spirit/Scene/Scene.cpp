@@ -31,7 +31,7 @@ Spirit::Entity Spirit::Scene::CreateEntity(const std::string& name)
 	entity.AddComponent<TransformComponent>();
 	auto& tag = entity.AddComponent<TagComponent>();
 	tag.Tag = name.empty() ? "Entity" : name;
-	m_ScriptingECS.AddComponent((unsigned int)entity, std::make_shared<Scripting::ScriptObject>(Scripting::ScriptController::GetDomain().GetClass("GameScripts.Class1").CreateInstance()));
+	//m_ScriptingECS.AddComponent((unsigned int)entity, std::make_shared<Scripting::ScriptObject>(Scripting::ScriptController::GetDomain().GetClass("GameScripts.Class1").CreateInstance()));
 	return entity;
 }
 
@@ -81,7 +81,7 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 	{
 		
 		{
-			Spirit::Render::LightManager::Start(AssetLibrary::GetShaderRegistry().GetMember({ "default", "assets/vertex.glsl", "assets/fragment.glsl" }));
+			Spirit::Render::LightManager::Start(AssetLibrary::GetShaderRegistry().GetMember({ "default", "vertex.glsl", "fragment.glsl" }));
 			{
 				auto view = m_Registry.view <TransformComponent, PointLightComponent>();
 				for (auto entity : view) {

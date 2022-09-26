@@ -31,6 +31,9 @@
     <Filter Include="src\Spirit\Platform\Windows">
       <UniqueIdentifier>{C5FC4D9B-310A-7C81-BAF0-776C26FD4738}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Spirit\Project">
+      <UniqueIdentifier>{9D54CDC1-8938-8E17-F298-886ADE9B7899}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Spirit\Render">
       <UniqueIdentifier>{E65FAD47-5276-ABDD-9BED-36FF07437C65}</UniqueIdentifier>
     </Filter>
@@ -61,6 +64,9 @@
     <Filter Include="vendor\assimp\assimp\port\AndroidJNI">
       <UniqueIdentifier>{F0505B56-DC37-1D4E-8588-836B714E96B4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\assimp\bin">
+      <UniqueIdentifier>{97EB688F-0302-6725-4C79-F246B8CE37AD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor\glm">
       <UniqueIdentifier>{829FC5A8-6E57-07F6-D75E-E051C335A2E6}</UniqueIdentifier>
     </Filter>
@@ -82,6 +88,9 @@
     <Filter Include="vendor\mono">
       <UniqueIdentifier>{5BE77CC1-C79C-F5B6-5091-EF8DBC45ECBA}</UniqueIdentifier>
     </Filter>
+    <Filter Include="vendor\mono\bin">
+      <UniqueIdentifier>{8391227A-EF1C-903E-F82D-13336438EC3E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor\mono\include">
       <UniqueIdentifier>{CE393D2A-3A9B-1A38-C308-61EA2F6951F7}</UniqueIdentifier>
     </Filter>
@@ -100,12 +109,6 @@
     <Filter Include="vendor\mono\include\mono\utils">
       <UniqueIdentifier>{56B029CF-42D6-F335-2B1C-790117E11802}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vendor\mono\lib">
-      <UniqueIdentifier>{01BC227A-6D47-903E-7658-1333E262EC3E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\mono\lib\Debug">
-      <UniqueIdentifier>{3703E48F-A36F-9F8A-6C63-37E8D88EC1F2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vendor\stb">
       <UniqueIdentifier>{8BD3C5A8-778B-07F6-E092-E051CC69A2E6}</UniqueIdentifier>
     </Filter>
@@ -121,6 +124,12 @@
       <Filter>src\Spirit</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Core\AssetLibrary.h">
+      <Filter>src\Spirit\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Core\AssetRegistry.h">
+      <Filter>src\Spirit\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Core\File.h">
       <Filter>src\Spirit\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Core\FileType.h">
@@ -194,6 +203,12 @@
     </ClInclude>
     <ClInclude Include="src\Spirit\Platform\Windows\WindowsWindow.h">
       <Filter>src\Spirit\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Project\Project.h">
+      <Filter>src\Spirit\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Project\ProjectSerializer.h">
+      <Filter>src\Spirit\Project</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Render\Buffer.h">
       <Filter>src\Spirit\Render</Filter>
@@ -1941,15 +1956,15 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spirit\Core\AssetRegistry.h" />
-    <ClInclude Include="src\Spirit\Project\ProjectSerializer.h" />
-    <ClInclude Include="src\Spirit\Project\Project.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp">
       <Filter>src\Spirit</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Core\AssetLibrary.cpp">
+      <Filter>src\Spirit\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Core\File.cpp">
       <Filter>src\Spirit\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\ImGui\ImGuiBuild.cpp">
@@ -1990,6 +2005,12 @@
     </ClCompile>
     <ClCompile Include="src\Spirit\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Spirit\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Project\Project.cpp">
+      <Filter>src\Spirit\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Project\ProjectSerializer.cpp">
+      <Filter>src\Spirit\Project</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Render\Buffer.cpp">
       <Filter>src\Spirit\Render</Filter>
@@ -2099,8 +2120,6 @@
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="src\Spirit\Project\Project.cpp" />
-    <ClCompile Include="src\Spirit\Project\ProjectSerializer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">
@@ -2109,11 +2128,14 @@
     <None Include="vendor\assimp\assimp\config.h.in">
       <Filter>vendor\assimp\assimp</Filter>
     </None>
+    <None Include="vendor\assimp\bin\assimp-vc143-mtd.dll">
+      <Filter>vendor\assimp\bin</Filter>
+    </None>
+    <None Include="vendor\mono\bin\mono-2.0-sgen.dll">
+      <Filter>vendor\mono\bin</Filter>
+    </None>
     <None Include="vendor\mono\include\mono\cil\opcode.def">
       <Filter>vendor\mono\include\mono\cil</Filter>
-    </None>
-    <None Include="vendor\mono\lib\Debug\libmono-static-sgen.lib">
-      <Filter>vendor\mono\lib\Debug</Filter>
     </None>
   </ItemGroup>
 </Project>

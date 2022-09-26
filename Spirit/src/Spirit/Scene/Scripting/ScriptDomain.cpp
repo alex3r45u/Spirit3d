@@ -1,10 +1,10 @@
 #include "sppch.h"
 #include "ScriptDomain.h"
 
-Spirit::Scripting::ScriptDomain::ScriptDomain(const char* filename)
+Spirit::Scripting::ScriptDomain::ScriptDomain(const char* filename, const char* filenameCore)
 {
 	mono_set_dirs("mono/lib", ".");
-	m_Domain = mono_jit_init("SpiritEngine");
+	m_Domain = mono_jit_init("SpiritScripting");
 
 
 	if (!m_Domain)
@@ -19,6 +19,17 @@ Spirit::Scripting::ScriptDomain::ScriptDomain(const char* filename)
 
 	if (!m_Image)
 		SP_CORE_ERROR("m_Image is null");
+
+	//Core
+	m_CoreAssembly = mono_domain_assembly_open(m_Domain, filenameCore);
+
+	if (!m_CoreAssembly)
+		SP_CORE_ERROR("m_CoreAssembly is null");
+
+	m_CoreImage = mono_assembly_get_image(m_CoreAssembly);
+
+	if (!m_CoreImage)
+		SP_CORE_ERROR("m_CoreImage is null");
 
 	
 }
@@ -45,9 +56,10 @@ Spirit::Scripting::ScriptClass& Spirit::Scripting::ScriptDomain::GetClass(const 
 
 	else
 	{
-		MonoClass* pClass = mono_class_from_name(m_Image, name_space.c_str(), class_name.c_str());
-		if (pClass == nullptr)
-			SP_CORE_ERROR("Failed to find class {0}", name);
+		MonoClass* pClass = mono_class_from_name(name_space == "SpiritScript" ? m_CoreImage : m_Image, name_space.c_str(), class_name.c_str());
+			if (pClass == nullptr)
+				SP_CORE_ERROR("Failed to find class {0}", name);
+		
 
 		auto _class = std::make_shared<ScriptClass>(pClass, m_Domain);
 		m_Classes[name] = _class;

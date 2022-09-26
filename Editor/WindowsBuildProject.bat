@@ -1,0 +1,1 @@
+call vendor\bin\premake\premake5.exe --file=scripting/premake5.lua vs2022

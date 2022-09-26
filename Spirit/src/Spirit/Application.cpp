@@ -14,6 +14,7 @@
 #include "Spirit/Scene/Scripting/ComponentsCs.h"
 #include "Spirit/Scene/Scripting/EntityCs.h"
 #include "Spirit/Core/AssetLibrary.h"
+#include "Spirit/Project/ProjectSerializer.h"
 
 namespace Spirit {
 
@@ -26,17 +27,24 @@ namespace Spirit {
 		Init();
 	}
 
-	Application::Application(std::filesystem::path project)
+	Application::Application(const std::filesystem::path& projectPath)
 	{
-		m_ProjectPath = project;
+		Spirit::ProjectSettings settings;
+		settings.AssetPath = std::filesystem::path("assets");
+		settings.RessourcePath = std::filesystem::path("ressources");
+		settings.ScriptSoulutionPath = std::filesystem::path("scripting");
+		settings.Path = std::filesystem::path("Haloo");
+		m_Project = std::make_shared<Project>(settings);
+		
+		//ProjectSerializer ps = ProjectSerializer(project);
+		
+		//if (!ps.Deserialize(projectPath))
+		//	SP_CORE_ERROR("Failed to load Project");
 		Init();
 	}
 
 
-	std::filesystem::path Application::GetProjectPath() const
-	{
-		return m_ProjectPath;
-	}
+
 
 	void Application::Init()
 	{
@@ -50,10 +58,10 @@ namespace Spirit {
 
 		AssetLibrary::Init();
 		Render::Renderer::Init();
-		Scripting::ScriptController::Init("GameScripts.dll");
+		Scripting::ScriptController::Init("GameScripts.dll", "SpiritScript.dll");
 		Scripting::ComponentsCs::Bind();
 		Scripting::EntityCs::Bind();
-		Scripting::ScriptObject script = Scripting::ScriptController::GetDomain().GetClass("GameScripts.Class1").CreateInstance();
+		//Scripting::ScriptObject script = Scripting::ScriptController::GetDomain().GetClass("GameScripts.Class1").CreateInstance();
 		//SP_CORE_INFO(script.GetTypeName());
 	}
 

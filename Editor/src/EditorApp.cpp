@@ -3,6 +3,10 @@
 #include "Windows/SceneHierarchyPanel.h"
 #include "Windows/PropertiesPanel.h"
 #include "Windows/FileExplorerPanel.h"
+#include <iostream>
+#include <filesystem>
+#include <fstream>
+#include "Core/ScriptSolutionCreater.h"
 
 enum class SceneState {
 	None = 0,
@@ -19,28 +23,22 @@ public:
 
 	virtual void OnAttach() override {
 		m_State = SceneState::Edit;
-		Spirit::AssetLibrary::GetShaderRegistry().AddMember({ "default", "assets/vertex.glsl", "assets/fragment.glsl" });
+		Spirit::AssetLibrary::GetShaderRegistry().AddMember({ "default", "vertex.glsl", "fragment.glsl" });
 		Spirit::Render::FramebufferSettings fbosettings;
 		fbosettings.Width = 1280;
 		fbosettings.Height = 720;
 		m_Fbo = Spirit::Render::Framebuffer::Create(fbosettings);
 		
-		Spirit::SceneManager::CreateScene("Test");
-		Spirit::SceneManager::SetActiveScene("Test");
+		Spirit::SceneManager::LoadScene("TestScene.spirit");
+		Spirit::SceneManager::SetActiveScene("TestScene.spirit");
 
-		m_Camera = Spirit::SceneManager::GetActiveScene()->CreateEntity("Cam");
-		m_Camera.AddComponent<Spirit::CameraComponent>(Spirit::CameraType::Perspective);
 		
-		m_Monkey = Spirit::SceneManager::GetActiveScene()->CreateEntity("Monkey");
-		m_Monkey.AddComponent<Spirit::MeshRendererComponent>("assets/monkey.fbx");
-		m_Monkey.AddComponent<Spirit::MaterialComponent>();
-		Spirit::SceneManager::SaveScene(std::filesystem::path("TestScene.spirit"));
 		m_SceneHierarchyPanel.SetScene(Spirit::SceneManager::GetActiveScene());
 		m_PropertiesPanel.SetScene(Spirit::SceneManager::GetActiveScene());
 		m_PropertiesPanel.SetSceneHierarchy(&m_SceneHierarchyPanel);
 
 		m_FileExplorerPanel.SetScene(Spirit::SceneManager::GetActiveScene());
-		m_FileExplorerPanel.SetDirectory(SP_ASSET_PATH);
+		m_FileExplorerPanel.SetDirectory(Spirit::Application::Get().GetProject()->GetSettings().AssetPath);
 
 	}
 
@@ -141,8 +139,14 @@ public:
 			{
 
 				if (ImGui::MenuItem("Open")) {}
-				if (ImGui::MenuItem("Save")) {}
+				if (ImGui::MenuItem("Save")) {
+					Spirit::SceneManager::SaveScene(std::filesystem::path("TestScene.spirit"));
+				}
 				if (ImGui::MenuItem("Export")) {}
+				if (ImGui::MenuItem("Create Script Solution")) {
+					Spirit::ScriptSolutionCreater::Create(Spirit::Application::Get().GetProject());
+				}
+				
 				ImGui::EndMenu();
 			}
 
@@ -202,7 +206,7 @@ private:
 class EditorApp : public Spirit::Application
 {
 public:
-	EditorApp() : Spirit::Application()
+	EditorApp() : Spirit::Application("")
 	{
 		m_LayerStack.AddLayer(new EditorLayer());
 	}

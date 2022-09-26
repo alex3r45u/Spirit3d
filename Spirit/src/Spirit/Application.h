@@ -11,6 +11,7 @@
 #include "Spirit/Event/ApplicationEvent.h"
 
 #include <filesystem>
+#include "Spirit/Project/Project.h"
 
 namespace Spirit {
 
@@ -18,7 +19,7 @@ namespace Spirit {
 	{
 	public:
 		Application();
-		Application(std::filesystem::path project);
+		Application(const std::filesystem::path& projectPath);
 		virtual ~Application();
 
 		void Run();
@@ -29,7 +30,7 @@ namespace Spirit {
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() const { return *m_Window; }
 
-		std::filesystem::path GetProjectPath() const;
+		inline std::shared_ptr<Spirit::Project> GetProject() { return m_Project; }
 
 	private:
 		void Init();
@@ -44,7 +45,7 @@ namespace Spirit {
 		float m_LastTime;
 		bool m_Running;
 
-		std::filesystem::path m_ProjectPath;
+		std::shared_ptr<Project> m_Project;
 	protected:
 		LayerStack m_LayerStack = LayerStack();
 

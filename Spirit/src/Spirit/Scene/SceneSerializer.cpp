@@ -6,6 +6,7 @@
 #include <typeinfo>
 #include "Spirit/Scene/Scripting/ScriptClass.h"
 #include "Spirit/Scene/Scripting/ScriptField.h"
+#include "Spirit/Scene/Scripting/ScriptController.h"
 #include <memory>
 
 #define yaml(y) << YAML::##y
@@ -76,10 +77,11 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 
 	static void ScriptSerialize(Spirit::Entity entity, YAML::Emitter& out, Spirit::Scripting::ScriptingECS& scriptingECS) {
 		out key "Scripts";
-		out yaml(BeginMap);
+		out yaml(BeginSeq);
 		for (auto& script : scriptingECS.GetAllScripts(entity)) {
-			out key script->GetTypeName();
 			out yaml(BeginMap);
+			out key "Name" value script->GetTypeName();
+			out key "Fields" yaml(BeginMap);
 			for (auto string : script->GetClass().GetFieldNames()) {
 
 				out key string;
@@ -116,8 +118,9 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 				}
 			}
 			out << YAML::EndMap;
+			out << YAML::EndMap;
 		}
-		out << YAML::EndMap;
+		out << YAML::EndSeq;
 	}
 
 	void Spirit::SceneSerializer::SerializeEntity(YAML::Emitter& out, Spirit::Entity entity) {
@@ -166,7 +169,7 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 		YAML::Emitter out;
 		out yaml(BeginMap);
 		out key "Scene" value m_Scene->GetPath().string();
-		out key "Entites" value YAML::BeginSeq;
+		out key "Entities" value YAML::BeginSeq;
 		m_Scene->m_Registry.each([&](auto entityID) {
 			Entity entity = Entity(entityID, m_Scene.get());
 			SerializeEntity(out, entity);
@@ -177,6 +180,7 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 
 		std::ofstream fout(filepath.string());
 		fout << out.c_str();
+		fout.close();
 	}
 
 	bool Spirit::SceneSerializer::Deserialize(const std::filesystem::path& filepath)
@@ -201,7 +205,6 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 				auto tagComponent = entity[typeid(TagComponent).name()];
 				if (tagComponent)
 					name = tagComponent["Tag"].as<std::string>();
-
 				Entity deserializedEntity = m_Scene->CreateEntity(name);
 
 				auto transformComponent = entity[typeid(TransformComponent).name()];
@@ -213,16 +216,19 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 
 				auto cameraComponent = entity[typeid(CameraComponent).name()];
 				if (cameraComponent) {
-					deserializedEntity.AddComponent<CameraComponent>();
-					deserializedEntity.GetComponent<CameraComponent>().IsMain = cameraComponent["IsMain"].as<bool>();
+					
+					
 					std::string cameraType = cameraComponent["Type"].as<std::string>();
 					if(cameraType == "Perspective") {
+						deserializedEntity.AddComponent<CameraComponent>(CameraType::Perspective);
 						deserializedEntity.GetComponent<CameraComponent>().Type == CameraType::Perspective;
 						std::static_pointer_cast<Render::PerspectiveCamera>(deserializedEntity.GetComponent<CameraComponent>().Camera)->SetZoom(cameraComponent["Zoom"].as<float>());
 					}
 					else if (cameraType == "Orthographic") {
+						deserializedEntity.AddComponent<CameraComponent>(CameraType::Orthographic);
 						deserializedEntity.GetComponent<CameraComponent>().Type == CameraType::Orthographic;
 					}
+					deserializedEntity.GetComponent<CameraComponent>().IsMain = cameraComponent["IsMain"].as<bool>();
 				}
 
 
@@ -238,7 +244,15 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 				auto scripts = entity["Scripts"];
 				if (scripts) {
 					for (auto script : scripts) {
-
+						std::shared_ptr<Scripting::ScriptObject> component = std::make_shared<Scripting::ScriptObject>(Scripting::ScriptController::GetDomain().GetClass(script["Name"].as<std::string>()).CreateInstance());
+						m_Scene->m_ScriptingECS.AddComponent((unsigned int)deserializedEntity, component);
+						
+						Scripting::ScriptClass& _class = component->GetClass();
+						for (auto field : _class.GetFieldNames()) {
+							Scripting::ScriptField& scriptfield = component->GetField(field);
+							scriptfield.SetValue(script["Fields"][field]);
+						}
+						
 					}
 				}
 			}

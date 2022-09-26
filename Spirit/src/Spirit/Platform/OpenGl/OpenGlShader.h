@@ -19,9 +19,6 @@ namespace Spirit::Render {
 		virtual void SetFloat3(const std::string& name, float value1, float value2, float value3) override;
 		virtual void SetFloat4(const std::string& name, float value1, float value2, float value3, float value4) override;
 		virtual void SetMat4(const std::string& name, glm::mat4 value) override;
-
-	private:
-		std::string ReadFile(const std::string& path);
 	private:
 		unsigned int m_RendererID;
 		std::string m_Name;

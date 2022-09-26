@@ -58,29 +58,12 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <None Include="GameScripts.csproj" />
-    <Compile Include="..\SpiritScript\Component.cs">
-      <Link>SpiritScript\Component.cs</Link>
-    </Compile>
-    <Compile Include="..\SpiritScript\Debug\Debug.cs">
-      <Link>SpiritScript\Debug\Debug.cs</Link>
-    </Compile>
-    <Compile Include="..\SpiritScript\Entity.cs">
-      <Link>SpiritScript\Entity.cs</Link>
-    </Compile>
-    <Compile Include="..\SpiritScript\Math\Vector2.cs">
-      <Link>SpiritScript\Math\Vector2.cs</Link>
-    </Compile>
-    <Compile Include="..\SpiritScript\Math\Vector3.cs">
-      <Link>SpiritScript\Math\Vector3.cs</Link>
-    </Compile>
-    <Compile Include="..\SpiritScript\Math\Vector4.cs">
-      <Link>SpiritScript\Math\Vector4.cs</Link>
-    </Compile>
-    <None Include="..\SpiritScript\SpiritScript.csproj">
-      <Link>SpiritScript\SpiritScript.csproj</Link>
-    </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SpiritScript\SpiritScript.csproj">
+      <Project>{F5FE18A9-E161-A84D-8AE7-E003762974D0}</Project>
+      <Name>SpiritScript</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

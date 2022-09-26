@@ -91,6 +91,7 @@ namespace Spirit {
 	};
 	
 	enum class CameraType {
+		None = 0,
 		Perspective,
 		Orthographic
 	};

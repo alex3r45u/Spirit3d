@@ -1,11 +1,10 @@
 #include "sppch.h"
 #include "Project.h"
 
-Spirit::Project::Project(const std::filesystem::path path, const std::filesystem::path& assetPath, const std::filesystem::path& scriptSoulutionPath)
+Spirit::Project::Project(const Spirit::ProjectSettings& settings)
+	: m_ProjectSettings(settings)
 {
-	m_ProjectSettings.Path = path;
-	m_ProjectSettings.AssetPath = assetPath;
-	m_ProjectSettings.ScriptSoulutionPath = scriptSoulutionPath;
+
 }
 
 void Spirit::Project::SetSettings(const ProjectSettings& settings)

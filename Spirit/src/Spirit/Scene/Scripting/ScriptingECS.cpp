@@ -35,8 +35,6 @@ void Spirit::Scripting::ScriptingECS::AddComponent(unsigned int entityID, std::s
 	if (!HasEntity(entityID)) {
 		m_Entities[entityID] = std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Entity").CreateInstance());
 		m_Entities[entityID]->GetProperty("ID").Set(entityID);
-		AddComponent(entityID, std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Transform").CreateInstance()));
-		AddComponent(entityID, std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Tag").CreateInstance()));
 	}
 	component->GetProperty("entityID").Set(entityID);
 	if (!HasComponent(entityID, component))
