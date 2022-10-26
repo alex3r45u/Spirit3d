@@ -6,10 +6,12 @@
 #include "Spirit/ImGui/DragDropSystem.h"
 #include <filesystem>
 #include <typeinfo>
-#include "Spirit/Scene/SceneManager.h"
+//#include "Spirit/Scene/SceneManager.h"
 #include "Spirit/Scene/Scripting/ScriptClass.h"
 #include "Spirit/Scene/Scripting/ScriptField.h"
 #include "Spirit/Scene/Scripting/ScriptingECS.h"
+#include "Spirit/Scene/Scripting/ScriptController.h"
+#include "Spirit/Application.h"
 
 template<typename T>
 static void DrawComponent(Spirit::Entity& entity, const std::string& name, std::function<void(T& component)> function) {
@@ -93,12 +95,9 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 		});
 
 	DrawComponent<MeshRendererComponent>(entity, "Mesh", [](auto& component) {
-		if (ImGui::Button(component.Mesh->GetPath().filename().string().c_str())) {
-	
-		}
-		DragDropSystem::SetTarget<const char*>("FILE_EXPLORER", [&](const char* c) {
-			SP_CORE_INFO(c);
-			component.Mesh = AssetLibrary::GetMeshRegistry().GetMember({c});
+		ImGui::Text(("Selected Mesh: " + component.Path.filename().string()).c_str());
+		DragDropSystem::SetTarget<const char*>("MESH", [&](const char* c) {
+			component.Path = c;
 			});
 		});
 	
@@ -125,7 +124,7 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 
 		});
 
-	Spirit::SceneManager::GetActiveScene()->GetScriptingECS().DrawComponents(entity, [&](std::shared_ptr<Scripting::ScriptObject> component) {
+	PROJECT->GetActiveScene()->GetScriptingECS().DrawComponents(entity, [&](std::shared_ptr<Scripting::ScriptObject> component) {
 
 		if (!component->GetTypeName().find("SpiritScript.")) {
 			return;
@@ -144,6 +143,9 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 				deleted = true;
 			}
 			ImGui::EndPopup();
+		}
+		if (deleted) {
+			PROJECT->GetActiveScene()->GetScriptingECS().RemoveComponent(entity, component->GetTypeName());
 		}
 		if (open) {
 			if (!deleted) {
@@ -200,8 +202,8 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 					default:
 						ImGui::Text(v.c_str(), ": ");
 						DragDropSystem::SetTarget<int>("COMPONENT_DRAG_DROP", [&](int i) {
-							if (SceneManager::GetActiveScene()->GetScriptingECS().HasComponent(i, component->GetTypeName())) {
-								field.SetValue(SceneManager::GetActiveScene()->GetScriptingECS().GetComponent(i, component->GetTypeName()));
+							if (PROJECT->GetActiveScene()->GetScriptingECS().HasComponent(i, component->GetTypeName())) {
+								field.SetValue(PROJECT->GetActiveScene()->GetScriptingECS().GetComponent(i, component->GetTypeName()));
 								return;
 							}
 
@@ -232,6 +234,9 @@ void Spirit::PropertiesPanel::DrawComponents(Entity& entity)
 	if (ImGui::Button("Add Component")) {
 		ImGui::OpenPopup("COMPONENT_VIEWER");
 	}
+	Spirit::DragDropSystem::SetTarget<const char*>("COMPONENT", [&](const char* c) {
+		PROJECT->GetActiveScene()->GetScriptingECS().AddComponent(entity, std::make_shared<Scripting::ScriptObject>(Scripting::ScriptController::GetDomain().GetClass(c).CreateInstance()));
+		});
 	if (ImGui::BeginPopup("COMPONENT_VIEWER")) {
 		ImGui::Text("Select Component");
 		ImGui::Separator();

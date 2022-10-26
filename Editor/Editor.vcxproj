@@ -147,17 +147,19 @@ IF EXIST ..\Spirit\vendor\assimp\bin\assimp-vc143-mtd.dll\ (xcopy /Q /E /Y /I ..
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\AssetViewer.h" />
-    <ClInclude Include="src\Core\ScriptSolutionCreater.h" />
+    <ClInclude Include="src\Core\ScriptSolution.h" />
     <ClInclude Include="src\Windows\FileExplorerPanel.h" />
     <ClInclude Include="src\Windows\Panel.h" />
+    <ClInclude Include="src\Windows\ProjectSettingsPanel.h" />
     <ClInclude Include="src\Windows\PropertiesPanel.h" />
     <ClInclude Include="src\Windows\SceneHierarchyPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\AssetViewer.cpp" />
-    <ClCompile Include="src\Core\ScriptSolutionCreater.cpp" />
+    <ClCompile Include="src\Core\ScriptSolution.cpp" />
     <ClCompile Include="src\EditorApp.cpp" />
     <ClCompile Include="src\Windows\FileExplorerPanel.cpp" />
+    <ClCompile Include="src\Windows\ProjectSettingsPanel.cpp" />
     <ClCompile Include="src\Windows\PropertiesPanel.cpp" />
     <ClCompile Include="src\Windows\SceneHierarchyPanel.cpp" />
   </ItemGroup>

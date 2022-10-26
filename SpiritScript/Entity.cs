@@ -36,9 +36,8 @@ namespace SpiritScript
         {
             if (HasComponent<T>())
                 return null;
-            T _Component = new T();
-            AddComponent_Native(ID, _Component);
-            return _Component;
+            AddComponent_Native(ID, typeof(T));
+            return GetComponent<T>();
         }
 
         public bool HasComponent<T>() where T : Component, new()
@@ -50,14 +49,9 @@ namespace SpiritScript
 
         public T GetComponent<T>() where T : Component, new()
         {
-            if (HasComponent<T>())
-            {
-                T component;
-                GetComponent_Native(ID, typeof(T), out component);
-                return component;
-            }
-
-            return null;
+             T component;
+             GetComponent_Native(ID, typeof(T), out component);
+            return component;
         }
 
         public void RemoveComponent<T>() where T : Component, new()
@@ -68,7 +62,7 @@ namespace SpiritScript
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private static extern void AddComponent_Native<T>(uint entityID, T component) where T : Component;
+        private static extern void AddComponent_Native(uint entityID, Type t);
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern void RemoveComponent_Native(uint entityID, Type t);
 

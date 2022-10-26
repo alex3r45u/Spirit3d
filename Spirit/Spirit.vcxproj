@@ -214,6 +214,7 @@
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptObject.h" />
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptProperty.h" />
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptingECS.h" />
+    <ClInclude Include="src\Spirit\Utils\FileDialog.h" />
     <ClInclude Include="src\Spirit\Window.h" />
     <ClInclude Include="src\sppch.h" />
     <ClInclude Include="vendor\assimp\assimp\Base64.hpp" />
@@ -775,6 +776,7 @@
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlShader.cpp" />
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlTexture.cpp" />
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlVertexArray.cpp" />
+    <ClCompile Include="src\Spirit\Platform\Windows\WindowsFileDialog.cpp" />
     <ClCompile Include="src\Spirit\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Spirit\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Spirit\Project\Project.cpp" />

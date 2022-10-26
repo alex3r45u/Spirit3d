@@ -13,6 +13,14 @@
 #include <mono/metadata/assembly.h>
 #include "ScriptController.h"
 #include "ScriptProperty.h"
+#include "Spirit/Application.h"
+
+
+#define COMPONENTTYPE_FROM_NAME(N, T) if(strcmp(c, ##N)) {return T;}
+#define ADD_COMPONENT(T, C) if(type == T) {entity.AddComponent<C>(); return;}
+#define REMOVE_COMPONENT(T, C) if(type == T) {entity.RemoveComponent<C>(); return;}
+#define HAS_COMPONENT(T, C) if(type == T && entity.HasComponent<C>()) {h = true;}
+#define GET_COMPONENT(T, O) if(type == T) {c = Spirit::Scripting::ScriptController::GetDomain().GetClass(##O).CreateInstance().GetObjectPointer();}
 
 enum class ComponentType {
 	None = 0,
@@ -22,77 +30,70 @@ enum class ComponentType {
 };
 
 static std::string GetName(MonoObject* object) {
-
 	MonoClass* klass = mono_object_get_class(object);
 
 	std::string build = mono_string_to_utf8((MonoString*)mono_property_get_value(mono_class_get_property_from_name(klass, "Namespace"), object, nullptr, nullptr));
 	build.append(".");
 	build.append(mono_string_to_utf8((MonoString*)mono_property_get_value(mono_class_get_property_from_name(klass, "Name"), object, nullptr, nullptr)));
 	return build;
-	//return Spirit::Scripting::ScriptController::GetDomain().GetObjectOutMonoObject(object).GetTypeName();
 }
 
 static ComponentType GetType(MonoObject* object) {
 	ComponentType type = ComponentType::None;
 
-	const char* c = GetName(object).c_str();
+	MonoClass* klass = mono_object_get_class(object);
 
-	if (std::strcmp(c, "Transform")) {
-		type = ComponentType::TransformComponent;
-	}
-	else if (std::strcmp(c, "Tag")) {
-		type = ComponentType::TagComponent;
-	}
+	const char* c = mono_string_to_utf8((MonoString*)mono_property_get_value(mono_class_get_property_from_name(klass, "Name"), object, nullptr, nullptr));
 
-	else {
-		type = ComponentType::Script;
-	}
+	COMPONENTTYPE_FROM_NAME("Transform", ComponentType::TransformComponent);
+	COMPONENTTYPE_FROM_NAME("Tag", ComponentType::TagComponent);
 
-	return type;
+	return ComponentType::Script;
+
+
+
 }
 
 static void AddComponent_Native(unsigned int entityID, MonoObject* object) {
-	Spirit::Entity entity = Spirit::SceneManager::GetActiveScene()->GetEntityByIndex((entt::entity)entityID);
+	Spirit::Entity entity = PROJECT->GetActiveScene()->GetEntityByIndex((entt::entity)entityID);
+	ComponentType type = GetType(object);
+	ADD_COMPONENT(ComponentType::TransformComponent, Spirit::TransformComponent);
+	ADD_COMPONENT(ComponentType::TagComponent, Spirit::TagComponent);
+	if (type == ComponentType::Script) {
 
-	switch (GetType(object)) {
-	case ComponentType::TransformComponent:
-		entity.AddComponent<Spirit::TransformComponent>();
-		break;
-	case ComponentType::TagComponent:
-		entity.AddComponent<Spirit::TagComponent>();
-		break;
-	case ComponentType::Script:
-		//entity.AddScript(Spirit::Scripting::ScriptController::GetDomain().GetObjectOutMonoObject(object));
-		break;
-		
 	}
 }
 
 static void RemoveComponent_Native(unsigned int entityID, MonoObject* object) {
-	Spirit::Entity entity = Spirit::SceneManager::GetActiveScene()->GetEntityByIndex((entt::entity)entityID);
-
-	switch (GetType(object)) {
-	case ComponentType::TransformComponent:
-		entity.RemoveComponent<Spirit::TransformComponent>();
-		break;
-	case ComponentType::TagComponent:
-		entity.RemoveComponent<Spirit::TagComponent>();
-		break;
-	case ComponentType::Script:
-		//entity.RemoveScript(GetName(object));
-		break;
-
-	}
+	Spirit::Entity entity = PROJECT->GetActiveScene()->GetEntityByIndex((entt::entity)entityID);
+	ComponentType type = GetType(object);
+	REMOVE_COMPONENT(ComponentType::TransformComponent, Spirit::TransformComponent);
+	REMOVE_COMPONENT(ComponentType::TagComponent, Spirit::TagComponent);
+	
+	//delete script
+	return;
 }
 
 static void HasComponent_Native(unsigned int entityID, MonoObject* object, bool* has) {
-	bool h = Spirit::SceneManager::GetActiveScene()->GetScriptingECS().HasComponent(entityID, GetName(object));
+	bool h = PROJECT->GetActiveScene()->GetScriptingECS().HasComponent(entityID, GetName(object));
+	ComponentType type = GetType(object);
+	Spirit::Entity entity = PROJECT->GetActiveScene()->GetEntityByIndex((entt::entity)entityID);
+	HAS_COMPONENT(ComponentType::TransformComponent, Spirit::TransformComponent);
+	HAS_COMPONENT(ComponentType::TagComponent, Spirit::TagComponent);
 	memcpy(has, &h, sizeof(bool));
 	//has = &component;
 }
 
 static void GetComponent_Native(unsigned int entityID, MonoObject* object, MonoObject** component) {
-	MonoObject* c = Spirit::SceneManager::GetActiveScene()->GetScriptingECS().GetComponent(entityID, GetName(object))->GetObjectPointer();
+	MonoObject* c;
+	if (PROJECT->GetActiveScene()->GetScriptingECS().HasComponent(entityID, GetName(object))) {
+		c = PROJECT->GetActiveScene()->GetScriptingECS().GetComponent(entityID, GetName(object))->GetObjectPointer();
+	}
+	else {
+		ComponentType type = GetType(object);
+		GET_COMPONENT(ComponentType::TransformComponent, "SpiritScript.Transform");
+		GET_COMPONENT(ComponentType::TagComponent, "SpiritScript.Tag");
+	}
 	memcpy(component, &c, sizeof(MonoObject*));
 }
 
@@ -101,7 +102,7 @@ static void NewEntity_Native(MonoObject* entity) {
 }
 
 static void GetEntity_Native(unsigned int entityID, MonoObject** entity) {
-	MonoObject* e = Spirit::SceneManager::GetActiveScene()->GetScriptingECS().GetEntity(entityID)->GetObjectPointer();
+	MonoObject* e = PROJECT->GetActiveScene()->GetScriptingECS().GetEntity(entityID)->GetObjectPointer();
 	memcpy(entity,&e, sizeof(MonoObject*));
 }
 

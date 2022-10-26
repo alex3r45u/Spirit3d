@@ -30,7 +30,8 @@ namespace Spirit {
 		inline static Application& Get() { return *s_Instance; }
 		inline Window& GetWindow() const { return *m_Window; }
 
-		inline std::shared_ptr<Spirit::Project> GetProject() { return m_Project; }
+		std::shared_ptr<Spirit::Project> GetProject() { return m_Project; }
+		void SetProject(const std::shared_ptr<Spirit::Project>& project);
 
 	private:
 		void Init();

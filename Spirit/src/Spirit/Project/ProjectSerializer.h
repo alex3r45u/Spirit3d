@@ -7,6 +7,8 @@ namespace Spirit {
 	public:
 		ProjectSerializer(const std::shared_ptr<Spirit::Project>& project);
 
+		static std::shared_ptr<Project> CreateProject(const std::filesystem::path& filePath, const std::filesystem::path& ressourcePath);
+
 		void Serialize(const std::filesystem::path& filepath);
 
 		bool Deserialize(const std::filesystem::path& filepath);

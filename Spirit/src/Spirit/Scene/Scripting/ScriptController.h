@@ -3,12 +3,15 @@
 #include <memory>
 #include "ScriptDomain.h"
 
-static const char* assembly_name;
+//static const char* assembly_name;
 
 namespace Spirit::Scripting {
 	class ScriptController {
 	public:
-		static void Init(const char* filename, const char* filenameCore);
+		static void Init(const std::string& filename, const std::string& filenameCore);
+		static void Reload();
+		static void Load();
+		static void Unload();
 		static ScriptDomain& GetDomain();
 
 		template<typename Func>
@@ -17,5 +20,7 @@ namespace Spirit::Scripting {
 		}
 	private:
 		static std::unique_ptr<ScriptDomain> m_Domain;
+		static std::string m_Filename;
+		static std::string m_FilenameCore;
 	};
 }

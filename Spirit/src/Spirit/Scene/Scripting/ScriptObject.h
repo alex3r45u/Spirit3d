@@ -40,7 +40,7 @@ namespace Spirit::Scripting {
 
 		ScriptProperty& GetProperty(const std::string& name);
 		ScriptField& GetField(const std::string& name);
-
+		bool FieldExists(const std::string& name);
 		ScriptClass& GetClass();
 
 	private:

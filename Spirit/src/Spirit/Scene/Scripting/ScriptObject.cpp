@@ -17,8 +17,6 @@ void Spirit::Scripting::ScriptObject::Invoke(const std::string& method, Paramete
 
     if (iter != m_Methods.end())
         iter->second->Invoke(params, this);
-    else
-        SP_CORE_ERROR("Cannot find method: " + method);
 }
 
 MonoObject* Spirit::Scripting::ScriptObject::GetObjectPointer() const
@@ -96,6 +94,21 @@ Spirit::Scripting::ScriptField& Spirit::Scripting::ScriptObject::GetField(const 
         return *field;
     }
 
+}
+
+bool Spirit::Scripting::ScriptObject::FieldExists(const std::string& name)
+{
+    auto iter = m_Fields.find(name);
+
+    if (iter != m_Fields.end())
+        return true;
+    MonoClass* pClass = mono_object_get_class(m_Object);
+    MonoClassField* pField = mono_class_get_field_from_name(pClass, name.c_str());
+
+
+    if (pField == nullptr)
+        return false;
+    return true;
 }
 
 Spirit::Scripting::ScriptClass& Spirit::Scripting::ScriptObject::GetClass()

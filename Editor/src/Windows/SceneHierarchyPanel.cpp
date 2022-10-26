@@ -75,6 +75,7 @@ void Spirit::SceneHierarchyPanel::DrawNode(Entity& entity)
 	if (ImGui::BeginPopup((const char*)&entity))
 	{
 		if (ImGui::Selectable("Delete")) {
+			m_IsSelected = false;
 			m_Scene->RemoveEntity(entity);
 		}		
 		ImGui::EndPopup();

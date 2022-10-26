@@ -24,7 +24,8 @@
     <ClInclude Include="src\Windows\SceneHierarchyPanel.h">
       <Filter>Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\ScriptSolutionCreater.h" />
+    <ClInclude Include="src\Core\ScriptSolution.h" />
+    <ClInclude Include="src\Windows\ProjectSettingsPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\AssetViewer.cpp">
@@ -40,6 +41,7 @@
     <ClCompile Include="src\Windows\SceneHierarchyPanel.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\ScriptSolutionCreater.cpp" />
+    <ClCompile Include="src\Core\ScriptSolution.cpp" />
+    <ClCompile Include="src\Windows\ProjectSettingsPanel.cpp" />
   </ItemGroup>
 </Project>

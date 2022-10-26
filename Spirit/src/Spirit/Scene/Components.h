@@ -78,16 +78,39 @@ namespace Spirit {
 
 	struct MeshRendererComponent
 	{
-		std::shared_ptr<Spirit::Render::Mesh> Mesh;
-		MeshRendererComponent() { Mesh = std::make_shared < Spirit::Render::Mesh>(); }
+		std::filesystem::path Path;
+		MeshRendererComponent() { Path = ""; }
 		MeshRendererComponent(const MeshRendererComponent&) = default;
-		MeshRendererComponent(const std::string& name) { Mesh = AssetLibrary::GetMeshRegistry().GetMember({ name }); }
+		MeshRendererComponent(const std::string& name) { Path = name; }
+	};
+
+	enum class MaterialType {
+		None = 0,
+		Asset,
+		Component
 	};
 
 	struct MaterialComponent {
+		MaterialType Type;
 		std::shared_ptr<Spirit::Render::Material> Material;
-		MaterialComponent() { Material = std::make_shared <Spirit::Render::Material>(); }
-		MaterialComponent(const MaterialComponent&) = default;
+		MaterialComponent(const MaterialComponent&y) = default;
+		MaterialComponent() {
+			Type = MaterialType::Component;
+			Material = std::make_shared<Spirit::Render::Material>();
+		}
+		MaterialComponent(const MaterialType& type) {
+			switch (type)
+			{
+			case MaterialType::Asset:
+				Type = MaterialType::Asset;
+				Material = std::make_shared<Spirit::Render::AssetMaterial>();
+			case MaterialType::Component:
+				Type = MaterialType::Component;
+				Material = std::make_shared<Spirit::Render::Material>();
+			default:
+				break;
+			}
+		}
 	};
 	
 	enum class CameraType {

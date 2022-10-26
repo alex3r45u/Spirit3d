@@ -32,7 +32,6 @@ namespace SpiritScript
     }
     public class Tag : Component
     {
-        void Update() { }
         public string tag
         {
             get => GetTag_Native(entity.ID);
@@ -192,6 +191,51 @@ namespace SpiritScript
 
     }
 
-    
+    public class MeshRenderer : Component
+    {
+        public Mesh Mesh
+        {
+            get
+            {
+                return new Mesh(GetPath_Native(entity.ID));
+            }
+            set => SetPath_Native(entity.ID, value.Path);
+        }
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern void SetPath_Native(uint entityID, string path);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern string GetPath_Native(uint entityID);
+    }
+
+    public enum MaterialType
+    {
+        Asset = 1,
+        Component = 2
+    }
+
+    public class MaterialRenderer : Component
+    {
+        public MaterialType Type
+        {
+            get
+            {
+                int type;
+                GetType_Native(entity.ID, out type);
+                return (MaterialType)type;
+            }
+            set => SetType_Native(entity.ID, (int)value);
+        }
+
+        public Material Material
+        {
+            get;set;
+        }
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern void GetType_Native(uint entityID, out int type);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern void SetType_Native(uint entityID, int type);
+    }
     
 }

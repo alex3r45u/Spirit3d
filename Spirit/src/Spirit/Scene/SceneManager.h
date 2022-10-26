@@ -3,7 +3,7 @@
 #include <memory>
 #include <unordered_map>
 #include "Scene.h"
-
+/*
 namespace Spirit {
 //	class Scene;
 	class SceneManager {
@@ -25,3 +25,4 @@ namespace Spirit {
 		static std::unordered_map<std::string, std::shared_ptr<Scene>> m_Scenes;
 	};
 }
+*/

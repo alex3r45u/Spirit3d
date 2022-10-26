@@ -16,7 +16,9 @@ std::shared_ptr<Spirit::Scripting::ScriptObject> Spirit::Scripting::ScriptingECS
 {
 	if (HasEntity(entityID))
 		return m_Entities[entityID];
-	return nullptr;
+	m_Entities[entityID] = std::make_shared<ScriptObject>(ScriptController::GetDomain().GetClass("SpiritScript.Entity").CreateInstance());
+	m_Entities[entityID]->GetProperty("ID").Set(entityID);
+	return m_Entities[entityID];
 }
 
 bool Spirit::Scripting::ScriptingECS::HasEntity(unsigned int entityID)
@@ -28,6 +30,9 @@ void Spirit::Scripting::ScriptingECS::RemoveEntity(unsigned int entityID)
 {
 	if (HasEntity(entityID))
 		m_Entities.erase(entityID);
+	for (auto i : m_Components[entityID]) {
+		m_Components[entityID].remove(i);
+	}
 }
 
 void Spirit::Scripting::ScriptingECS::AddComponent(unsigned int entityID, std::shared_ptr<ScriptObject> component)

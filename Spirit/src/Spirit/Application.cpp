@@ -15,6 +15,7 @@
 #include "Spirit/Scene/Scripting/EntityCs.h"
 #include "Spirit/Core/AssetLibrary.h"
 #include "Spirit/Project/ProjectSerializer.h"
+#include "Spirit/Core/File.h"
 
 namespace Spirit {
 
@@ -29,13 +30,9 @@ namespace Spirit {
 
 	Application::Application(const std::filesystem::path& projectPath)
 	{
-		Spirit::ProjectSettings settings;
-		settings.AssetPath = std::filesystem::path("assets");
-		settings.RessourcePath = std::filesystem::path("ressources");
-		settings.ScriptSoulutionPath = std::filesystem::path("scripting");
-		settings.Path = std::filesystem::path("Haloo");
-		m_Project = std::make_shared<Project>(settings);
 		
+		//m_Project = ProjectSerializer::CreateProject("C:\\Users\\ap\\OneDrive\\Desktop\\asdf\\MeinProject.spiritproject", "ressources");
+		m_Project = ProjectSerializer::CreateProject("Examples/Project/Example.spiritproject", "ressources");
 		//ProjectSerializer ps = ProjectSerializer(project);
 		
 		//if (!ps.Deserialize(projectPath))
@@ -45,6 +42,11 @@ namespace Spirit {
 
 
 
+
+	void Application::SetProject(const std::shared_ptr<Spirit::Project>& project)
+	{
+		m_Project = project;
+	}
 
 	void Application::Init()
 	{
@@ -58,7 +60,7 @@ namespace Spirit {
 
 		AssetLibrary::Init();
 		Render::Renderer::Init();
-		Scripting::ScriptController::Init("GameScripts.dll", "SpiritScript.dll");
+		Scripting::ScriptController::Init(Spirit::File::Merge2Paths(m_Project->GetSettings().Path, m_Project->GetSettings().ProjectName + ".dll").string(), Spirit::File::Merge2Paths(m_Project->GetSettings().Path, "SpiritScript.dll").string());
 		Scripting::ComponentsCs::Bind();
 		Scripting::EntityCs::Bind();
 		//Scripting::ScriptObject script = Scripting::ScriptController::GetDomain().GetClass("GameScripts.Class1").CreateInstance();

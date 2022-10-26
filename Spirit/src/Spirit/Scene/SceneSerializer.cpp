@@ -13,6 +13,8 @@
 #define value << YAML::Value <<
 #define key << YAML::Key <<
 
+#define DESERIALIZE_SCRIPT(type) if(script["Fields"][field]["type"].as<std::string>() == #type) {scriptfield.SetValue(script["Fields"][field]["value"].as<##type>());}
+#define SERIALIZE_SCRIPT(type, field) if(script->GetField(string).GetType() == ##field) {out key "value" value script->GetField(string).GetValue<##type>(); out key "type" value #type;}
 
 
 namespace YAML {
@@ -31,6 +33,44 @@ namespace YAML {
 			rhs.x = node[0].as<float>();
 			rhs.y = node[1].as<float>();
 			rhs.z = node[2].as<float>();
+			return true;
+		}
+	};
+
+	template<>
+	struct convert<glm::vec2> {
+		static Node encode(const glm::vec2& rhs) {
+			Node node;
+			node.push_back(rhs.x);
+			node.push_back(rhs.y);
+			return node;
+		}
+
+		static bool decode(const Node& node, glm::vec2& rhs) {
+			if (!node.IsSequence() || node.size() != 2) return false;
+			rhs.x = node[0].as<float>();
+			rhs.y = node[1].as<float>();
+			return true;
+		}
+	};
+
+	template<>
+	struct convert<glm::vec4> {
+		static Node encode(const glm::vec4& rhs) {
+			Node node;
+			node.push_back(rhs.x);
+			node.push_back(rhs.y);
+			node.push_back(rhs.z);
+			node.push_back(rhs.w);
+			return node;
+		}
+
+		static bool decode(const Node& node, glm::vec4& rhs) {
+			if (!node.IsSequence() || node.size() != 4) return false;
+			rhs.x = node[0].as<float>();
+			rhs.y = node[1].as<float>();
+			rhs.z = node[2].as<float>();
+			rhs.w = node[3].as<float>();
 			return true;
 		}
 	};
@@ -84,39 +124,18 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 			out key "Fields" yaml(BeginMap);
 			for (auto string : script->GetClass().GetFieldNames()) {
 
-				out key string;
-				out yaml(Value);
-				switch (script->GetField(string).GetType()) {
-				case Spirit::Scripting::FieldType::Bool:
-					out << script->GetField(string).GetValue<bool>();
-					break;
-				case Spirit::Scripting::FieldType::Float:
-					out << script->GetField(string).GetValue<float>();
-					break;
-				case Spirit::Scripting::FieldType::Int:
-					out << script->GetField(string).GetValue<int>();
-					break;
-				case Spirit::Scripting::FieldType::String:
-					out << script->GetField(string).GetValue<std::string>();
-					break;
-				case Spirit::Scripting::FieldType::UnsignedInt:
-					out << script->GetField(string).GetValue<unsigned int>();
-					break;
-				case Spirit::Scripting::FieldType::Vec2:
-					out << script->GetField(string).GetValue<glm::vec2>();
-					break;
-				case Spirit::Scripting::FieldType::Vec3:
-					out << script->GetField(string).GetValue<glm::vec2>();
-					break;
-				case Spirit::Scripting::FieldType::Vec4:
-					out << script->GetField(string).GetValue<glm::vec2>();
-					break;
-				case Spirit::Scripting::FieldType::Unknown:
-					//TODO
-					break;
-					
-				}
+				out key string yaml(BeginMap);
+				SERIALIZE_SCRIPT(bool, Spirit::Scripting::FieldType::Bool);
+				SERIALIZE_SCRIPT(float, Spirit::Scripting::FieldType::Float);
+				SERIALIZE_SCRIPT(int, Spirit::Scripting::FieldType::Int);
+				SERIALIZE_SCRIPT(std::string, Spirit::Scripting::FieldType::String);
+				SERIALIZE_SCRIPT(unsigned int, Spirit::Scripting::FieldType::UnsignedInt);
+				SERIALIZE_SCRIPT(glm::vec2, Spirit::Scripting::FieldType::Vec2);
+				SERIALIZE_SCRIPT(glm::vec3, Spirit::Scripting::FieldType::Vec3);
+				SERIALIZE_SCRIPT(glm::vec4, Spirit::Scripting::FieldType::Vec4);
+				//TODO unkown
 			}
+			out << YAML::EndMap;
 			out << YAML::EndMap;
 			out << YAML::EndMap;
 		}
@@ -151,7 +170,7 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 			}
 			});
 		ComponentSerialize<Spirit::MeshRendererComponent>(entity, out, [&](auto c) {
-			out key "Path" value c.Mesh->GetPath().string();
+			out key "Path" value c.Path.string();
 			});
 		ComponentSerialize<Spirit::MaterialComponent>(entity, out, [&](auto c) {
 			//TODO
@@ -235,7 +254,7 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 				auto meshComponent = entity[typeid(MeshRendererComponent).name()];
 				if (meshComponent) {
 					deserializedEntity.AddComponent<MeshRendererComponent>();
-					deserializedEntity.GetComponent<MeshRendererComponent>().Mesh = AssetLibrary::GetMeshRegistry().GetMember({ meshComponent["Path"].as<std::string>() });
+					deserializedEntity.GetComponent<MeshRendererComponent>().Path =meshComponent["Path"].as<std::string>();
 				}
 
 
@@ -249,8 +268,20 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 						
 						Scripting::ScriptClass& _class = component->GetClass();
 						for (auto field : _class.GetFieldNames()) {
-							Scripting::ScriptField& scriptfield = component->GetField(field);
-							scriptfield.SetValue(script["Fields"][field]);
+							if (script["Fields"][field]) {
+								SP_CORE_INFO(field);
+								Scripting::ScriptField& scriptfield = component->GetField(field);
+								SP_CORE_INFO(script["Fields"][field]["type"].as<std::string>());
+								DESERIALIZE_SCRIPT(bool);
+								DESERIALIZE_SCRIPT(float);
+								DESERIALIZE_SCRIPT(int);
+								DESERIALIZE_SCRIPT(std::string);
+								DESERIALIZE_SCRIPT(unsigned int);
+								DESERIALIZE_SCRIPT(glm::vec2);
+								DESERIALIZE_SCRIPT(glm::vec3);
+								DESERIALIZE_SCRIPT(glm::vec4);
+							}
+							
 						}
 						
 					}

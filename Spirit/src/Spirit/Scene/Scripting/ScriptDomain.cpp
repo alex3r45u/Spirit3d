@@ -1,42 +1,39 @@
 #include "sppch.h"
 #include "ScriptDomain.h"
+#include "Spirit/Application.h"
+#include "Spirit/Core/File.h"
 
-Spirit::Scripting::ScriptDomain::ScriptDomain(const char* filename, const char* filenameCore)
+Spirit::Scripting::ScriptDomain::ScriptDomain(std::string filename, std::string filenameCore)
 {
 	mono_set_dirs("mono/lib", ".");
-	m_Domain = mono_jit_init("SpiritScripting");
-
-
-	if (!m_Domain)
-		SP_CORE_ERROR("m_Domain is null");
-
-	m_Assembly = mono_domain_assembly_open(m_Domain, filename);
-
-	if (!m_Assembly)
-		SP_CORE_ERROR("m_Assembly is null");
-
-	m_Image = mono_assembly_get_image(m_Assembly);
-
-	if (!m_Image)
-		SP_CORE_ERROR("m_Image is null");
-
-	//Core
-	m_CoreAssembly = mono_domain_assembly_open(m_Domain, filenameCore);
-
-	if (!m_CoreAssembly)
-		SP_CORE_ERROR("m_CoreAssembly is null");
-
-	m_CoreImage = mono_assembly_get_image(m_CoreAssembly);
-
-	if (!m_CoreImage)
-		SP_CORE_ERROR("m_CoreImage is null");
+	m_Root = mono_jit_init("SpiritScriptRoot");
+	
+	InitAssemblies(filename, filenameCore);
 
 	
 }
 
 Spirit::Scripting::ScriptDomain::~ScriptDomain()
 {
-	mono_jit_cleanup(m_Domain);
+	mono_jit_cleanup(m_Root);
+}
+
+void Spirit::Scripting::ScriptDomain::Reload(std::string filename, std::string filenameCore)
+{
+	Unload();
+	Load(filename, filenameCore);
+}
+
+void Spirit::Scripting::ScriptDomain::Unload()
+{
+	mono_domain_set(m_Root, 0);
+	m_Classes = {};
+	mono_domain_unload(m_Domain);
+}
+
+void Spirit::Scripting::ScriptDomain::Load(std::string filename, std::string filenameCore)
+{
+	InitAssemblies(filename, filenameCore);
 }
 
 Spirit::Scripting::ScriptClass& Spirit::Scripting::ScriptDomain::GetClass(const std::string& name)
@@ -88,4 +85,35 @@ bool Spirit::Scripting::ScriptDomain::ClassExist(const std::string& name)
 	MonoClass* pClass = mono_class_from_name(m_Image, name_space.c_str(), class_name.c_str());
 
 	return pClass != nullptr;
+}
+
+void Spirit::Scripting::ScriptDomain::InitAssemblies(std::string filename, std::string filenameCore)
+{
+	
+	m_Domain = mono_domain_create_appdomain("SpiritScript", NULL);
+	mono_domain_set(m_Domain, true);
+	if (!m_Domain)
+		SP_CORE_ERROR("m_Domain is null");
+
+	m_Assembly = mono_domain_assembly_open(m_Domain, Spirit::File::Merge2Paths(PROJECT->GetSettings().Path, PROJECT->GetSettings().ProjectName + ".dll").string().c_str());
+
+	if (!m_Assembly)
+		SP_CORE_ERROR("m_Assembly is null");
+
+	m_Image = mono_assembly_get_image(m_Assembly);
+
+	if (!m_Image)
+		SP_CORE_ERROR("m_Image is null");
+
+	//Core
+	m_CoreAssembly = mono_domain_assembly_open(m_Domain, Spirit::File::Merge2Paths(PROJECT->GetSettings().Path, "SpiritScript.dll").string().c_str());
+
+	if (!m_CoreAssembly)
+		SP_CORE_ERROR("m_CoreAssembly is null");
+
+	m_CoreImage = mono_assembly_get_image(m_CoreAssembly);
+
+	if (!m_CoreImage)
+		SP_CORE_ERROR("m_CoreImage is null");
+	
 }

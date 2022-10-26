@@ -15,6 +15,8 @@
 
 #include "Spirit/Log.h"
 
+#define PROJECT Spirit::Application::Get().GetProject()
+
 #ifdef HZ_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif

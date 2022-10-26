@@ -7,15 +7,19 @@ namespace Spirit::Scripting {
 	class ScriptDomain {
 	public:
 		ScriptDomain() = default;
-		ScriptDomain(const char* filename, const char* filenameCore);
+		ScriptDomain(std::string filename, std::string filenameCore);
 		~ScriptDomain();
-
+		void Reload(std::string filename, std::string filenameCore);
+		void Unload();
+		void Load(std::string filename, std::string filenameCore);
 		ScriptClass& GetClass(const std::string& name);
 		ScriptObject& GetObjectOutMonoObject(MonoObject* object);
 		bool ClassExist(const std::string& name);
-
+	private:
+		void InitAssemblies(std::string filename, std::string filenameCore);
 	private:
 		MonoDomain* m_Domain = nullptr;
+		MonoDomain* m_Root = nullptr;
 		MonoAssembly* m_Assembly = nullptr;
 		MonoImage* m_Image = nullptr;
 		MonoAssembly* m_CoreAssembly = nullptr;

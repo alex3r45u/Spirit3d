@@ -7,7 +7,7 @@
 #include "Spirit/Render/Lights/LightManager.h"
 #include "Entity.h"
 #include "Scripting/ScriptController.h"
-
+#include "Spirit/Core/AssetLibrary.h"
 
 
 
@@ -31,7 +31,7 @@ Spirit::Entity Spirit::Scene::CreateEntity(const std::string& name)
 	entity.AddComponent<TransformComponent>();
 	auto& tag = entity.AddComponent<TagComponent>();
 	tag.Tag = name.empty() ? "Entity" : name;
-	//m_ScriptingECS.AddComponent((unsigned int)entity, std::make_shared<Scripting::ScriptObject>(Scripting::ScriptController::GetDomain().GetClass("GameScripts.Class1").CreateInstance()));
+	//m_ScriptingECS.AddComponent((unsigned int)entity, std::make_shared<Scripting::ScriptObject>(Scripting::ScriptController::GetDomain().GetClass("MeinProject.assets.Class1").CreateInstance()));
 	return entity;
 }
 
@@ -116,7 +116,7 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 			{
 				auto [transform, mesh, material] = view.get<TransformComponent, MeshRendererComponent, MaterialComponent>(entity);
 
-				for (auto va : mesh.Mesh->GetVertexArray()) {
+				for (auto va : AssetLibrary::GetMeshRegistry().GetMember({ mesh.Path.string()})->GetVertexArray()) {
 					Spirit::Render::Renderer::Submit(va, AssetLibrary::GetShaderRegistry().GetMember({ "default", "assets/vertex.glsl", "assets/fragment.glsl" }), material.Material, transform);
 				}
 			}

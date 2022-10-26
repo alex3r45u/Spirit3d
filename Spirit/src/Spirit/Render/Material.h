@@ -22,4 +22,10 @@ namespace Spirit::Render {
 		std::shared_ptr<Texture> MetallicMap;
 		std::shared_ptr<Texture> AOMap;
 	};
+
+	struct AssetMaterial : public Material {
+		std::filesystem::path Path;
+		AssetMaterial() = default;
+		AssetMaterial(const AssetMaterial&) = default;
+	};
 }

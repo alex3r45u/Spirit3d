@@ -6,7 +6,12 @@
 #include <iostream>
 #include <filesystem>
 #include <fstream>
-#include "Core/ScriptSolutionCreater.h"
+#include "Core/ScriptSolution.h"
+#include "Spirit/Utils/FileDialog.h"
+#include "Spirit/Project/ProjectSerializer.h"
+#include "Spirit/Scene/Scripting/ScriptController.h"
+#include "Spirit/Core/File.h"
+#define PROJECT Spirit::Application::Get().GetProject()
 
 enum class SceneState {
 	None = 0,
@@ -29,19 +34,19 @@ public:
 		fbosettings.Height = 720;
 		m_Fbo = Spirit::Render::Framebuffer::Create(fbosettings);
 		
-		Spirit::SceneManager::LoadScene("TestScene.spirit");
-		Spirit::SceneManager::SetActiveScene("TestScene.spirit");
-
+		ReloadPanels();
 		
-		m_SceneHierarchyPanel.SetScene(Spirit::SceneManager::GetActiveScene());
-		m_PropertiesPanel.SetScene(Spirit::SceneManager::GetActiveScene());
-		m_PropertiesPanel.SetSceneHierarchy(&m_SceneHierarchyPanel);
-
-		m_FileExplorerPanel.SetScene(Spirit::SceneManager::GetActiveScene());
-		m_FileExplorerPanel.SetDirectory(Spirit::Application::Get().GetProject()->GetSettings().AssetPath);
+		
 
 	}
+	void ReloadPanels() {
+		m_SceneHierarchyPanel.SetScene(PROJECT->GetActiveScene());
+		m_PropertiesPanel.SetScene(PROJECT->GetActiveScene());
+		m_PropertiesPanel.SetSceneHierarchy(&m_SceneHierarchyPanel);
 
+		m_FileExplorerPanel.SetScene(PROJECT->GetActiveScene());
+		m_FileExplorerPanel.SetDirectory(Spirit::Application::Get().GetProject()->GetSettings().AssetPath);
+	}
 
 	virtual void Update(Spirit::TimeStep ts) override {
 		
@@ -55,7 +60,7 @@ public:
 		Spirit::Render::RenderCommand::SetClearColor({ 0.1f, .1f, .1f, 1 });
 		Spirit::Render::RenderCommand::Clear();
 
-		Spirit::SceneManager::GetActiveScene()->OnUpdate(ts);
+		PROJECT->GetActiveScene()->OnUpdate(ts);
 		m_Fbo->Unbind();
 	}
 
@@ -115,8 +120,8 @@ public:
 				case SceneState::Edit:
 					break;
 				case SceneState::Play: {
-					std::string activeSceneName = Spirit::SceneManager::GetActiveScene()->GetPath().string();
-					Spirit::SceneManager::SaveActiveScene(std::filesystem::path(activeSceneName));
+					std::string activeSceneName = PROJECT->GetActiveScene()->GetPath().string();
+					PROJECT->SaveActiveScene(std::filesystem::path(activeSceneName));
 					break;
 				}
 					
@@ -137,22 +142,45 @@ public:
 			}
 			if (ImGui::BeginMenu("File"))
 			{
-
-				if (ImGui::MenuItem("Open")) {}
+				
+				if (ImGui::MenuItem("Create")) {
+					std::string path = Spirit::FileDialog::SaveFile("Spirit Project (*.spiritproject)\0*.spiritproject\0");
+					if (!path.empty()) {
+						PROJECT->SaveActiveScene(PROJECT->GetActiveScene()->GetPath());
+						std::shared_ptr<Spirit::Project> project = Spirit::ProjectSerializer::CreateProject(path, "ressources");
+						Spirit::Application::Get().SetProject(project);
+						Spirit::ScriptSolution::Create(project);
+						Spirit::ScriptSolution::Open(project);
+						ReloadPanels();
+					}
+				}
+				if (ImGui::MenuItem("Open")) {
+					std::string path = Spirit::FileDialog::OpenFile("Spirit Project (*.spiritproject)\0*.spiritproject\0");
+					if (!path.empty()) {
+						PROJECT->SaveActiveScene(PROJECT->GetActiveScene()->GetPath());
+						std::shared_ptr<Spirit::Project> project = std::make_shared<Spirit::Project>();
+						Spirit::ProjectSerializer serializer(project);
+						serializer.Deserialize(path);
+						Spirit::Application::Get().SetProject(project);
+						PROJECT->SetLoadScene(PROJECT->GetSettings().StartScene);
+						ReloadPanels();
+						Spirit::Scripting::ScriptController::Reload();
+					}
+				}
 				if (ImGui::MenuItem("Save")) {
-					Spirit::SceneManager::SaveScene(std::filesystem::path("TestScene.spirit"));
+					Spirit::ProjectSerializer serializer(PROJECT);
+					serializer.Serialize(PROJECT->GetSettings().Path);
+					PROJECT->SaveActiveScene(PROJECT->GetActiveScene()->GetPath());
 				}
 				if (ImGui::MenuItem("Export")) {}
-				if (ImGui::MenuItem("Create Script Solution")) {
-					Spirit::ScriptSolutionCreater::Create(Spirit::Application::Get().GetProject());
+				if (ImGui::MenuItem("Open Script Solution")) {
+					Spirit::ScriptSolution::Open(PROJECT);
 				}
-				
 				ImGui::EndMenu();
 			}
 
 			ImGui::EndMenuBar();
 		}
-
 		m_SceneHierarchyPanel.ImGuiRender();
 		m_PropertiesPanel.ImGuiRender();
 		m_FileExplorerPanel.ImGuiRender();
@@ -170,7 +198,7 @@ public:
 			m_Fbo->Reseize(viewportPanelSize.x, viewportPanelSize.y);
 			m_ViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
-			Spirit::SceneManager::GetActiveScene()->OnReseize(viewportPanelSize.x, viewportPanelSize.y);
+			PROJECT->GetActiveScene()->OnReseize(viewportPanelSize.x, viewportPanelSize.y);
 		}
 		
 		uint32_t textureID = m_Fbo->GetRendererID();

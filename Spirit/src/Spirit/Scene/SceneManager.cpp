@@ -1,7 +1,7 @@
 #include "sppch.h"
 #include "SceneManager.h"
 #include "SceneSerializer.h"
-
+/*
 std::shared_ptr<Spirit::Scene> Spirit::SceneManager::m_ActiveScene;
 std::unordered_map<std::string, std::shared_ptr<Spirit::Scene>> Spirit::SceneManager::m_Scenes;
 
@@ -84,4 +84,4 @@ bool Spirit::SceneManager::LoadScene(const std::filesystem::path& path)
 	Spirit::SceneSerializer ss = Spirit::SceneSerializer(GetScene(path.string()));
 	ss.Deserialize(path);
 	return true;
-}
+}*/
