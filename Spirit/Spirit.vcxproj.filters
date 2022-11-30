@@ -46,6 +46,9 @@
     <Filter Include="src\Spirit\Scene\Scripting">
       <UniqueIdentifier>{B6C12A6B-A2D1-D63B-0B8B-3B5AF7B9C5D4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Spirit\Utils">
+      <UniqueIdentifier>{F7AF4367-E3A8-62B9-0CDB-473EF83242C5}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -320,6 +323,9 @@
     </ClInclude>
     <ClInclude Include="src\Spirit\Scene\Scripting\ScriptingECS.h">
       <Filter>src\Spirit\Scene\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Utils\FileDialog.h">
+      <Filter>src\Spirit\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Window.h">
       <Filter>src\Spirit</Filter>
@@ -1956,7 +1962,6 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spirit\Utils\FileDialog.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp">
@@ -2000,6 +2005,9 @@
     </ClCompile>
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlVertexArray.cpp">
       <Filter>src\Spirit\Platform\OpenGl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Platform\Windows\WindowsFileDialog.cpp">
+      <Filter>src\Spirit\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Spirit\Platform\Windows</Filter>
@@ -2121,7 +2129,6 @@
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="src\Spirit\Platform\Windows\WindowsFileDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">

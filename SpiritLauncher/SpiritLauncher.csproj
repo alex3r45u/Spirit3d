@@ -1,0 +1,103 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWpf>True</UseWpf>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Debug-windows-x86_64\SpiritLauncher\</OutputPath>
+    <IntermediateOutputPath>..\bin-int\Debug-windows-x86_64\SpiritLauncher\</IntermediateOutputPath>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Release-windows-x86_64\SpiritLauncher\</OutputPath>
+    <IntermediateOutputPath>..\bin-int\Release-windows-x86_64\SpiritLauncher\</IntermediateOutputPath>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Dist|x64' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugType>portable</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\Dist-windows-x86_64\SpiritLauncher\</OutputPath>
+    <IntermediateOutputPath>..\bin-int\Dist-windows-x86_64\SpiritLauncher\</IntermediateOutputPath>
+    <DefineConstants></DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <Reference Include="Microsoft.Csharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xmal" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <Reference Include="Microsoft.Csharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xmal" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Dist|x64' ">
+    <Reference Include="Microsoft.Csharp" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xmal" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\PlatformType.cs" />
+    <Compile Include="Core\Project.cs" />
+    <Compile Include="Core\ProjectType.cs" />
+    <Compile Include="Core\WPFManager.cs" />
+    <Compile Include="MainWindow.xaml.cs" />
+    <Compile Include="MVVM\Model\ProjectControl.cs" />
+    <Compile Include="MVVM\Model\ValueConverter\DateTimeConverter.cs" />
+    <Compile Include="MVVM\Model\ValueConverter\ProjectTypeConverter.cs" />
+    <Compile Include="MVVM\ObservableObject.cs" />
+    <Compile Include="MVVM\RelayCommand.cs" />
+    <Compile Include="MVVM\SharedRessourceDictionary.cs" />
+    <Compile Include="MVVM\ViewModel\ImportVM.cs" />
+    <Compile Include="MVVM\ViewModel\MainWindowVM.cs" />
+    <Compile Include="MVVM\ViewModel\HomeVM.cs" />
+    <Compile Include="MVVM\ViewModel\AddVM.cs" />
+    <Compile Include="MVVM\ViewModel\SettingsVM.cs" />
+    <Compile Include="MVVM\ViewModel\BuildVM.cs" />
+    <Compile Include="MVVM\View\AddView.xaml.cs" />
+    <Compile Include="MVVM\View\BuildView.xaml.cs" />
+    <Compile Include="MVVM\View\HomeView.xaml.cs" />
+    <Compile Include="MVVM\View\ImportView.xaml.cs" />
+    <Compile Include="MVVM\View\SettingsView.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+    <PackageReference Include="WPF-UI" Version="2.0.3" />
+  </ItemGroup>
+</Project>

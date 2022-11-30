@@ -1,0 +1,8 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="clr-namespace:SpiritLauncher.MVVM.Model.ValueConverter">
+
+    <converter:DateTimeConverter x:Key="DateTimeConverter" />
+    <converter:ProjectTypeConverter x:Key="ProjectTypeConverter" />
+</ResourceDictionary>

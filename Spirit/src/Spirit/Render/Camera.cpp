@@ -22,5 +22,5 @@ void Spirit::Render::PerspectiveCamera::CalcProjection()
 
 void Spirit::Render::PerspectiveCamera::CalcView(TransformComponent& transform)
 {
-	m_View = glm::lookAt(transform.Position, transform.Position + transform.GetForward(), glm::vec3(0.0f, 1.0f, 0.0f));
+	m_View = glm::lookAt(transform.Position, transform.Position + transform.GetForward(), transform.GetUp());
 }

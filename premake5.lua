@@ -182,60 +182,7 @@ workspace "Spirit3d"
 
 
 
-	project "SpiritHub"
-		location "SpiritHub"
-		kind "ConsoleApp"
-		language "C++"
 	
-		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
-		
-		files
-		{
-			"%{prj.name}/src/**.h",
-			"%{prj.name}/src/**.cpp"
-		}
-	
-		includedirs
-		{
-			"Spirit/vendor/spdlog/include",
-			"Spirit/src",
-			"Spirit/vendor",
-		}
-	
-		links
-		{
-			"Spirit",
-		}
-
-	
-		filter "system:windows"
-			cppdialect "C++17"
-			staticruntime "On"
-			systemversion "latest"
-	
-			defines
-			{
-				"SP_PLATFORM_WINDOWS"
-			}
-	
-		filter "configurations:Debug"
-			defines "SP_DEBUG"
-			symbols "On"
-	
-		filter "configurations:Release"
-			defines "SP_RELEASE"
-			optimize "On"
-	
-		filter "configurations:Dist"
-			defines "SP_DIST"
-			optimize "On"
-
-
-
-
-
-
 
 
 
@@ -269,6 +216,31 @@ workspace "Spirit3d"
 			"%{prj.name}/**"
 		}
 
+
+		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	
+
+
+	project "SpiritLauncher"
+		location "SpiritLauncher"
+  		language "C#"
+  		kind "WindowedApp"
+		architecture "x64"
+		framework "net6.0-windows"
+		flags { "WPF" }
+  		--files{ "%{prj.name}/**" }   -- source files
+
+		links ("Microsoft.Csharp")
+		links ("PresentationCore")
+		--links ("PresentationFramework")
+		links ("System")
+		links ("System.Core")
+		links ("System.Data")
+		links ("System.Data.DataSetExtensions")
+		links ("System.Xmal")
+		links ("System.Xml")
+		links ("System.Xml.Linq")
 
 		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 		objdir ("bin-int/" .. outputdir .. "/%{prj.name}")

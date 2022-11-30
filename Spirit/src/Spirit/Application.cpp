@@ -32,7 +32,7 @@ namespace Spirit {
 	{
 		
 		//m_Project = ProjectSerializer::CreateProject("C:\\Users\\ap\\OneDrive\\Desktop\\asdf\\MeinProject.spiritproject", "ressources");
-		m_Project = ProjectSerializer::CreateProject("Examples/Project/Example.spiritproject", "ressources");
+		m_Project = ProjectSerializer::CreateProject(projectPath, "ressources");
 		//ProjectSerializer ps = ProjectSerializer(project);
 		
 		//if (!ps.Deserialize(projectPath))

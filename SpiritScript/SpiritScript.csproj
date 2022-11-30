@@ -21,8 +21,7 @@
     <OutputPath>..\bin\Debug-windows-x86_64\SpiritScript\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Debug-windows-x86_64\SpiritScript\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -34,8 +33,7 @@
     <OutputPath>..\bin\Release-windows-x86_64\SpiritScript\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Release-windows-x86_64\SpiritScript\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -47,8 +45,7 @@
     <OutputPath>..\bin\Dist-windows-x86_64\SpiritScript\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Dist-windows-x86_64\SpiritScript\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>
-    </DefineConstants>
+    <DefineConstants></DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -67,8 +64,8 @@
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />
     <Compile Include="Mesh.cs" />
-    <Compile Include="Texture2d.cs" />
     <None Include="SpiritScript.csproj" />
+    <Compile Include="Texture2d.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

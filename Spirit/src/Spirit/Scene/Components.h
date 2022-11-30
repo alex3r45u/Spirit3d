@@ -60,6 +60,8 @@ namespace Spirit {
 			m_Backward = -m_Forward;
 			m_Right = glm::normalize(glm::cross(m_Forward, glm::vec3(0.0f, 1.0f, 0.0f)));
 			m_Left = -m_Right;
+			m_Up = glm::normalize(glm::cross(m_Forward, m_Right));
+			m_Down = -m_Up;
 
 			Transform = glm::translate(Transform, Position);
 			Transform = glm::scale(Transform, Scale);

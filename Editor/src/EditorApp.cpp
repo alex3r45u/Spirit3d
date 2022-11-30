@@ -143,36 +143,11 @@ public:
 			if (ImGui::BeginMenu("File"))
 			{
 				
-				if (ImGui::MenuItem("Create")) {
-					std::string path = Spirit::FileDialog::SaveFile("Spirit Project (*.spiritproject)\0*.spiritproject\0");
-					if (!path.empty()) {
-						PROJECT->SaveActiveScene(PROJECT->GetActiveScene()->GetPath());
-						std::shared_ptr<Spirit::Project> project = Spirit::ProjectSerializer::CreateProject(path, "ressources");
-						Spirit::Application::Get().SetProject(project);
-						Spirit::ScriptSolution::Create(project);
-						Spirit::ScriptSolution::Open(project);
-						ReloadPanels();
-					}
-				}
-				if (ImGui::MenuItem("Open")) {
-					std::string path = Spirit::FileDialog::OpenFile("Spirit Project (*.spiritproject)\0*.spiritproject\0");
-					if (!path.empty()) {
-						PROJECT->SaveActiveScene(PROJECT->GetActiveScene()->GetPath());
-						std::shared_ptr<Spirit::Project> project = std::make_shared<Spirit::Project>();
-						Spirit::ProjectSerializer serializer(project);
-						serializer.Deserialize(path);
-						Spirit::Application::Get().SetProject(project);
-						PROJECT->SetLoadScene(PROJECT->GetSettings().StartScene);
-						ReloadPanels();
-						Spirit::Scripting::ScriptController::Reload();
-					}
-				}
 				if (ImGui::MenuItem("Save")) {
 					Spirit::ProjectSerializer serializer(PROJECT);
 					serializer.Serialize(PROJECT->GetSettings().Path);
 					PROJECT->SaveActiveScene(PROJECT->GetActiveScene()->GetPath());
 				}
-				if (ImGui::MenuItem("Export")) {}
 				if (ImGui::MenuItem("Open Script Solution")) {
 					Spirit::ScriptSolution::Open(PROJECT);
 				}
@@ -234,9 +209,11 @@ private:
 class EditorApp : public Spirit::Application
 {
 public:
-	EditorApp() : Spirit::Application("")
-	{
-		m_LayerStack.AddLayer(new EditorLayer());
+	EditorApp(char* c) : Spirit::Application(std::filesystem::path(c)) {
+		m_LayerStack.AddLayer(new EditorLayer);
+	}
+	EditorApp() : Spirit::Application(std::filesystem::path("Examples/Project/Example.spiritproject")) {
+		m_LayerStack.AddLayer(new EditorLayer);
 	}
 
 	~EditorApp()
@@ -249,7 +226,11 @@ public:
 
 };
 
-Spirit::Application* Spirit::CreateApplication()
+Spirit::Application* Spirit::CreateApplication(int argc, char** argv)
 {
+	if (argc == 2) {
+		return new EditorApp(argv[1]);
+	}
 	return new EditorApp();
+	
 }

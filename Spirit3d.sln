@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
+VisualStudioVersion = 17.0.31919.166
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Editor", "Editor\Editor.vcxproj", "{8C1A20B0-78BC-4A86-6177-5EDA4DB8D1D6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GLFW", "Spirit\vendor\glfw\GLFW.vcxproj", "{154B857C-0182-860D-AA6E-6C109684020F}"
@@ -13,7 +15,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "Spirit\vendor\imgu
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Spirit", "Spirit\Spirit.vcxproj", "{2070A1D1-0C12-CCA7-F5CC-DFFBE10D53F8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpiritHub", "SpiritHub\SpiritHub.vcxproj", "{DF3D7EB7-4BA8-322E-94E6-E3D300901083}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpiritLauncher", "SpiritLauncher\SpiritLauncher.csproj", "{72F2E54A-5EC0-D950-4754-4A7733C1B5B5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpiritScript", "SpiritScript\SpiritScript.csproj", "{F5FE18A9-E161-A84D-8AE7-E003762974D0}"
 EndProject
@@ -62,12 +64,12 @@ Global
 		{2070A1D1-0C12-CCA7-F5CC-DFFBE10D53F8}.Dist|x64.Build.0 = Dist|x64
 		{2070A1D1-0C12-CCA7-F5CC-DFFBE10D53F8}.Release|x64.ActiveCfg = Release|x64
 		{2070A1D1-0C12-CCA7-F5CC-DFFBE10D53F8}.Release|x64.Build.0 = Release|x64
-		{DF3D7EB7-4BA8-322E-94E6-E3D300901083}.Debug|x64.ActiveCfg = Debug|x64
-		{DF3D7EB7-4BA8-322E-94E6-E3D300901083}.Debug|x64.Build.0 = Debug|x64
-		{DF3D7EB7-4BA8-322E-94E6-E3D300901083}.Dist|x64.ActiveCfg = Dist|x64
-		{DF3D7EB7-4BA8-322E-94E6-E3D300901083}.Dist|x64.Build.0 = Dist|x64
-		{DF3D7EB7-4BA8-322E-94E6-E3D300901083}.Release|x64.ActiveCfg = Release|x64
-		{DF3D7EB7-4BA8-322E-94E6-E3D300901083}.Release|x64.Build.0 = Release|x64
+		{72F2E54A-5EC0-D950-4754-4A7733C1B5B5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{72F2E54A-5EC0-D950-4754-4A7733C1B5B5}.Debug|x64.Build.0 = Debug|Any CPU
+		{72F2E54A-5EC0-D950-4754-4A7733C1B5B5}.Dist|x64.ActiveCfg = Dist|x64
+		{72F2E54A-5EC0-D950-4754-4A7733C1B5B5}.Dist|x64.Build.0 = Dist|x64
+		{72F2E54A-5EC0-D950-4754-4A7733C1B5B5}.Release|x64.ActiveCfg = Release|x64
+		{72F2E54A-5EC0-D950-4754-4A7733C1B5B5}.Release|x64.Build.0 = Release|x64
 		{F5FE18A9-E161-A84D-8AE7-E003762974D0}.Debug|x64.ActiveCfg = Debug|x64
 		{F5FE18A9-E161-A84D-8AE7-E003762974D0}.Debug|x64.Build.0 = Debug|x64
 		{F5FE18A9-E161-A84D-8AE7-E003762974D0}.Dist|x64.ActiveCfg = Dist|x64
@@ -83,5 +85,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BB09E146-FA29-4391-8A92-778A057E5E8C}
 	EndGlobalSection
 EndGlobal

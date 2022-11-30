@@ -46,7 +46,6 @@ namespace SpiritScript
 
     public class Transform : Component
     {
-        void Update() { }
         public Vector3 position
         {
             get
@@ -198,6 +197,7 @@ namespace SpiritScript
             get
             {
                 return new Mesh(GetPath_Native(entity.ID));
+                //Material material = new Material() { AlbedoMap = true };
             }
             set => SetPath_Native(entity.ID, value.Path);
         }
@@ -229,13 +229,37 @@ namespace SpiritScript
 
         public Material Material
         {
-            get;set;
+            get
+            {
+                switch(Type) {
+                    case MaterialType.Asset:
+                        return new AssetMaterial(GetPath_Native(entity.ID));
+                    case MaterialType.Component:
+                        return new ComponentMaterial(entity.ID);
+                }
+                return null;
+            }
+            set
+            {
+                switch(Type)
+                {
+                    case MaterialType.Asset:
+                        SetPath_Native(entity.ID, ((AssetMaterial)value).Path);
+                        break;
+                }
+            }
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern void GetType_Native(uint entityID, out int type);
         [MethodImpl(MethodImplOptions.InternalCall)]
         private static extern void SetType_Native(uint entityID, int type);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern string GetPath_Native(uint entityID);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private static extern void SetPath_Native(uint entityID, string path);
     }
     
 }

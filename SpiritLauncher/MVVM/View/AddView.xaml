@@ -1,0 +1,37 @@
+﻿<ui:UiPage  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" x:Class="SpiritLauncher.MVVM.View.AddView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SpiritLauncher.MVVM.View"
+             xmlns:viewmodel ="clr-namespace:SpiritLauncher.MVVM.ViewModel"
+             DataContext="{Binding AddVM, Source={x:Static viewmodel:MainWindowVM.Instance}}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <TextBlock Text="Choose your type"
+                       Foreground="White"
+                       Margin="5,15,0,0"
+                       FontSize="17"/>
+            <ComboBox Focusable="False" ItemsSource="{Binding ProjectTypes}" SelectedItem="{Binding Index}" Margin="5,0,0,0"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <TextBlock Text="Choose your directory"
+                       Foreground="White"
+                       Margin="5,15,0,0"
+                       FontSize="17"/>
+            <ui:Button Command="{Binding Directory}" Content="{Binding ButtonContent}" FontSize="17" Margin="5,0,0,0" />
+        </StackPanel>
+        
+        <ui:Button Command="{Binding Create}" Grid.Row="100" Content="Create" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="300" Height="40" FontSize="25" Margin="0,0,0,5"/>
+    </Grid>
+</ui:UiPage>

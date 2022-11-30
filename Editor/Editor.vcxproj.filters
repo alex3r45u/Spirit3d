@@ -12,10 +12,16 @@
     <ClInclude Include="src\Core\AssetViewer.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\ScriptSolution.h">
+      <Filter>Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Windows\FileExplorerPanel.h">
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Windows\Panel.h">
+      <Filter>Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Windows\ProjectSettingsPanel.h">
       <Filter>Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Windows\PropertiesPanel.h">
@@ -24,15 +30,19 @@
     <ClInclude Include="src\Windows\SceneHierarchyPanel.h">
       <Filter>Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\ScriptSolution.h" />
-    <ClInclude Include="src\Windows\ProjectSettingsPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\AssetViewer.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\ScriptSolution.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\EditorApp.cpp" />
     <ClCompile Include="src\Windows\FileExplorerPanel.cpp">
+      <Filter>Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Windows\ProjectSettingsPanel.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Windows\PropertiesPanel.cpp">
@@ -41,7 +51,5 @@
     <ClCompile Include="src\Windows\SceneHierarchyPanel.cpp">
       <Filter>Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\ScriptSolution.cpp" />
-    <ClCompile Include="src\Windows\ProjectSettingsPanel.cpp" />
   </ItemGroup>
 </Project>
