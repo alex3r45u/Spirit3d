@@ -2,21 +2,24 @@
 #include <unordered_map>
 #include "ScriptClass.h"
 
+namespace Spirit {
+	class ProjectSettings;
+}
 
 namespace Spirit::Scripting {
 	class ScriptDomain {
 	public:
 		ScriptDomain() = default;
-		ScriptDomain(std::string filename, std::string filenameCore);
+		ScriptDomain(std::string filename, std::string filenameCore, const Spirit::ProjectSettings& settings);
 		~ScriptDomain();
-		void Reload(std::string filename, std::string filenameCore);
+		void Reload(std::string filename, std::string filenameCore, const Spirit::ProjectSettings& settings);
 		void Unload();
-		void Load(std::string filename, std::string filenameCore);
+		void Load(std::string filename, std::string filenameCore, const Spirit::ProjectSettings& settings);
 		ScriptClass& GetClass(const std::string& name);
 		ScriptObject& GetObjectOutMonoObject(MonoObject* object);
 		bool ClassExist(const std::string& name);
 	private:
-		void InitAssemblies(std::string filename, std::string filenameCore);
+		void InitAssemblies(std::string filename, std::string filenameCore, const Spirit::ProjectSettings& settings);
 	private:
 		MonoDomain* m_Domain = nullptr;
 		MonoDomain* m_Root = nullptr;

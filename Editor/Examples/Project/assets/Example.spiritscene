@@ -1,3 +1,37 @@
-Scene: Examples/Project\assets\Example.spiritscene
+Scene: C:/Users/ap/source/repos/Spirit3d/Editor/Examples/Project\assets\Example.spiritscene
 Entities:
-  []
+  - Entity: 1
+    class Spirit::TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    struct Spirit::TagComponent:
+      Tag: Camera
+    struct Spirit::CameraComponent:
+      IsMain: false
+      Type: Perspective
+      Zoom: 45
+    Scripts:
+      []
+  - Entity: 1
+    class Spirit::TransformComponent:
+      Position: [7, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    struct Spirit::TagComponent:
+      Tag: Cube
+    struct Spirit::MeshRendererComponent:
+      Path: C:/Users/ap/source/repos/Spirit3d/Editor/Examples/Project\assets\untitled.fbx
+    struct Spirit::MaterialComponent:
+      Type: Component
+      Albedo: [0.138408303, 0.556347191, 0.784313738]
+      Normal: [0.813725471, 0.267252982, 0.267252982]
+      Metallic: 0
+      AO: 0
+      Roughness: 0.458999991
+    Scripts:
+      - Name: Example.assets.Hallo
+        Fields:
+          speed:
+            value: 7
+            type: int

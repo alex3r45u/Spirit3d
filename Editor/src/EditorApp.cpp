@@ -17,7 +17,6 @@ enum class SceneState {
 	None = 0,
 	Edit,
 	Play,
-	PlayStop,
 };
 
 
@@ -41,6 +40,7 @@ public:
 	}
 	void ReloadPanels() {
 		m_SceneHierarchyPanel.SetScene(PROJECT->GetActiveScene());
+		m_SceneHierarchyPanel.Deselect();
 		m_PropertiesPanel.SetScene(PROJECT->GetActiveScene());
 		m_PropertiesPanel.SetSceneHierarchy(&m_SceneHierarchyPanel);
 
@@ -118,28 +118,22 @@ public:
 				switch (m_State)
 				{
 				case SceneState::Edit:
+					PROJECT->GetActiveScene()->Stop();
+					PROJECT->SetLoadScene(PROJECT->GetActiveScene()->GetPath());
+					ReloadPanels();
 					break;
 				case SceneState::Play: {
 					std::string activeSceneName = PROJECT->GetActiveScene()->GetPath().string();
 					PROJECT->SaveActiveScene(std::filesystem::path(activeSceneName));
+					PROJECT->GetActiveScene()->Start();
 					break;
 				}
 					
-				case SceneState::PlayStop:
-					break;
 				default:
 					break;
 				}
 			}
-			if (m_State == SceneState::Play) {
-				if(ImGui::Button("Stop")) {
-					m_State = SceneState::PlayStop;
-				}
-			} else if (m_State == SceneState::PlayStop) {
-				if (ImGui::Button("Start")) {
-					m_State = SceneState::Play;
-				}
-			}
+
 			if (ImGui::BeginMenu("File"))
 			{
 				
@@ -212,7 +206,7 @@ public:
 	EditorApp(char* c) : Spirit::Application(std::filesystem::path(c)) {
 		m_LayerStack.AddLayer(new EditorLayer);
 	}
-	EditorApp() : Spirit::Application(std::filesystem::path("Examples/Project/Example.spiritproject")) {
+	EditorApp() : Spirit::Application(std::filesystem::path("C:/Users/ap/source/repos/Spirit3d/Editor/Examples/Project/Example.spiritproject")) {
 		m_LayerStack.AddLayer(new EditorLayer);
 	}
 

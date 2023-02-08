@@ -60,9 +60,7 @@ namespace Spirit {
 
 		AssetLibrary::Init();
 		Render::Renderer::Init();
-		Scripting::ScriptController::Init(Spirit::File::Merge2Paths(m_Project->GetSettings().Path, m_Project->GetSettings().ProjectName + ".dll").string(), Spirit::File::Merge2Paths(m_Project->GetSettings().Path, "SpiritScript.dll").string());
-		Scripting::ComponentsCs::Bind();
-		Scripting::EntityCs::Bind();
+		
 		//Scripting::ScriptObject script = Scripting::ScriptController::GetDomain().GetClass("GameScripts.Class1").CreateInstance();
 		//SP_CORE_INFO(script.GetTypeName());
 	}

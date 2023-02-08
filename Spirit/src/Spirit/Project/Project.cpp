@@ -18,7 +18,7 @@ void Spirit::Project::SetSettings(const ProjectSettings& settings)
 	m_ProjectSettings = settings;
 }
 
-Spirit::ProjectSettings& Spirit::Project::GetSettings()
+const Spirit::ProjectSettings& Spirit::Project::GetSettings()
 {
 	return m_ProjectSettings;
 }

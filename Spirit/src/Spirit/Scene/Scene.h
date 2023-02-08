@@ -5,7 +5,11 @@
 #include "Scripting/ScriptingECS.h"
 #include <filesystem>
 
+
 namespace Spirit {
+	namespace Render {
+		class EditorCamera;
+	}
 	class Entity;
 
 	class Scene {
@@ -18,7 +22,11 @@ namespace Spirit {
 		Entity CreateEntity(const std::string& name);
 		void RemoveEntity(Entity& entity);
 
+		void Start();
+		void Stop();
+
 		void OnUpdate(TimeStep ts);
+		void OnRunUpdate(TimeStep ts);
 		void OnReseize(unsigned int width, unsigned int height);
 		Entity GetEntityByIndex(entt::entity handle);
 		std::filesystem::path GetPath() { return m_Path; }
@@ -30,6 +38,8 @@ namespace Spirit {
 		entt::registry m_Registry;
 		std::filesystem::path m_Path;
 		Scripting::ScriptingECS m_ScriptingECS;
+		std::shared_ptr<Spirit::Render::EditorCamera> m_EditorCamera;
+		bool m_IsRunning;
 		friend class Entity;
 		friend class SceneHierarchyPanel;
 		friend class PropertiesPanel;

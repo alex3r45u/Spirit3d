@@ -1,7 +1,8 @@
 #pragma once
-#include "Spirit/Project/Project.h"
+
 
 namespace Spirit {
+	class Project;
 	class ScriptSolution {
 	public:
 		static void Open(const std::shared_ptr<Project>& project);

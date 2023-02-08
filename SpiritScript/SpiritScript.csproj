@@ -21,7 +21,8 @@
     <OutputPath>..\bin\Debug-windows-x86_64\SpiritScript\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Debug-windows-x86_64\SpiritScript\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -33,7 +34,8 @@
     <OutputPath>..\bin\Release-windows-x86_64\SpiritScript\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Release-windows-x86_64\SpiritScript\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -45,7 +47,8 @@
     <OutputPath>..\bin\Dist-windows-x86_64\SpiritScript\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Dist-windows-x86_64\SpiritScript\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants></DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -56,6 +59,7 @@
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Dist|x64' ">
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="Debug\Debug.cs" />
     <Compile Include="Entity.cs" />

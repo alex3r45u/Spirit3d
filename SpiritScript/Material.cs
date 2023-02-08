@@ -109,56 +109,56 @@ namespace SpiritScript
     }
     public class ComponentMaterial : Material
     {
-        public readonly uint EntityID;
-        public ComponentMaterial(uint entityID)
+        public readonly Entity Entity;
+        public ComponentMaterial(Entity entity)
         {
-            EntityID = entityID;
+            Entity = entity;
         }
 
         public override Vector3 Albedo {
             get
             {
                 Vector3 result;
-                GetAlbedo_Native(EntityID, out result);
+                GetAlbedo_Native(Entity.ID, out result);
                 return result;
             }
-            set => SetAlbedo_Native(EntityID, ref value);
+            set => SetAlbedo_Native(Entity.ID, ref value);
         }
         public override Vector3 Normal {
             get
             {
                 Vector3 result;
-                GetNormal_Native(EntityID, out result);
+                GetNormal_Native(Entity.ID, out result);
                 return result;
             }
-            set => SetNormal_Native(EntityID, ref value);
+            set => SetNormal_Native(Entity.ID, ref value);
         }
         public override float Roughness {
             get
             {
                 float result;
-                GetRoughness_Native(EntityID, out result);
+                GetRoughness_Native(Entity.ID, out result);
                 return result;
             }
-            set => SetRoughness_Native(EntityID, value);
+            set => SetRoughness_Native(Entity.ID, value);
         }
         public override float Metallic {
             get
             {
                 float result;
-                GetMetallic_Native(EntityID, out result);
+                GetMetallic_Native(Entity.ID, out result);
                 return result;
             }
-            set => SetMetallic_Native(EntityID, value);
+            set => SetMetallic_Native(Entity.ID, value);
         }
         public override float AO {
             get
             {
                 float result;
-                GetAO_Native(EntityID, out result);
+                GetAO_Native(Entity.ID, out result);
                 return result;
             }
-            set => SetAO_Native(EntityID, value);
+            set => SetAO_Native(Entity.ID, value);
         }
         public override Texture2d AlbedoMap { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public override Texture2d NormalMap { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }

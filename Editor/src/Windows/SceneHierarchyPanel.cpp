@@ -57,6 +57,11 @@ void Spirit::SceneHierarchyPanel::ImGuiRender()
 	ImGui::End();
 }
 
+void Spirit::SceneHierarchyPanel::Deselect()
+{
+	m_IsSelected = false;
+}
+
 void Spirit::SceneHierarchyPanel::DrawNode(Entity& entity)
 {
 	auto& tag = entity.GetComponent<TagComponent>().Tag;

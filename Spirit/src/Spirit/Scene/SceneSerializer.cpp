@@ -17,6 +17,7 @@
 #define SERIALIZE_SCRIPT(type, field) if(script->GetField(string).GetType() == ##field) {out key "value" value script->GetField(string).GetValue<##type>(); out key "type" value #type;}
 
 
+
 namespace YAML {
 	template<>
 	struct convert<glm::vec3> {
@@ -173,7 +174,25 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 			out key "Path" value c.Path.string();
 			});
 		ComponentSerialize<Spirit::MaterialComponent>(entity, out, [&](auto c) {
-			//TODO
+
+			out key "Type";
+			switch (c.Type) {
+			case MaterialType::Asset: {
+					out value "Asset";
+					out key "Path" value std::static_pointer_cast<Render::AssetMaterial>(c.Material)->Path.c_str();
+					break;
+				}
+			case MaterialType::Component: {
+				out value "Component";
+				break;
+			}
+			}
+
+			out key "Albedo" value c.Material->Albedo;
+			out key "Normal" value c.Material->Normal;
+			out key "Metallic" value c.Material->Metallic;
+			out key "AO" value c.Material->AO;
+			out key "Roughness" value c.Material->Roughness;
 			});
 
 
@@ -257,13 +276,34 @@ Spirit::SceneSerializer::SceneSerializer(const std::shared_ptr<Spirit::Scene>& s
 					deserializedEntity.GetComponent<MeshRendererComponent>().Path =meshComponent["Path"].as<std::string>();
 				}
 
+				auto materialComponent = entity[typeid(MaterialComponent).name()];
+				if (materialComponent) {
+					deserializedEntity.AddComponent<MaterialComponent>();
+					std::shared_ptr<Render::Material> material;
+					std::string materialType = materialComponent["Type"].as<std::string>();
+					if (materialType == "Asset") {
+						material == std::make_shared<Render::AssetMaterial>();
+						std::static_pointer_cast<Render::AssetMaterial>(material)->Path = std::filesystem::path(materialComponent["Path"].as<std::string>());
+					}
+					else if (materialType == "Component") {
+						material = std::make_shared<Render::Material>();
+
+					}
+					material->Albedo = materialComponent["Albedo"].as<glm::vec3>();
+					material->Normal = materialComponent["Normal"].as<glm::vec3>();
+					material->AO = materialComponent["AO"].as<float>();
+					material->Metallic = materialComponent["Metallic"].as<float>();
+					material->Roughness = materialComponent["Roughness"].as<float>();
+					deserializedEntity.GetComponent<MaterialComponent>().Material = material;
+				}
 
 
 
 				auto scripts = entity["Scripts"];
 				if (scripts) {
 					for (auto script : scripts) {
-						std::shared_ptr<Scripting::ScriptObject> component = std::make_shared<Scripting::ScriptObject>(Scripting::ScriptController::GetDomain().GetClass(script["Name"].as<std::string>()).CreateInstance());
+						auto scriptName = script["Name"].as<std::string>();
+						std::shared_ptr<Scripting::ScriptObject> component = std::make_shared<Scripting::ScriptObject>(Scripting::ScriptController::GetDomain().GetClass(scriptName).CreateInstance());
 						m_Scene->m_ScriptingECS.AddComponent((unsigned int)deserializedEntity, component);
 						
 						Scripting::ScriptClass& _class = component->GetClass();

@@ -6,6 +6,7 @@
 #include "Spirit/Core/File.h"
 #include "Spirit/Scene/Scripting/ScriptController.h"
 #include "Spirit/Scene/Scene.h"
+#include "Spirit/Project/Project.h"
 
 
 void Spirit::ScriptSolution::Open(const std::shared_ptr<Project>& project)
@@ -15,7 +16,8 @@ void Spirit::ScriptSolution::Open(const std::shared_ptr<Project>& project)
 	Scripting::ScriptController::Unload();
 	std::filesystem::path projectPath = Spirit::Application::Get().GetProject()->GetSettings().Path;
 	std::string solutionName = Spirit::Application::Get().GetProject()->GetSettings().ProjectName;
-	system((File::Merge2Paths(projectPath, solutionName+".sln")).string().c_str());
-	Scripting::ScriptController::Load();
+	auto launch = (File::Merge2Paths(projectPath, std::filesystem::path(solutionName + ".sln"))).string();
+	system(launch.c_str());
+	Scripting::ScriptController::Load(PROJECT->GetSettings());
 	PROJECT->SetLoadScene(path);
 }

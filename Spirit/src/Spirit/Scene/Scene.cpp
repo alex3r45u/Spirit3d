@@ -8,7 +8,7 @@
 #include "Entity.h"
 #include "Scripting/ScriptController.h"
 #include "Spirit/Core/AssetLibrary.h"
-
+#include "Spirit/Render/EditorCamera.h"
 
 
 Spirit::Scene::~Scene()
@@ -18,11 +18,15 @@ Spirit::Scene::~Scene()
 Spirit::Scene::Scene()
 {
 	m_Path = "Not Found";
+	m_IsRunning = false;
+	m_EditorCamera = std::make_shared<Spirit::Render::EditorCamera>();
 }
 
 Spirit::Scene::Scene(const std::filesystem::path& path)
 {
 	m_Path = path;
+	m_IsRunning = false;
+	m_EditorCamera = std::make_shared<Spirit::Render::EditorCamera>();
 }
 
 Spirit::Entity Spirit::Scene::CreateEntity(const std::string& name)
@@ -41,29 +45,25 @@ void Spirit::Scene::RemoveEntity(Entity& entity)
 	m_Registry.destroy(entity);
 }
 
+void Spirit::Scene::Start()
+{
+	m_IsRunning = true;
+}
+
+void Spirit::Scene::Stop()
+{
+	m_IsRunning = false;
+}
+
 
 void Spirit::Scene::OnUpdate(TimeStep ts)
 {
-
-	{
-		m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc){
-			if (!nsc.Instance)
-			{
-				nsc.Instance = nsc.InstantiateScript();
-				nsc.Instance->entity = Entity{ entity, this };
-				nsc.Instance->transform = nsc.Instance->entity.GetComponent<TransformComponent>();
-				nsc.Instance->OnCreate();
-			}
-
-			nsc.Instance->OnUpdate(ts);
-		});
-	}
-	m_ScriptingECS.UpdateScriptingECS();
-
-
 	std::shared_ptr<Render::Camera> mainCamera = nullptr;
 	TransformComponent* cameraTransform = nullptr;
-	{
+
+	if (m_IsRunning) { 
+		OnRunUpdate(ts); 
+
 		auto view = m_Registry.view<TransformComponent, CameraComponent>();
 		for (auto entity : view)
 		{
@@ -73,9 +73,20 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 			mainCamera = camera.Camera;
 			cameraTransform = &transform;
 			break;
-			
+
 		}
 	}
+	else {
+		///mainCamera = 
+		m_EditorCamera->OnUpdate();
+		mainCamera = m_EditorCamera->GetCamera();
+		cameraTransform = m_EditorCamera->GetTransform();
+	}
+	
+
+
+	
+
 
 	if (mainCamera)
 	{
@@ -116,7 +127,7 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 			{
 				auto [transform, mesh, material] = view.get<TransformComponent, MeshRendererComponent, MaterialComponent>(entity);
 
-				for (auto va : AssetLibrary::GetMeshRegistry().GetMember({ mesh.Path.string()})->GetVertexArray()) {
+				for (auto va : AssetLibrary::GetMeshRegistry().GetMember({ mesh.Path.string() })->GetVertexArray()) {
 					Spirit::Render::Renderer::Submit(va, AssetLibrary::GetShaderRegistry().GetMember({ "default", "assets/vertex.glsl", "assets/fragment.glsl" }), material.Material, transform);
 				}
 			}
@@ -125,6 +136,26 @@ void Spirit::Scene::OnUpdate(TimeStep ts)
 		}
 		
 	}
+
+	//delete cameraTransform;
+}
+
+void Spirit::Scene::OnRunUpdate(TimeStep ts)
+{
+	{
+		m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) {
+			if (!nsc.Instance)
+			{
+				nsc.Instance = nsc.InstantiateScript();
+				nsc.Instance->entity = Entity{ entity, this };
+				nsc.Instance->transform = nsc.Instance->entity.GetComponent<TransformComponent>();
+				nsc.Instance->OnCreate();
+			}
+
+			nsc.Instance->OnUpdate(ts);
+			});
+	}
+	m_ScriptingECS.UpdateScriptingECS();
 }
 
 void Spirit::Scene::OnReseize(unsigned int width, unsigned int height)

@@ -30,7 +30,11 @@ void Spirit::Scripting::ScriptingECS::RemoveEntity(unsigned int entityID)
 {
 	if (HasEntity(entityID))
 		m_Entities.erase(entityID);
-	for (auto i : m_Components[entityID]) {
+	std::vector<std::shared_ptr<ScriptObject>> deleteIndexes;
+	for (auto &i : m_Components[entityID]) {
+		deleteIndexes.push_back(i);
+	}
+	for (auto &i : deleteIndexes) {
 		m_Components[entityID].remove(i);
 	}
 }
@@ -81,11 +85,22 @@ bool Spirit::Scripting::ScriptingECS::HasComponent(unsigned int entityID, std::s
 void Spirit::Scripting::ScriptingECS::RemoveComponent(unsigned int entityID, std::string componentName)
 {
 	for (auto c : m_Components[entityID]) {
-		if (c->GetTypeName() == componentName)
-			m_Components[entityID].remove(c);
+		if (c->GetTypeName() == componentName) {
+			m_RemovedComponent = c;
+			m_RemovedComponentEntity = entityID;
+			break;
+		}
+
 	}
 
+}
 
+void Spirit::Scripting::ScriptingECS::CheckRemoved()
+{
+	if (!m_RemovedComponent) return;
+	
+	m_Components[m_RemovedComponentEntity].remove(m_RemovedComponent);
+	m_RemovedComponent = nullptr;
 }
 
 void Spirit::Scripting::ScriptingECS::UpdateScriptingECS()
@@ -102,6 +117,7 @@ void Spirit::Scripting::ScriptingECS::DrawComponents(unsigned int entityID, std:
 	for (auto c : m_Components[entityID]) {
 		drawFunction(c);
 	}
+	CheckRemoved();
 }
 
 std::shared_ptr<Spirit::Scripting::ScriptObject> Spirit::Scripting::ScriptingECS::GetComponentOutOfName(unsigned int entityID, std::string name)

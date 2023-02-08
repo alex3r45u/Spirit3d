@@ -17,7 +17,7 @@ namespace Spirit {
 		Project();
 		Project(const ProjectSettings& settings);
 		void SetSettings(const ProjectSettings& settings);
-		ProjectSettings& GetSettings();
+		const ProjectSettings& GetSettings();
 		void SetScene(const std::shared_ptr<Scene>& scene);
 		void SetLoadScene(const std::filesystem::path& path);
 		void SaveActiveScene(const std::filesystem::path& path);

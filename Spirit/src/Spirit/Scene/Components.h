@@ -10,6 +10,10 @@
 #include "Spirit/Render/Lights/PointLight.h"
 #include "Spirit/Render/Lights/SpotLight.h"
 #include "ScriptableEntity.h"
+#include "Spirit/Physics/Collider.h"
+#include "Spirit/Physics/AABBCollider.h"
+#include "Spirit/Physics/SphereCollider.h"
+#include "Spirit/Physics/RigidBody.h"
 
 namespace Spirit {
 
@@ -42,7 +46,9 @@ namespace Spirit {
 		glm::vec3 GetUp() { Recalculate(); return m_Up; }
 		glm::vec3 GetDown() { Recalculate(); return m_Down; }
 
-
+		void Translate(glm::vec3 translation, float intensity) {
+			Position = glm::vec3(Position.x + translation.x * intensity, Position.y + translation.y * intensity, Position.z + translation.z * intensity);
+		}
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
@@ -60,7 +66,8 @@ namespace Spirit {
 			m_Backward = -m_Forward;
 			m_Right = glm::normalize(glm::cross(m_Forward, glm::vec3(0.0f, 1.0f, 0.0f)));
 			m_Left = -m_Right;
-			m_Up = glm::normalize(glm::cross(m_Forward, m_Right));
+
+			m_Up = glm::vec3(0.0f, 1.0f, 0.0f);
 			m_Down = -m_Up;
 
 			Transform = glm::translate(Transform, Position);
@@ -130,7 +137,7 @@ namespace Spirit {
 			switch (type) {
 			case CameraType::Perspective:
 				Camera = std::make_shared<Render::PerspectiveCamera>();
-				Type = CameraType::Perspective;
+				Type = type;
 				break;
 			case CameraType::Orthographic:
 				//TODO
@@ -139,6 +146,38 @@ namespace Spirit {
 			}
 		}
 
+	};
+
+	enum class ColliderType {
+		None = 0,
+		AABB,
+		Sphere
+	};
+
+	struct ColliderComponent {
+		std::shared_ptr<Spirit::Physics::Collider> Collider;
+		ColliderType Type;
+		ColliderComponent() { Collider = nullptr; }
+		ColliderComponent(const ColliderComponent&) = default;
+		ColliderComponent(const ColliderType& type) {
+			switch (type) {
+			case ColliderType::AABB:
+				Collider = std::make_shared<Physics::AABBCollider>();
+				Type = type;
+				break;
+			case ColliderType::Sphere:
+				Collider = std::make_shared<Physics::SphereCollider>();
+				Type = type;
+				break;
+			}
+		}
+	};
+
+	struct RigidBodyComponent {
+		std::shared_ptr<Physics::RigidBody> RigidBody;
+		RigidBodyComponent() = default;
+		RigidBodyComponent(const RigidBodyComponent&) = default;
+		RigidBodyComponent(const std::shared_ptr<Physics::RigidBody>& rigidBody) { RigidBody = rigidBody; }
 	};
 
 	struct DirectionalLightComponent {

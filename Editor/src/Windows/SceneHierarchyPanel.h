@@ -9,6 +9,7 @@ namespace Spirit {
 		SceneHierarchyPanel() = default;
 		SceneHierarchyPanel(const std::shared_ptr<Scene>& scene) : Panel(scene) {}
 		virtual void ImGuiRender() override;
+		void Deselect();
 	private:
 		void DrawNode(Entity& entity);
 	private:

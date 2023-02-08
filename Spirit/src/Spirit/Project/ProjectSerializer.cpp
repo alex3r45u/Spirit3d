@@ -4,6 +4,9 @@
 #include "Spirit/Scene/Scene.h"
 #include "Spirit/Core/File.h"
 #include "Spirit/Scene/SceneSerializer.h"
+#include "Spirit/Scene/Scripting/ScriptController.h"
+#include "Spirit/Scene/Scripting/ComponentsCs.h"
+#include "Spirit/Scene/Scripting/EntityCs.h"
 #define yaml(y) << YAML::##y
 #define value << YAML::Value <<
 #define key << YAML::Key <<
@@ -24,8 +27,21 @@ std::shared_ptr<Spirit::Project> Spirit::ProjectSerializer::CreateProject(const 
 	settings.RessourcePath = ressourcePath;
 	settings.ProjectName = filePath.stem().string();
 	
+	
+
+
 	std::shared_ptr<Project> project = std::make_shared<Project>(settings);
 	project->SetScene(std::make_shared<Spirit::Scene>(Spirit::File::Merge2Paths(project->GetSettings().AssetPath, "Example.spiritscene")));
+
+	Scripting::ScriptController::Init(Spirit::File::Merge2Paths(project->GetSettings().Path, project->GetSettings().ProjectName + ".dll").string(), Spirit::File::Merge2Paths(project->GetSettings().Path, "SpiritScript.dll").string(), settings);
+	Scripting::ComponentsCs::Bind();
+	Scripting::EntityCs::Bind();
+
+	if (std::filesystem::exists(Spirit::File::Merge2Paths(project->GetSettings().AssetPath, "Example.spiritscene"))) {
+		SceneSerializer s(project->GetActiveScene());
+		s.Deserialize(Spirit::File::Merge2Paths(project->GetSettings().AssetPath, "Example.spiritscene"));
+	}
+	
 	auto s = project->GetSettings();
 	s.StartScene = project->GetActiveScene()->GetPath();
 	project->SetSettings(s);

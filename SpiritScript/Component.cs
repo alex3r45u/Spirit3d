@@ -149,14 +149,15 @@ namespace SpiritScript
 
 
     }
-
-    public class Camera : Component
+    public enum CameraType
     {
-        public enum CameraType
-        {
-            Perspective = 1,
-            Orthographic = 2,
-        }
+        Perspective = 1,
+        Orthographic = 2,
+    }
+
+    public class RenderCamera : Component
+    {
+        
 
         public bool IsMain
         {
@@ -235,7 +236,7 @@ namespace SpiritScript
                     case MaterialType.Asset:
                         return new AssetMaterial(GetPath_Native(entity.ID));
                     case MaterialType.Component:
-                        return new ComponentMaterial(entity.ID);
+                        return new ComponentMaterial(entity);
                 }
                 return null;
             }

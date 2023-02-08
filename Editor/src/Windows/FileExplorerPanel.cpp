@@ -189,7 +189,6 @@ void Spirit::FileExplorerPanel::AddFile()
 	if (ImGui::BeginPopup("ADD_FILE")) {
 		ImGui::Text("Select Filetype");
 		ImGui::Separator();
-		ADD_ITEM(FileType::Script, "adf");
 		ADD_ITEM(FileType::Material, "")
 		ImGui::EndPopup();
 	}

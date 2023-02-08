@@ -1962,6 +1962,19 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spirit\Render\EditorCamera.h" />
+    <ClInclude Include="src\Spirit\Physics\Collider.h" />
+    <ClInclude Include="src\Spirit\Physics\SphereCollider.h" />
+    <ClInclude Include="src\Spirit\Physics\AABBCollider.h" />
+    <ClInclude Include="src\Spirit\Physics\PhysicsObject.h" />
+    <ClInclude Include="src\Spirit\Physics\RigidBody.h" />
+    <ClInclude Include="src\Spirit\Physics\CollisionPoints.h" />
+    <ClInclude Include="src\Spirit\Physics\Collision.h" />
+    <ClInclude Include="src\Spirit\Physics\Solver.h" />
+    <ClInclude Include="src\Spirit\Physics\CollisionWorld.h" />
+    <ClInclude Include="src\Spirit\Physics\DynamicsWorld.h" />
+    <ClInclude Include="src\Spirit\Physics\ImpulseSolver.h" />
+    <ClInclude Include="src\Spirit\Physics\CollisionAlgo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp">
@@ -2129,6 +2142,13 @@
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
+    <ClCompile Include="src\Spirit\Render\EditorCamera.cpp" />
+    <ClCompile Include="src\Spirit\Physics\SphereCollider.cpp" />
+    <ClCompile Include="src\Spirit\Physics\AABBCollider.cpp" />
+    <ClCompile Include="src\Spirit\Physics\Collider.cpp" />
+    <ClCompile Include="src\Spirit\Physics\CollisionWorld.cpp" />
+    <ClCompile Include="src\Spirit\Physics\DynamicsWorld.cpp" />
+    <ClCompile Include="src\Spirit\Physics\ImpulseSolver.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">

@@ -21,7 +21,7 @@ namespace Spirit::Scripting {
 		bool HasComponent(unsigned int entityID, std::string componentName);
 		bool HasComponent(unsigned int entityID, std::shared_ptr<ScriptObject> component);
 		void RemoveComponent(unsigned int entityID, std::string componentName);
-
+		void CheckRemoved();
 		void UpdateScriptingECS();
 		void DrawComponents(unsigned int entityID, std::function<void(std::shared_ptr<ScriptObject>)> drawFunction);
 	private:
@@ -30,7 +30,8 @@ namespace Spirit::Scripting {
 
 
 
-
+		std::shared_ptr<ScriptObject> m_RemovedComponent;
+		unsigned int m_RemovedComponentEntity;
 		std::unordered_map<unsigned int, std::shared_ptr<ScriptObject>> m_Entities;
 		std::unordered_map<unsigned int, std::list<std::shared_ptr<ScriptObject>>> m_Components;
 	};
