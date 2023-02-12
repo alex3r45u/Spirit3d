@@ -11,6 +11,8 @@
 #include "Spirit/Project/ProjectSerializer.h"
 #include "Spirit/Scene/Scripting/ScriptController.h"
 #include "Spirit/Core/File.h"
+#include <future>
+
 #define PROJECT Spirit::Application::Get().GetProject()
 
 enum class SceneState {
@@ -143,7 +145,14 @@ public:
 					PROJECT->SaveActiveScene(PROJECT->GetActiveScene()->GetPath());
 				}
 				if (ImGui::MenuItem("Open Script Solution")) {
-					Spirit::ScriptSolution::Open(PROJECT);
+
+					//std::future<void> open = std::async(std::launch::async, Spirit::ScriptSolution::Open, PROJECT);
+					if (m_Thread.joinable()) m_Thread.join();
+					m_Thread = std::thread(&Spirit::ScriptSolution::Open, PROJECT);
+
+				}
+				if (ImGui::MenuItem("Reload Script Solution")) {
+					Spirit::ScriptSolution::Reload(PROJECT);
 				}
 				ImGui::EndMenu();
 			}
@@ -196,6 +205,7 @@ private:
 	Spirit::SceneHierarchyPanel m_SceneHierarchyPanel;
 	Spirit::PropertiesPanel m_PropertiesPanel;
 	Spirit::FileExplorerPanel m_FileExplorerPanel;
+	std::thread m_Thread;
 };
 
 

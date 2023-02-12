@@ -777,6 +777,7 @@
   <ItemGroup>
     <ClCompile Include="src\Spirit\Physics\AABBCollider.cpp" />
     <ClCompile Include="src\Spirit\Physics\Collider.cpp" />
+    <ClCompile Include="src\Spirit\Physics\CollisionAlgo.cpp" />
     <ClCompile Include="src\Spirit\Physics\CollisionWorld.cpp" />
     <ClCompile Include="src\Spirit\Physics\DynamicsWorld.cpp" />
     <ClCompile Include="src\Spirit\Physics\ImpulseSolver.cpp" />

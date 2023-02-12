@@ -2149,6 +2149,7 @@
     <ClCompile Include="src\Spirit\Physics\CollisionWorld.cpp" />
     <ClCompile Include="src\Spirit\Physics\DynamicsWorld.cpp" />
     <ClCompile Include="src\Spirit\Physics\ImpulseSolver.cpp" />
+    <ClCompile Include="src\Spirit\Physics\CollisionAlgo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">

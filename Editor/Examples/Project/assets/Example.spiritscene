@@ -2,19 +2,6 @@ Scene: C:/Users/ap/source/repos/Spirit3d/Editor/Examples/Project\assets\Example.
 Entities:
   - Entity: 1
     class Spirit::TransformComponent:
-      Position: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    struct Spirit::TagComponent:
-      Tag: Camera
-    struct Spirit::CameraComponent:
-      IsMain: false
-      Type: Perspective
-      Zoom: 45
-    Scripts:
-      []
-  - Entity: 1
-    class Spirit::TransformComponent:
       Position: [7, 0, 0]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
@@ -30,8 +17,17 @@ Entities:
       AO: 0
       Roughness: 0.458999991
     Scripts:
-      - Name: Example.assets.Hallo
-        Fields:
-          speed:
-            value: 7
-            type: int
+      []
+  - Entity: 1
+    class Spirit::TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    struct Spirit::TagComponent:
+      Tag: Camera
+    struct Spirit::CameraComponent:
+      IsMain: false
+      Type: Perspective
+      Zoom: 45
+    Scripts:
+      []

@@ -9,6 +9,13 @@
     <Grid>
         <StackPanel Orientation="Vertical">
 
+            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                <TextBlock Text="Choose your environment"
+                       Foreground="White"
+                       Margin="5,15,0,0"
+                       FontSize="17"/>
+                <ComboBox Focusable="False" ItemsSource="{Binding EnvirontmentTypes}" SelectedItem="{Binding Index}" Margin="5,0,0,0"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </ui:UiPage>
