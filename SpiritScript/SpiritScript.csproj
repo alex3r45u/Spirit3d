@@ -61,9 +61,9 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Component.cs" />
-    <Compile Include="Debug\Debug.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Material.cs" />
+    <Compile Include="Math\Rotation.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Math\Vector4.cs" />

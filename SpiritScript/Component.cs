@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using SpiritScript.Math;
 
 namespace SpiritScript
@@ -57,15 +52,20 @@ namespace SpiritScript
             set => SetPosition_Native(entity.ID, ref value);
         }
 
-        public Vector3 rotation
+        public Quaternion rotation
         {
             get
             {
                 Vector3 _Result;
                 GetRotation_Native(entity.ID, out _Result);
-                return _Result;
+                return _Result.ToQuaternion();
             }
-            set => SetRotation_Native(entity.ID, ref value);
+            set
+            {
+                Vector3 x = value.ToEuler();
+                SetRotation_Native(entity.ID, ref x);
+            }
+
         }
 
         public Vector3 scale

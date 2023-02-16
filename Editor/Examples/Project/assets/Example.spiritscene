@@ -1,4 +1,4 @@
-Scene: C:/Users/ap/source/repos/Spirit3d/Editor/Examples/Project\assets\Example.spiritscene
+Scene: Examples/Project\assets\Example.spiritscene
 Entities:
   - Entity: 1
     class Spirit::TransformComponent:
@@ -26,7 +26,7 @@ Entities:
     struct Spirit::TagComponent:
       Tag: Camera
     struct Spirit::CameraComponent:
-      IsMain: false
+      IsMain: true
       Type: Perspective
       Zoom: 45
     Scripts:

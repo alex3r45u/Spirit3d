@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 
 namespace SpiritScript
 {
-
-
-    
     public class Entity
     {
         public static Entity Get(uint entityID)
@@ -23,13 +16,6 @@ namespace SpiritScript
         {
             get;
             private set;
-        }
-        
-        
-        public Entity() {  }
-        private Entity(uint id)
-        {
-            this.ID = id;
         }
 
         public T AddComponent<T>() where T : Component, new()

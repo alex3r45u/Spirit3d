@@ -22,6 +22,9 @@
     <Filter Include="src\Spirit\Layer">
       <UniqueIdentifier>{63AB9666-4FA4-B5B8-78D6-9A3D642E95C4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Spirit\Physics">
+      <UniqueIdentifier>{C9B333AB-B597-F400-1EF8-EE530AFBDE82}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Spirit\Platform">
       <UniqueIdentifier>{8BF7A70D-F758-851B-80C6-CBCDEC26BCDA}</UniqueIdentifier>
     </Filter>
@@ -177,6 +180,42 @@
     <ClInclude Include="src\Spirit\Log.h">
       <Filter>src\Spirit</Filter>
     </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\AABBCollider.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\Collider.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\Collision.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\CollisionAlgo.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\CollisionPoints.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\CollisionWorld.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\DynamicsWorld.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\ImpulseSolver.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\PhysicsObject.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\RigidBody.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\Solver.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Physics\SphereCollider.h">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlBuffer.h">
       <Filter>src\Spirit\Platform\OpenGl</Filter>
     </ClInclude>
@@ -219,7 +258,10 @@
     <ClInclude Include="src\Spirit\Render\Camera.h">
       <Filter>src\Spirit\Render</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spirit\Render\Framebuffer.h">
+    <ClInclude Include="src\Spirit\Render\EditorCamera.h">
+      <Filter>src\Spirit\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Spirit\Render\FrameBuffer.h">
       <Filter>src\Spirit\Render</Filter>
     </ClInclude>
     <ClInclude Include="src\Spirit\Render\Lights\DirectionalLight.h">
@@ -1962,19 +2004,6 @@
     <ClInclude Include="vendor\stb\stb_image.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\Spirit\Render\EditorCamera.h" />
-    <ClInclude Include="src\Spirit\Physics\Collider.h" />
-    <ClInclude Include="src\Spirit\Physics\SphereCollider.h" />
-    <ClInclude Include="src\Spirit\Physics\AABBCollider.h" />
-    <ClInclude Include="src\Spirit\Physics\PhysicsObject.h" />
-    <ClInclude Include="src\Spirit\Physics\RigidBody.h" />
-    <ClInclude Include="src\Spirit\Physics\CollisionPoints.h" />
-    <ClInclude Include="src\Spirit\Physics\Collision.h" />
-    <ClInclude Include="src\Spirit\Physics\Solver.h" />
-    <ClInclude Include="src\Spirit\Physics\CollisionWorld.h" />
-    <ClInclude Include="src\Spirit\Physics\DynamicsWorld.h" />
-    <ClInclude Include="src\Spirit\Physics\ImpulseSolver.h" />
-    <ClInclude Include="src\Spirit\Physics\CollisionAlgo.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Spirit\Application.cpp">
@@ -1997,6 +2026,27 @@
     </ClCompile>
     <ClCompile Include="src\Spirit\Log.cpp">
       <Filter>src\Spirit</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Physics\AABBCollider.cpp">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Physics\Collider.cpp">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Physics\CollisionAlgo.cpp">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Physics\CollisionWorld.cpp">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Physics\DynamicsWorld.cpp">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Physics\ImpulseSolver.cpp">
+      <Filter>src\Spirit\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Physics\SphereCollider.cpp">
+      <Filter>src\Spirit\Physics</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlBuffer.cpp">
       <Filter>src\Spirit\Platform\OpenGl</Filter>
@@ -2038,6 +2088,9 @@
       <Filter>src\Spirit\Render</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Render\Camera.cpp">
+      <Filter>src\Spirit\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Spirit\Render\EditorCamera.cpp">
       <Filter>src\Spirit\Render</Filter>
     </ClCompile>
     <ClCompile Include="src\Spirit\Render\Framebuffer.cpp">
@@ -2142,14 +2195,6 @@
     <ClCompile Include="vendor\stb\stb_image.cpp">
       <Filter>vendor\stb</Filter>
     </ClCompile>
-    <ClCompile Include="src\Spirit\Render\EditorCamera.cpp" />
-    <ClCompile Include="src\Spirit\Physics\SphereCollider.cpp" />
-    <ClCompile Include="src\Spirit\Physics\AABBCollider.cpp" />
-    <ClCompile Include="src\Spirit\Physics\Collider.cpp" />
-    <ClCompile Include="src\Spirit\Physics\CollisionWorld.cpp" />
-    <ClCompile Include="src\Spirit\Physics\DynamicsWorld.cpp" />
-    <ClCompile Include="src\Spirit\Physics\ImpulseSolver.cpp" />
-    <ClCompile Include="src\Spirit\Physics\CollisionAlgo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="vendor\assimp\assimp\.editorconfig">
