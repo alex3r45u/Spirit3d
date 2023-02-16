@@ -1,6 +1,0 @@
-C:\Users\ap\source\repos\Spirit3d\bin\Debug-windows-x86_64\SpiritScript\SpiritScript.dll
-C:\Users\ap\source\repos\Spirit3d\bin\Debug-windows-x86_64\SpiritScript\SpiritScript.pdb
-C:\Users\ap\source\repos\Spirit3d\bin-int\Debug-windows-x86_64\SpiritScript\SpiritScript.csproj.CoreCompileInputs.cache
-C:\Users\ap\source\repos\Spirit3d\bin-int\Debug-windows-x86_64\SpiritScript\SpiritScript.dll
-C:\Users\ap\source\repos\Spirit3d\bin-int\Debug-windows-x86_64\SpiritScript\SpiritScript.pdb
-C:\Users\ap\source\repos\Spirit3d\bin-int\Debug-windows-x86_64\SpiritScript\SpiritScript.csproj.AssemblyReference.cache

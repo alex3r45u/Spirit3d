@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,11 +31,60 @@ namespace SpiritScript.Math
             if (Y > max.Y)
                 Y = max.Y;
         }
+
+        public float CalculateDistance(Vector2 target)
+        {
+            float distA = X - target.X;
+            float distC = Y - target.Y;
+            return (float)System.Math.Sqrt(distA * distA + distC * distC);
+        }
+
+        #region Operators
         public static Vector2 operator -(Vector2 vector)
         {
             return new Vector2(-vector.X, -vector.Y);
         }
-    }
 
-    
+        public static Vector2 operator -(Vector2 vector1, Vector2 vector2)
+        {
+            return new Vector2(vector1.X - vector2.X, vector1.Y - vector2.Y);
+        }
+
+        public static Vector2 operator -(Vector2 vector1, float scalar)
+        {
+            return new Vector2(vector1.X - scalar, vector1.Y - scalar);
+        }
+
+        public static Vector2 operator +(Vector2 vector1, Vector2 vector2)
+        {
+            return new Vector2(vector1.X + vector2.X, vector1.Y + vector2.Y);
+        }
+
+        public static Vector2 operator +(Vector2 vector1, float scalar)
+        {
+            return new Vector2(vector1.X + scalar, vector1.Y + scalar);
+        }
+
+        public static Vector2 operator /(Vector2 vector1, Vector2 vector2)
+        {
+            return new Vector2(vector1.X / vector2.X, vector1.Y / vector2.Y);
+        }
+
+        public static Vector2 operator /(Vector2 vector1, float scalar)
+        {
+            return new Vector2(vector1.X / scalar, vector1.Y / scalar);
+        }
+
+        public static Vector2 operator *(Vector2 vector1, Vector2 vector2)
+        {
+            return new Vector2(vector1.X * vector2.X, vector1.Y * vector2.Y);
+        }
+
+        public static Vector2 operator *(Vector2 vector1, float scalar)
+        {
+            return new Vector2(vector1.X * scalar, vector1.Y * scalar);
+        }
+
+        #endregion
+    }
 }

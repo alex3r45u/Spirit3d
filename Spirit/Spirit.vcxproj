@@ -145,19 +145,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Spirit\Physics\AABBCollider.h" />
-    <ClInclude Include="src\Spirit\Physics\Collider.h" />
-    <ClInclude Include="src\Spirit\Physics\Collision.h" />
-    <ClInclude Include="src\Spirit\Physics\CollisionAlgo.h" />
-    <ClInclude Include="src\Spirit\Physics\CollisionPoints.h" />
-    <ClInclude Include="src\Spirit\Physics\CollisionWorld.h" />
-    <ClInclude Include="src\Spirit\Physics\DynamicsWorld.h" />
-    <ClInclude Include="src\Spirit\Physics\ImpulseSolver.h" />
-    <ClInclude Include="src\Spirit\Physics\PhysicsObject.h" />
-    <ClInclude Include="src\Spirit\Physics\RigidBody.h" />
-    <ClInclude Include="src\Spirit\Physics\Solver.h" />
-    <ClInclude Include="src\Spirit\Physics\SphereCollider.h" />
-    <ClInclude Include="src\Spirit\Render\EditorCamera.h" />
     <ClInclude Include="src\Spirit.h" />
     <ClInclude Include="src\Spirit\Application.h" />
     <ClInclude Include="src\Spirit\Core.h" />
@@ -178,6 +165,18 @@
     <ClInclude Include="src\Spirit\Layer\Layer.h" />
     <ClInclude Include="src\Spirit\Layer\LayerStack.h" />
     <ClInclude Include="src\Spirit\Log.h" />
+    <ClInclude Include="src\Spirit\Physics\AABBCollider.h" />
+    <ClInclude Include="src\Spirit\Physics\Collider.h" />
+    <ClInclude Include="src\Spirit\Physics\Collision.h" />
+    <ClInclude Include="src\Spirit\Physics\CollisionAlgo.h" />
+    <ClInclude Include="src\Spirit\Physics\CollisionPoints.h" />
+    <ClInclude Include="src\Spirit\Physics\CollisionWorld.h" />
+    <ClInclude Include="src\Spirit\Physics\DynamicsWorld.h" />
+    <ClInclude Include="src\Spirit\Physics\ImpulseSolver.h" />
+    <ClInclude Include="src\Spirit\Physics\PhysicsObject.h" />
+    <ClInclude Include="src\Spirit\Physics\RigidBody.h" />
+    <ClInclude Include="src\Spirit\Physics\Solver.h" />
+    <ClInclude Include="src\Spirit\Physics\SphereCollider.h" />
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlBuffer.h" />
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlFramebuffer.h" />
     <ClInclude Include="src\Spirit\Platform\OpenGl\OpenGlRenderAPI.h" />
@@ -192,7 +191,8 @@
     <ClInclude Include="src\Spirit\Project\ProjectSerializer.h" />
     <ClInclude Include="src\Spirit\Render\Buffer.h" />
     <ClInclude Include="src\Spirit\Render\Camera.h" />
-    <ClInclude Include="src\Spirit\Render\Framebuffer.h" />
+    <ClInclude Include="src\Spirit\Render\EditorCamera.h" />
+    <ClInclude Include="src\Spirit\Render\FrameBuffer.h" />
     <ClInclude Include="src\Spirit\Render\Lights\DirectionalLight.h" />
     <ClInclude Include="src\Spirit\Render\Lights\Light.h" />
     <ClInclude Include="src\Spirit\Render\Lights\LightManager.h" />
@@ -775,14 +775,6 @@
     <ClInclude Include="vendor\stb\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Spirit\Physics\AABBCollider.cpp" />
-    <ClCompile Include="src\Spirit\Physics\Collider.cpp" />
-    <ClCompile Include="src\Spirit\Physics\CollisionAlgo.cpp" />
-    <ClCompile Include="src\Spirit\Physics\CollisionWorld.cpp" />
-    <ClCompile Include="src\Spirit\Physics\DynamicsWorld.cpp" />
-    <ClCompile Include="src\Spirit\Physics\ImpulseSolver.cpp" />
-    <ClCompile Include="src\Spirit\Physics\SphereCollider.cpp" />
-    <ClCompile Include="src\Spirit\Render\EditorCamera.cpp" />
     <ClCompile Include="src\Spirit\Application.cpp" />
     <ClCompile Include="src\Spirit\Core\AssetLibrary.cpp" />
     <ClCompile Include="src\Spirit\Core\File.cpp" />
@@ -790,6 +782,13 @@
     <ClCompile Include="src\Spirit\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Spirit\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Spirit\Log.cpp" />
+    <ClCompile Include="src\Spirit\Physics\AABBCollider.cpp" />
+    <ClCompile Include="src\Spirit\Physics\Collider.cpp" />
+    <ClCompile Include="src\Spirit\Physics\CollisionAlgo.cpp" />
+    <ClCompile Include="src\Spirit\Physics\CollisionWorld.cpp" />
+    <ClCompile Include="src\Spirit\Physics\DynamicsWorld.cpp" />
+    <ClCompile Include="src\Spirit\Physics\ImpulseSolver.cpp" />
+    <ClCompile Include="src\Spirit\Physics\SphereCollider.cpp" />
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlBuffer.cpp" />
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlFramebuffer.cpp" />
     <ClCompile Include="src\Spirit\Platform\OpenGl\OpenGlRenderAPI.cpp" />
@@ -804,6 +803,7 @@
     <ClCompile Include="src\Spirit\Project\ProjectSerializer.cpp" />
     <ClCompile Include="src\Spirit\Render\Buffer.cpp" />
     <ClCompile Include="src\Spirit\Render\Camera.cpp" />
+    <ClCompile Include="src\Spirit\Render\EditorCamera.cpp" />
     <ClCompile Include="src\Spirit\Render\Framebuffer.cpp" />
     <ClCompile Include="src\Spirit\Render\Lights\DirectionalLight.cpp" />
     <ClCompile Include="src\Spirit\Render\Lights\Light.cpp" />

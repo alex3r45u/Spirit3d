@@ -216,7 +216,7 @@ public:
 	EditorApp(char* c) : Spirit::Application(std::filesystem::path(c)) {
 		m_LayerStack.AddLayer(new EditorLayer);
 	}
-	EditorApp() : Spirit::Application(std::filesystem::path("C:/Users/ap/source/repos/Spirit3d/Editor/Examples/Project/Example.spiritproject")) {
+	EditorApp() : Spirit::Application(std::filesystem::path("Examples/Project/Example.spiritproject")) {
 		m_LayerStack.AddLayer(new EditorLayer);
 	}
 
